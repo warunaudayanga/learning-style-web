@@ -1,0 +1,65 @@
+@import "src/style/scss";
+
+:host {
+    display: block;
+    position: fixed;
+    top: calc($app-header + $app-layout-space);
+    left: 0;
+    z-index: $z-index-app;
+    width: $app-sidebar;
+    height: calc(100vh - $app-header);
+    background-color: $app-surface-color;
+    box-shadow: $app-shadow;
+    border-radius: 0 $border-radius-lg 0 0;
+}
+
+.sidebar-content {
+    height: 100%;
+    background-color: $app-surface-color;
+    border-top-right-radius: $app-card-radius;
+    padding: $app-layout-space calc($app-layout-space * 1.5);
+}
+
+.menu-item {
+    margin-bottom: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: $app-text-color;
+
+    .icon {
+        width: 45px;
+        height: 45px;
+        border-radius: 8px;
+        background-color: $app-surface-color;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 3px 10px #{$app-border-color}50;
+
+        i {
+            font-size: $font-size-2xl;
+            color: $app-text-color;
+        }
+    }
+
+    span {
+        margin-left: $app-layout-space;
+        font-size: $font-size-lg;
+    }
+
+    &.active {
+        .icon {
+            background-color: $app-primary-color;
+            box-shadow: 0 3px 10px #{$app-primary-color}40;
+
+            i {
+                color: $app-text-invert-color;
+            }
+        }
+
+        span {
+            color: $app-primary-color;
+        }
+    }
+}

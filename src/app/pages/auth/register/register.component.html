@@ -1,0 +1,19 @@
+<div class="container h-100 w-50">
+    <form *ngIf="registerForm" [formGroup]="registerForm!" (ngSubmit)="register()" class="pb-5">
+        <h1 class="title font-bold mb-3 mt-5">Register</h1>
+
+        <ng-input label="Username" size="lg" formControlName="username"></ng-input>
+        <ng-input ngPassword label="Password" size="lg" formControlName="password"></ng-input>
+        <ng-input ngPassword label="Confirm Password" size="lg" formControlName="confirm"></ng-input>
+        <ng-input label="Name" size="lg" formControlName="name"></ng-input>
+        <ng-input label="Registration Number" size="lg" formControlName="regNo"></ng-input>
+        <ng-input ngDatepicker label="Date of Birth" size="lg" formControlName="dob"></ng-input>
+        <ng-select-box label="Gender" size="lg" formControlName="gender" [items]="genders" bindLabel="name" bindValue="value" [clearable]="false"></ng-select-box>
+
+        <ng-button type="submit" class="w-100 mt-3" styleClass="btn-app-primary" label="Register" size="lg" [spin]="loading" loadingText="Please wait..."></ng-button>
+
+        <div class="text-center mt-3 pb-3">
+            <a routerLink="/auth/login">Already Registered?</a>
+        </div>
+    </form>
+</div>
