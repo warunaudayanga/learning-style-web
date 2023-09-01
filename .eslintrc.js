@@ -48,6 +48,8 @@ module.exports = {
         ],
         "@angular-eslint/no-output-on-prefix": "off",
         "@typescript-eslint/explicit-function-return-type": "error",
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/no-unused-vars": "off",
         "array-bracket-newline": "off",
         "array-bracket-spacing": "error",
         "array-callback-return": "warn",
@@ -347,10 +349,15 @@ module.exports = {
         "plugin:prettier/recommended"
       ],
       rules: {
+        "@angular-eslint/template/click-events-have-key-events": "off",
+        "@angular-eslint/template/elements-content": "off",
+        "@angular-eslint/template/interactive-supports-focus": "off",
+        "@angular-eslint/template/label-has-associated-control": "off",
         "prettier/prettier": [
           "error",
           {
-            "parser": "angular"
+            "parser": "angular",
+            printWidth: 180,
           }
         ]
       }

@@ -1,0 +1,7 @@
+<app-section [full]="true">
+    <ng-template appSectionHeading>
+        <h2 class="mb-3">Quizzes</h2>
+    </ng-template>
+
+    <qz-list [items]="quizzes" [(answers)]="answers" (answersChange)="onAnswersChange()"></qz-list>
+</app-section>

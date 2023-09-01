@@ -1,0 +1,7 @@
+@import "src/style/scss";
+
+:host {
+  display: block;
+  margin-top: $app-layout-space;
+  padding: $app-layout-space;
+}
