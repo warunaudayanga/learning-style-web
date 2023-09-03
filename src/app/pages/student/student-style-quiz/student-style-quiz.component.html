@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <qz-list *ngIf="quizCollection" [items]="quizCollection.quizzes" [(answers)]="answers" (answersChange)="onAnswersChange()" [readonly]="submitted"></qz-list>
+    <qz-list [items]="quizzes" [(answers)]="answers" (answersChange)="onAnswersChange()" [readonly]="submitted"></qz-list>
 
     <div *ngIf="!submitted && quizCollection" class="d-flex justify-content-end">
         <ng-button type="submit" class="mt-3" styleClass="btn-app-primary" label="Submit" [spin]="submitting" loadingText="Submitting..." (onClick)="onSubmit()"></ng-button>

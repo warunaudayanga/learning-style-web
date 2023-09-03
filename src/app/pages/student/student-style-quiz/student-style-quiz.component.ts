@@ -22,6 +22,10 @@ import { StyleQuizResult } from "../../../core/utils/style-quiz-result";
 export class StudentStyleQuizComponent implements OnInit {
     quizCollection?: IQuizCollection<IStyleQuiz>;
 
+    get quizzes(): IQuiz<IQuizChoice>[] {
+        return this.quizCollection?.quizzes ?? [];
+    }
+
     answers: IQuizAnswer[] = [];
 
     submitting = false;
@@ -44,16 +48,16 @@ export class StudentStyleQuizComponent implements OnInit {
     }
 
     localQuizCollection(): void {
-        const qc = this.store.selectSnapshot(QuizState.getQuiz)(QuizType.STYLE);
-        if (qc?.quizzes?.length) {
-            if (!this.loadAnswers(qc)) {
+        this.quizCollection = this.store.selectSnapshot(QuizState.getQuiz)(
+            QuizType.STYLE,
+        ) as IQuizCollection<IStyleQuiz>;
+        if (this.quizCollection?.quizzes?.length) {
+            if (!this.loadAnswers(this.quizCollection)) {
                 this.getQuizCollection();
             }
         } else {
             this.getQuizCollection();
         }
-
-        this.quizCollection = qc as IQuizCollection<IStyleQuiz>;
 
         if (this.quizCollection && !this.answers?.length) {
             this.dialogService.alert({
@@ -69,6 +73,7 @@ export class StudentStyleQuizComponent implements OnInit {
         this.error = false;
         this.quizService.getQuizCollection<IStyleQuiz>(QuizType.STYLE).subscribe({
             next: qc => {
+                this.quizCollection = qc;
                 this.loading = false;
                 this.store.dispatch(new SaveQuizAnswersDraft({ quizType: QuizType.STYLE, answers: qc.userAnswers }));
                 this.loadAnswers(qc);
