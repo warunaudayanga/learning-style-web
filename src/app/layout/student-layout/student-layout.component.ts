@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { MenuItem } from "../../core/interfaces";
+import { StudentMenu } from "../../core/enums/menus/student-menu.enum";
 
 @Component({
     selector: "app-student-layout",
@@ -7,16 +8,19 @@ import { MenuItem } from "../../core/interfaces";
     styleUrls: ["../shared/layout.scss", "./student-layout.component.scss"],
 })
 export class StudentLayoutComponent {
-    items: MenuItem[] = [
+    items: MenuItem<StudentMenu>[] = [
         {
-            label: "My Classes",
+            key: StudentMenu.LEARNING_STYLE,
+            label: "Learning Style",
             icon: "bi bi-mortarboard",
-            routerLink: "/student/my-classes",
+            routerLink: "/",
         },
         {
-            label: "Find Class",
+            key: StudentMenu.LEARNING_STYLE_RESULT,
+            label: "Learning Style Result",
             icon: "bi bi-search",
-            routerLink: "/student/find-class",
+            routerLink: "/style-result",
+            hidden: true,
         },
     ];
 }

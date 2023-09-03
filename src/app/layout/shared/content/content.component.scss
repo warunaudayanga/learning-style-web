@@ -8,7 +8,7 @@
     width: calc(100vw - $app-sidebar);
     height: calc(100vh - $app-header);
     background-color: $app-background-color;
-    padding: $app-layout-space $app-layout-space 0 $app-layout-space;
+    padding: $app-layout-space;
     overflow-y: auto;
 
     //::ng-deep > *:not(router-outlet) {

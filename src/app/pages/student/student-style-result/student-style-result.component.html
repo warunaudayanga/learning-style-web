@@ -1,0 +1,25 @@
+<app-section [full]="true" [loading]="loading" [error]="error" (onRefresh)="refresh()">
+    <ng-template appSectionHeading>
+        <h4 class="mb-4 font-bold">Index of Learning Styles (ILS) Result</h4>
+    </ng-template>
+
+    <ng-container *ngIf="result">
+        <ng-container *ngFor="let pair of result.pairs; let i = index">
+            <div class="d-flex justify-content-between px-4 py-2 font-lg">
+                <div *ngFor="let single of pair">{{ single.label }} ({{ single.percentage }}%)</div>
+            </div>
+            <div class="d-flex">
+                <!--suppress JSUnusedGlobalSymbols -->
+                <div *ngFor="let single of pair; let j = index" class="w-50 ps-1 pe-4" [class.flip-vertical]="!j">
+                    <progressbar class="mb-3" [value]="single.percentage" [type]="colors[i]"></progressbar>
+                </div>
+            </div>
+        </ng-container>
+
+        <div class="d-flex flex-column align-items-center gap-3 mt-4">
+            <h3>Category: {{ result.final.label }}</h3>
+            <h5>Result: {{ result.final.count }}</h5>
+            <h5>Percentage: {{ result.final.percentage }}%</h5>
+        </div>
+    </ng-container>
+</app-section>

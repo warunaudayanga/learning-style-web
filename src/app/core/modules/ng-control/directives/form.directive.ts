@@ -26,7 +26,9 @@ export class FormDirective {
             });
             const controlList = this.getInvalidControls(this.fgDirective.form);
             controlList.forEach((controlData, i) => {
-                const controlElement: HTMLInputElement = this.element.nativeElement.querySelector("[name='" + controlData.key + "']");
+                const controlElement: HTMLInputElement = this.element.nativeElement.querySelector(
+                    "[name='" + controlData.key + "']",
+                );
                 if (controlElement) {
                     controlElement.classList.add("is-invalid");
                     if (!i) {
@@ -48,18 +50,30 @@ export class FormDirective {
                         if (errors["required"]) {
                             this.app.error(`${toFirstCase(label)} cannot be empty!`);
                         } else if (errors["minlength"]) {
-                            this.app.error(`${toFirstCase(label)} must be at least ${errors["minlength"]["requiredLength"]} characters long!`);
+                            this.app.error(
+                                `${toFirstCase(label)} must be at least ${
+                                    errors["minlength"]["requiredLength"]
+                                } characters long!`,
+                            );
                         } else if (errors["maxlength"]) {
-                            this.app.error(`${toFirstCase(label)} cannot exceed ${errors["maxlength"]["requiredLength"]} characters!`);
+                            this.app.error(
+                                `${toFirstCase(label)} cannot exceed ${
+                                    errors["maxlength"]["requiredLength"]
+                                } characters!`,
+                            );
                         } else if (errors["email"]) {
                             this.app.error(`'${value}' is not a valid email address!`);
                         } else if (errors["pattern"]) {
                             const matchWith = controlElement.getAttribute("data-match") || "";
-                            this.app.error(`${toFirstCase(label)} does not match ${matchWith ? "with " : ""}${matchWith}!`);
+                            this.app.error(
+                                `${toFirstCase(label)} does not match ${matchWith ? "with " : ""}${matchWith}!`,
+                            );
                         } else if (errors["matched"]) {
                             this.app.error(`${toFirstCase(label)} does not match!`);
                         } else if (errors["tagInputMin"]) {
-                            this.app.error(`Option '${label}' need to have more than ${errors["tagInputMin"]} choices!`);
+                            this.app.error(
+                                `Option '${label}' need to have more than ${errors["tagInputMin"]} choices!`,
+                            );
                         }
                     }
                 }

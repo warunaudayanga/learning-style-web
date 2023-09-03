@@ -1,86 +1,161 @@
-import { Injectable } from "@angular/core";
-import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { SaveQuizAnswers, SaveAssessmentDrafts, ClearAssessmentDraft, ClearQuizAnswers, InitQuizState } from "./quiz.action";
+import { Injectable, NgZone } from "@angular/core";
+import { Action, NgxsOnInit, Selector, State, StateContext, Store } from "@ngxs/store";
+import {
+    SaveQuizAnswersDraft,
+    ClearQuizAnswersDraft,
+    SaveQuizAnswers,
+    ClearQuizAnswers,
+    LoadQuiz,
+    SaveQuiz,
+} from "./quiz.action";
 import { deepCopy } from "hichchi-utils";
-import { AssessmentDraft, QuizAnswerList } from "../../interfaces/quiz.interfaces";
+import { IQuiz, IQuizAnswers, IQuizChoice } from "../../interfaces/quiz.interfaces";
+import { ClearState } from "../shared/state.actions";
+import { QuizType } from "../../enums/quiz-type.eum";
+import { QuizService } from "../../services/http/quiz.service";
+import { catchError, Observable, of, take } from "rxjs";
+import { tap } from "rxjs/operators";
+import { HttpError } from "../../interfaces";
+import { IQuizCollection } from "../../interfaces/models/quiz";
+import { AppService } from "../../../app.service";
+import { StudentMenu } from "../../enums/menus/student-menu.enum";
 
 interface QuizStateModel {
-    quizAnswerLists: QuizAnswerList[];
-    assessmentDrafts: AssessmentDraft[];
+    quizCollectionList: IQuizCollection<IQuiz<IQuizChoice>>[];
+    quizAnswersList: IQuizAnswers[];
+    quizAnswersDraftList: IQuizAnswers[];
 }
 
 @State<QuizStateModel>({
     name: "quiz",
     defaults: {
-        quizAnswerLists: [],
-        assessmentDrafts: [],
+        quizCollectionList: [],
+        quizAnswersList: [],
+        quizAnswersDraftList: [],
     },
 })
 @Injectable()
-export class QuizState {
+export class QuizState implements NgxsOnInit {
+    constructor(
+        private readonly store: Store,
+        private readonly ngZone: NgZone,
+        private readonly app: AppService,
+        private readonly quizService: QuizService,
+    ) {}
+
+    ngxsOnInit({ getState, patchState }: StateContext<QuizStateModel>): void {
+        if (!getState().quizCollectionList?.length) {
+            patchState({ quizCollectionList: [] });
+        }
+        if (!getState().quizAnswersList?.length) {
+            patchState({ quizAnswersList: [] });
+        }
+        if (!getState().quizAnswersDraftList?.length) {
+            patchState({ quizAnswersDraftList: [] });
+        }
+    }
+
     @Selector()
-    static getQuizAnswerList(state: QuizStateModel): (assessmentId: number) => QuizAnswerList | undefined {
-        return (assessmentId: number): QuizAnswerList | undefined => {
-            return deepCopy(state.quizAnswerLists.find(list => list.assessmentId === assessmentId));
+    static getQuiz(state: QuizStateModel): (quizType: QuizType) => IQuizCollection<IQuiz<IQuizChoice>> | undefined {
+        return (quizType: QuizType): IQuizCollection<IQuiz<IQuizChoice>> | undefined => {
+            return deepCopy(state.quizCollectionList.find(list => list.type === quizType));
         };
     }
 
     @Selector()
-    static getQuizAnswerLists(state: QuizStateModel): AssessmentDraft[] {
-        return deepCopy(state.assessmentDrafts);
-    }
-
-    @Selector()
-    static getAssessmentDraft(state: QuizStateModel): (classRoomId: number) => AssessmentDraft | undefined {
-        return (classRoomId: number): AssessmentDraft | undefined => {
-            return deepCopy(state.assessmentDrafts.find(list => list.classRoomId === classRoomId));
+    static getQuizAnswers(state: QuizStateModel): (quizType: QuizType) => IQuizAnswers | undefined {
+        return (quizType: QuizType): IQuizAnswers | undefined => {
+            return deepCopy(state.quizAnswersList.find(list => list.quizType === quizType));
         };
     }
 
     @Selector()
-    static getAssessmentDrafts(state: QuizStateModel): AssessmentDraft[] {
-        return deepCopy(state.assessmentDrafts);
+    static getQuizAnswersDraft(state: QuizStateModel): (quizType: QuizType) => IQuizAnswers | undefined {
+        return (quizType: QuizType): IQuizAnswers | undefined => {
+            return deepCopy(state.quizAnswersDraftList.find(list => list.quizType === quizType));
+        };
     }
 
-    // noinspection JSUnusedLocalSymbols
-    @Action(InitQuizState)
-    initState({ setState }: StateContext<QuizStateModel>, _action: InitQuizState): void {
-        setState({ quizAnswerLists: [], assessmentDrafts: [] });
+    @Action(LoadQuiz)
+    loadQuiz(
+        _ctx: StateContext<QuizStateModel>,
+        action: LoadQuiz,
+    ): Observable<IQuizCollection<IQuiz<IQuizChoice>> | null> {
+        return this.quizService.getQuizCollection(action.payload).pipe(
+            take(1),
+            tap(quizCollection => {
+                if (quizCollection) {
+                    this.store.dispatch(new SaveQuiz(quizCollection));
+                }
+            }),
+            catchError((err: HttpError) => {
+                this.ngZone.run(() => {
+                    this.app.error(err.error?.message || "Failed to Login!");
+                });
+                return of(null);
+            }),
+        );
+    }
+
+    @Action(SaveQuiz)
+    saveQuiz({ patchState, getState }: StateContext<QuizStateModel>, action: SaveQuiz): void {
+        const collectionList = [...getState().quizCollectionList];
+        const index = collectionList.findIndex(list => list.type === action.payload.type);
+        if (index !== -1) {
+            collectionList.splice(index, 1, action.payload);
+        } else {
+            collectionList.push(action.payload);
+        }
+        patchState({ quizCollectionList: deepCopy(collectionList) });
+        if (action.payload.userAnswers?.length) {
+            this.app.toggleMenu(true, StudentMenu.LEARNING_STYLE_RESULT);
+        }
     }
 
     @Action(SaveQuizAnswers)
     saveQuizAnswers({ patchState, getState }: StateContext<QuizStateModel>, action: SaveQuizAnswers): void {
-        const quizAnswerLists = [...getState().quizAnswerLists];
-        const index = quizAnswerLists.findIndex(list => list.assessmentId === action.payload.assessmentId);
+        const answersList = [...getState().quizAnswersList];
+        const index = answersList.findIndex(list => list.quizType === action.payload.quizType);
+        const answers = {
+            quizType: action.payload.quizType,
+            answers: action.payload.answers.answers,
+            result: action.payload.answers.result,
+            user: action.payload.answers.user,
+        };
         if (index !== -1) {
-            quizAnswerLists.splice(index, 1, action.payload);
+            answersList.splice(index, 1, answers);
         } else {
-            quizAnswerLists.push(action.payload);
+            answersList.push(answers);
         }
-        patchState({ quizAnswerLists: deepCopy(quizAnswerLists) });
+        patchState({ quizAnswersList: deepCopy(answersList) });
     }
 
-    @Action(SaveAssessmentDrafts)
-    saveAssessmentDrafts({ patchState, getState }: StateContext<QuizStateModel>, action: SaveAssessmentDrafts): void {
-        const assessmentDrafts = [...getState().assessmentDrafts];
-        const index = assessmentDrafts.findIndex(list => list.classRoomId === action.payload.classRoomId);
+    @Action(SaveQuizAnswersDraft)
+    saveQuizAnswersDraft({ patchState, getState }: StateContext<QuizStateModel>, action: SaveQuizAnswersDraft): void {
+        const answersDraftList = [...getState().quizAnswersDraftList];
+        const index = answersDraftList.findIndex(list => list.quizType === action.payload.quizType);
         if (index !== -1) {
-            assessmentDrafts.splice(index, 1, action.payload);
+            answersDraftList.splice(index, 1, action.payload);
         } else {
-            assessmentDrafts.push(action.payload);
+            answersDraftList.push(action.payload);
         }
-        patchState({ assessmentDrafts: deepCopy(assessmentDrafts) });
+        patchState({ quizAnswersDraftList: deepCopy(answersDraftList) });
     }
 
     @Action(ClearQuizAnswers)
     clearQuizAnswers({ patchState, getState }: StateContext<QuizStateModel>, action: ClearQuizAnswers): void {
-        const assessmentDrafts = [...getState().quizAnswerLists].filter(list => list.assessmentId !== action.payload);
-        patchState({ quizAnswerLists: deepCopy(assessmentDrafts) });
+        const answersList = [...getState().quizAnswersList].filter(list => list.quizType !== action.payload);
+        patchState({ quizAnswersList: deepCopy(answersList) });
     }
 
-    @Action(ClearAssessmentDraft)
-    clearQuizDrafts({ patchState, getState }: StateContext<QuizStateModel>, action: ClearAssessmentDraft): void {
-        const assessmentDrafts = [...getState().assessmentDrafts].filter(list => list.classRoomId !== action.payload);
-        patchState({ assessmentDrafts: deepCopy(assessmentDrafts) });
+    @Action(ClearQuizAnswersDraft)
+    clearQuizAnswersDraft({ patchState, getState }: StateContext<QuizStateModel>, action: ClearQuizAnswersDraft): void {
+        const answersDraftList = [...getState().quizAnswersDraftList].filter(list => list.quizType !== action.payload);
+        patchState({ quizAnswersDraftList: deepCopy(answersDraftList) });
+    }
+
+    @Action(ClearState)
+    clearState({ setState }: StateContext<QuizStateModel>): void {
+        setState({ quizCollectionList: [], quizAnswersList: [], quizAnswersDraftList: [] });
     }
 }

@@ -11,11 +11,11 @@
                         class="form-check-input"
                         type="radio"
                         [name]="quizDraft.id"
-                        [id]="quizDraft.id + '_choose'"
+                        [id]="quizDraft.id + '_choice'"
                         [checked]="quizDraft.choice && !quizDraft.multiple"
                         (click)="answerTypeChange(true, false)"
                     />
-                    <label class="form-check-label" [for]="quizDraft.id + '_choose'">Choice</label>
+                    <label class="form-check-label" [for]="quizDraft.id + '_choice'">Choice</label>
                 </div>
                 <!--                <div class="form-check ms-3">-->
                 <!--                    <input class="form-check-input" type="radio" [name]="quizDraft.id" [id]="quizDraft.id + '_multi'"-->
@@ -36,7 +36,7 @@
                             <th colspan="2">Choice</th>
                             <th class="ps-3">Answer{{ quizDraft.multiple ? "s" : "" }}</th>
                         </tr>
-                        <tr *ngFor="let option of quizDraft.options; let i = index">
+                        <tr *ngFor="let option of quizDraft.choices; let i = index">
                             <td class="choice-label">Choice {{ i + 1 }}</td>
                             <td>
                                 <ng-input class="choice-answer flex-grow-1" noValidation size="sm" [(ngModel)]="option.value" (ngModelChange)="quizChange()"></ng-input>
@@ -47,12 +47,12 @@
                                     [type]="quizDraft.multiple ? 'checkbox' : 'radio'"
                                     [name]="quizDraft.id + 'answer'"
                                     [id]="quizDraft.id + '_answer_' + (i + 1)"
-                                    [checked]="quizDraft.answer?.includes(option.id)"
-                                    (click)="answerChange(option.id)"
+                                    [checked]="quizDraft.answer?.map(mapChoiceId)?.includes(option.id)"
+                                    (click)="answerChange(option)"
                                 />
                             </td>
                             <td class="ps-3">
-                                <button *ngIf="(quizDraft.options?.length ?? 0) > 2" type="button" class="btn-close btn" (click)="removeChoice(option)"></button>
+                                <button *ngIf="(quizDraft.choices?.length ?? 0) > 2" type="button" class="btn-close btn" (click)="removeChoice(option)"></button>
                             </td>
                         </tr>
                         <tr>

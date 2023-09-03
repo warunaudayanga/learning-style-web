@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { v4 as uuid } from "uuid";
-import { QuizDraft } from "../../../core/interfaces/quiz.interfaces";
+import { IQuizChoice, IQuizDraft } from "../../../../interfaces/quiz.interfaces";
+import { mapChoiceId } from "../../../../utils/quiz.utils";
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
@@ -9,13 +10,13 @@ import { QuizDraft } from "../../../core/interfaces/quiz.interfaces";
     styleUrls: ["./quiz-editor.component.scss"],
 })
 export class QuizEditorComponent {
-    @Input() quizDraft: QuizDraft = { id: uuid() };
+    @Input() quizDraft: IQuizDraft = { id: uuid() };
 
     @Input() index?: number;
 
     @Output() onRemove: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
 
-    @Output() quizDraftChange: EventEmitter<QuizDraft> = new EventEmitter<QuizDraft>();
+    @Output() quizDraftChange: EventEmitter<IQuizDraft> = new EventEmitter<IQuizDraft>();
 
     answerTypeChange(choice: boolean, multiple?: boolean): void {
         this.quizDraft.choice = choice;
@@ -27,13 +28,14 @@ export class QuizEditorComponent {
     }
 
     addChoice(): void {
-        this.quizDraft.options = [...(this.quizDraft.options ?? []), { id: uuid(), value: "" }];
+        this.quizDraft.choices = [...(this.quizDraft.choices ?? []), { id: uuid(), value: "" }];
         this.quizChange();
     }
 
     removeChoice(option: { id: string; value: string }): void {
-        this.quizDraft.options = this.quizDraft.options?.filter(o => o.id !== option.id);
-        this.quizDraft.answer = this.quizDraft.answer?.filter(a => this.quizDraft.options?.map(o => o.id)?.includes(a!)) ?? [];
+        this.quizDraft.choices = this.quizDraft.choices?.filter(o => o.id !== option.id);
+        this.quizDraft.answer =
+            this.quizDraft.answer?.filter(a => this.quizDraft.choices?.map(mapChoiceId)?.includes(a.id!)) ?? [];
         this.quizChange();
     }
 
@@ -41,16 +43,18 @@ export class QuizEditorComponent {
         this.quizDraftChange.emit(this.quizDraft);
     }
 
-    answerChange(id: string): void {
+    answerChange(choice: IQuizChoice): void {
         if (this.quizDraft.multiple) {
-            if (this.quizDraft.answer?.includes(id)) {
-                this.quizDraft.answer = this.quizDraft.answer?.filter(a => a !== id);
+            if (this.quizDraft.answer?.map(mapChoiceId)?.includes(choice.id)) {
+                this.quizDraft.answer = this.quizDraft.answer?.filter(a => a !== choice);
             } else {
-                this.quizDraft.answer = [...(this.quizDraft.answer ?? []), id];
+                this.quizDraft.answer = [...(this.quizDraft.answer ?? []), choice];
             }
         } else {
-            this.quizDraft.answer = [id];
+            this.quizDraft.answer = [choice];
         }
         this.quizChange();
     }
+
+    protected readonly mapChoiceId = mapChoiceId;
 }

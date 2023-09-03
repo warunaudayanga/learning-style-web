@@ -1,22 +1,31 @@
-import { AfterContentInit, Component, EventEmitter, Input, Output } from "@angular/core";
-import { MenuItem } from "../../../core/interfaces";
+import { AfterContentInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
+import { MenuItem, MenuToggleOptions } from "../../../core/interfaces";
 import { NavigationEnd, Router } from "@angular/router";
+import { Subscription } from "rxjs";
+import { StudentMenu } from "../../../core/enums/menus/student-menu.enum";
+import { AdinMenu } from "../../../core/enums/menus/adin-menu.enum";
+import { AppService } from "../../../app.service";
 
 @Component({
     selector: "app-sidebar",
     templateUrl: "./sidebar.component.html",
     styleUrls: ["./sidebar.component.scss"],
 })
-export class SidebarComponent implements AfterContentInit {
+export class SidebarComponent implements OnInit, AfterContentInit, OnDestroy {
     @Input() items: MenuItem[] = [];
 
     @Input() activeIndex = 0;
 
     @Output() activeIndexChange: EventEmitter<number> = new EventEmitter<number>();
 
+    menuToggleSub?: Subscription;
+
     private url = "";
 
-    constructor(private router: Router) {
+    constructor(
+        private readonly router: Router,
+        private readonly app: AppService,
+    ) {
         this.router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
                 this.url = event.url;
@@ -25,6 +34,18 @@ export class SidebarComponent implements AfterContentInit {
                 });
             }
         });
+    }
+
+    ngOnInit(): void {
+        this.menuToggleSub = this.app
+            .getMenuToggleListener()
+            .subscribe((options: MenuToggleOptions<StudentMenu | AdinMenu>) => {
+                this.items.forEach(item => {
+                    if (item.key === options.key) {
+                        item.hidden = !options.show;
+                    }
+                });
+            });
     }
 
     ngAfterContentInit(): void {
@@ -41,5 +62,9 @@ export class SidebarComponent implements AfterContentInit {
     onClick(e: MouseEvent, index: number, item: MenuItem): void {
         item.action?.(e);
         this.activate(index);
+    }
+
+    ngOnDestroy(): void {
+        this.menuToggleSub?.unsubscribe();
     }
 }

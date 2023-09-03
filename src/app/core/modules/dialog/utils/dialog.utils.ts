@@ -7,7 +7,7 @@ export const getIconAndColor = (data: {
     icon?: string;
     colorClass?: string;
     confirm?: boolean;
-}): { colorClass: unknown; icon: unknown } => {
+}): { colorClass: string; icon: string } => {
     let icon;
     let colorClass;
 

@@ -4,8 +4,13 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { environment } from "../environments/environment";
 import { IndividualConfig, ToastrService } from "ngx-toastr";
-import { Observable, Subject } from "rxjs";
+import { Observable, ReplaySubject, Subject } from "rxjs";
 import { IUser } from "./core/interfaces/models";
+import { ScrollDir } from "./core/enums/scroll-dir.enum";
+import { StudentMenu } from "./core/enums/menus/student-menu.enum";
+import { AdinMenu } from "./core/enums/menus/adin-menu.enum";
+import { HeaderMenu } from "./core/enums/menus/header-menu.enum";
+import { MenuToggleOptions } from "./core/interfaces";
 
 @Injectable({
     providedIn: "root",
@@ -16,6 +21,18 @@ export class AppService {
     private userListener: Subject<IUser | undefined> = new Subject<IUser | undefined>();
 
     toastConfig: Partial<IndividualConfig>;
+
+    private scrollToListener: Subject<ScrollDir> = new Subject<ScrollDir>();
+
+    private scrollEndListener: Subject<ScrollDir> = new Subject<ScrollDir>();
+
+    sideMenuToggleListener: ReplaySubject<MenuToggleOptions<StudentMenu | AdinMenu>> = new ReplaySubject<
+        MenuToggleOptions<StudentMenu | AdinMenu>
+    >();
+
+    headerMenuToggleListener: ReplaySubject<MenuToggleOptions<HeaderMenu>> = new ReplaySubject<
+        MenuToggleOptions<HeaderMenu>
+    >();
 
     constructor(
         private readonly router: Router,
@@ -35,6 +52,38 @@ export class AppService {
 
     getUserListener(): Observable<IUser | undefined> {
         return this.userListener.asObservable();
+    }
+
+    scrollToTop(): void {
+        this.scrollToListener.next(ScrollDir.TOP);
+    }
+
+    scrollToBottom(): void {
+        this.scrollToListener.next(ScrollDir.BOTTOM);
+    }
+
+    getScrollToListener(): Observable<ScrollDir> {
+        return this.scrollToListener.asObservable();
+    }
+
+    setScrollEnded(direction: ScrollDir): void {
+        this.scrollEndListener.next(direction);
+    }
+
+    getScrollEndListener(): Observable<ScrollDir> {
+        return this.scrollEndListener.asObservable();
+    }
+
+    toggleMenu(show: boolean, key: StudentMenu | AdinMenu | HeaderMenu): void {
+        if ([...Object.values(StudentMenu), ...Object.values(AdinMenu)].includes(key as StudentMenu | AdinMenu)) {
+            this.sideMenuToggleListener.next({ show, key: key as StudentMenu | AdinMenu });
+        } else if (Object.values(HeaderMenu).includes(key as HeaderMenu)) {
+            this.headerMenuToggleListener.next({ show, key: key as HeaderMenu });
+        }
+    }
+
+    getMenuToggleListener(): Observable<MenuToggleOptions<StudentMenu | AdinMenu>> {
+        return this.sideMenuToggleListener.asObservable();
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

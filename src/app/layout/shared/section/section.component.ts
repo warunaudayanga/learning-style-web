@@ -1,4 +1,13 @@
-import { Component, ContentChild, EventEmitter, HostBinding, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
+import {
+    Component,
+    ContentChild,
+    EventEmitter,
+    HostBinding,
+    Input,
+    OnChanges,
+    Output,
+    SimpleChanges,
+} from "@angular/core";
 import { SectionHeadingDirective } from "../../../core/directives/section-heading.directive";
 
 @Component({
@@ -18,6 +27,14 @@ export class SectionComponent implements OnChanges {
     @Output() onRefresh: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
 
     @ContentChild(SectionHeadingDirective) heading?: SectionHeadingDirective;
+
+    @HostBinding("class.app-section-loading") get appSectionLoading(): boolean {
+        return this.loading;
+    }
+
+    @HostBinding("class.app-section-error") get appSectionError(): boolean {
+        return this.loading;
+    }
 
     @HostBinding("class.app-section-full") get appSectionFull(): boolean {
         return this.full;

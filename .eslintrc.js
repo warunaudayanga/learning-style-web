@@ -27,7 +27,7 @@ module.exports = {
             "bracketSpacing": true,
             "arrowParens": "avoid",
             "trailingComma": "all",
-            "printWidth": 150
+            "printWidth": 120
           }
         ],
         "@angular-eslint/directive-selector": [
@@ -273,7 +273,13 @@ module.exports = {
         "prefer-spread": "error",
         "prefer-template": "off",
         "quote-props": "off",
-        "quotes": "warn",
+        "quotes": [
+          "warn",
+          "double",
+          {
+            "avoidEscape": true
+          }
+        ],
         "radix": "off",
         "require-atomic-updates": "error",
         "require-await": "error",

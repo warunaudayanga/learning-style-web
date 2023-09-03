@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
-import { Quiz } from "../../../core/interfaces/quiz.interfaces";
+import { IQuiz, IQuizChoice } from "../../../../interfaces/quiz.interfaces";
+import { mapChoiceId } from "../../../../utils/quiz.utils";
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
@@ -8,15 +9,18 @@ import { Quiz } from "../../../core/interfaces/quiz.interfaces";
     styleUrls: ["./qz.component.scss"],
 })
 export class QzComponent implements OnChanges {
-    @Input() quiz!: Quiz;
+    @Input() quiz!: IQuiz<IQuizChoice>;
 
-    @Input() answer: string[] = [];
+    @Input() answer: IQuizChoice[] = [];
+
+    @Input() readonly = false;
 
     @Input() assess = false;
 
-    @Output() answerChange: EventEmitter<string[]> = new EventEmitter<string[]>();
+    @Output() answerChange: EventEmitter<IQuizChoice[]> = new EventEmitter<IQuizChoice[]>();
 
-    checkedValues?: string[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    checkedValues?: IQuizChoice[];
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes["quiz"]) {
@@ -28,12 +32,12 @@ export class QzComponent implements OnChanges {
         this.updateChecked();
     }
 
-    onRadioChange(value: string): void {
+    onRadioChange(value: IQuizChoice): void {
         this.answer = [value];
         this.answerChange.emit(this.answer);
     }
 
-    onCheckChange(value: string, checked: boolean): void {
+    onCheckChange(value: IQuizChoice, checked: boolean): void {
         if (checked) {
             if (this.answer) {
                 this.answer.push(value);
@@ -41,7 +45,7 @@ export class QzComponent implements OnChanges {
                 this.answer = [value];
             }
         } else {
-            this.answer = this.answer?.filter(ans => ans !== value);
+            this.answer = this.answer?.filter(ans => ans.id !== value.id);
         }
         this.answerChange.emit(this.answer);
     }
@@ -56,7 +60,11 @@ export class QzComponent implements OnChanges {
 
     isCorrect(): boolean {
         return Boolean(
-            this.answer?.length && this.answer?.length === this.quiz.answer?.length && this.quiz.answer?.every(ans => this.answer?.includes(ans)),
+            this.answer?.length &&
+                this.answer?.length === this.quiz.answer?.length &&
+                this.quiz.answer?.every(ans => this.answer.map(mapChoiceId)?.includes(ans.id)),
         );
     }
+
+    protected readonly mapChoiceId = mapChoiceId;
 }

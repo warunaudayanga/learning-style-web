@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { MenuItem } from "../../core/interfaces";
+import { AdinMenu } from "../../core/enums/menus/adin-menu.enum";
 
 @Component({
     selector: "app-admin-layout",
@@ -7,31 +8,12 @@ import { MenuItem } from "../../core/interfaces";
     styleUrls: ["../shared/layout.scss", "./admin-layout.component.scss"],
 })
 export class AdminLayoutComponent {
-    items: MenuItem[] = [
+    items: MenuItem<AdinMenu>[] = [
         {
-            label: "Manage Classes",
+            key: AdinMenu.LEARNING_STYLE,
+            label: "Learning Style",
             icon: "bi bi-mortarboard",
             routerLink: "/admin/classes",
-        },
-        {
-            label: "Manage Tutors",
-            icon: "bi bi-people",
-            routerLink: "/admin/tutors",
-        },
-        {
-            label: "Manage Students",
-            icon: "bi bi-people",
-            routerLink: "/admin/students",
-        },
-        {
-            label: "Grades",
-            icon: "bi bi-123",
-            routerLink: "/admin/grades",
-        },
-        {
-            label: "Subjects",
-            icon: "bi bi-book-half",
-            routerLink: "/admin/subjects",
         },
     ];
 }

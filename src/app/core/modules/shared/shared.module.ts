@@ -12,6 +12,7 @@ import { MatDividerModule } from "@angular/material/divider";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MomentModule } from "ngx-moment";
+import { QuizModule } from "../quiz/quiz.module";
 
 @NgModule({
     declarations: [PageNotFoundComponent, CarouselComponent, NgDataViewComponent, SlideComponent],
@@ -26,7 +27,23 @@ import { MomentModule } from "ngx-moment";
         MatButtonModule,
         MomentModule,
         FormsModule,
+        QuizModule,
     ],
-    exports: [PageNotFoundComponent, CarouselComponent, NgDataViewComponent, SlideComponent],
+    exports: [
+        PageNotFoundComponent,
+        CarouselComponent,
+        NgDataViewComponent,
+        SlideComponent,
+        RouterModule,
+        PipeModule,
+        NgControlModule,
+        MatDialogModule,
+        MatDividerModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MomentModule,
+        FormsModule,
+        QuizModule,
+    ],
 })
 export class SharedModule {}

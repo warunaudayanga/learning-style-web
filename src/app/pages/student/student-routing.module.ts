@@ -1,9 +1,11 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { StudentQuizComponent } from "./student-quiz/student-quiz.component";
+import { StudentStyleQuizComponent } from "./student-style-quiz/student-style-quiz.component";
+import { StudentStyleResultComponent } from "./student-style-result/student-style-result.component";
 
 const routes: Routes = [
-    { path: "", component: StudentQuizComponent },
+    { path: "", component: StudentStyleQuizComponent },
+    { path: "style-result", component: StudentStyleResultComponent },
     { path: "**", redirectTo: "", pathMatch: "full" },
 ];
 
