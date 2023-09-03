@@ -20,7 +20,7 @@ import { StyleQuizResult } from "../../../core/utils/style-quiz-result";
     styleUrls: ["./student-style-quiz.component.scss"],
 })
 export class StudentStyleQuizComponent implements OnInit {
-    quizCollection: IQuizCollection<IStyleQuiz> = { quizzes: {} } as IQuizCollection<IStyleQuiz>;
+    quizCollection?: IQuizCollection<IStyleQuiz>;
 
     answers: IQuizAnswer[] = [];
 
@@ -97,7 +97,7 @@ export class StudentStyleQuizComponent implements OnInit {
     }
 
     onSubmit(): void {
-        if (this.quizCollection.quizzes.some(q => !this.answers.map(a => a.id).includes(q.id))) {
+        if (this.quizCollection!.quizzes.some(q => !this.answers.map(a => a.id).includes(q.id))) {
             this.dialogService.alert({
                 title: "Error",
                 message: "Please answer all questions",
@@ -107,7 +107,7 @@ export class StudentStyleQuizComponent implements OnInit {
         }
 
         this.submitting = true;
-        const result = new StyleQuizResult(this.quizCollection, this.answers).result;
+        const result = new StyleQuizResult(this.quizCollection!, this.answers).result;
         this.quizService.saveAnswers<IStyleQuiz>(QuizType.STYLE, this.answers, result).subscribe({
             next: answers => {
                 this.store.dispatch(new SaveQuizAnswers({ quizType: QuizType.STYLE, answers }));
