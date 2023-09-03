@@ -55,7 +55,7 @@ export class StudentStyleQuizComponent implements OnInit {
 
         this.quizCollection = qc as IQuizCollection<IStyleQuiz>;
 
-        if (!this.answers?.length) {
+        if (this.quizCollection && !this.answers?.length) {
             this.dialogService.alert({
                 title: "Information",
                 message: "Please answer the following questionnaire to identify your learning style",
@@ -97,7 +97,7 @@ export class StudentStyleQuizComponent implements OnInit {
     }
 
     onSubmit(): void {
-        if (this.quizCollection!.quizzes.some(q => !this.answers.map(a => a.id).includes(q.id))) {
+        if (this.quizCollection && this.quizCollection.quizzes.some(q => !this.answers.map(a => a.id).includes(q.id))) {
             this.dialogService.alert({
                 title: "Error",
                 message: "Please answer all questions",
