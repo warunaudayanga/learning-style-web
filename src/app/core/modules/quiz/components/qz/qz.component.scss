@@ -3,6 +3,10 @@
 .quiz {
     margin-bottom: $spacer-4;
 
+    .form-check {
+        margin-bottom: 10px;
+    }
+
     .marking {
         position: absolute;
         height: 100%;

@@ -1,27 +1,32 @@
 // noinspection JSUnusedGlobalSymbols
 
-import { Quiz, QuizDraft } from "../interfaces/quiz.interfaces";
-import { v4 as uuid } from "uuid";
+import { IQuiz, IQuizChoice, IQuizDraft } from "../interfaces/quiz.interfaces";
 
-export const quizToDraft = (quiz: Quiz): QuizDraft => {
-    const options = quiz.options?.map(option => ({ id: uuid(), value: option })) ?? [];
-    const answer = quiz.answer?.map(ans => options!.find(option => option.value === ans)?.id) ?? [];
+export const mapChoiceId = (q: IQuizChoice, _i: number, _array: IQuizChoice[]): string => q.id;
+
+export const mapChoiceValue = (q: IQuizChoice, _i: number, _array: IQuizChoice[]): string => q.value;
+
+export const quizToDraft = (quiz: IQuiz<IQuizChoice>): IQuizDraft => {
+    const answer = quiz.answer?.map(ans => quiz.choices!.find(option => option.value === ans.value)!) ?? [];
     return {
         id: quiz.id,
         question: quiz.question,
-        choice: Boolean(quiz.options),
+        choice: Boolean(quiz.choices),
         multiple: quiz.multiple,
-        options,
+        choices: quiz.choices,
         answer,
     };
 };
 
-export const draftToQuiz = (draft: QuizDraft): Quiz => {
+export const draftToQuiz = (draft: IQuizDraft): IQuiz<IQuizChoice> => {
     return {
         id: draft.id,
         question: draft.question ?? "",
-        options: draft.choice ? draft.options?.map(option => option.value) : undefined,
+        choices: draft.choice ? draft.choices : undefined,
         multiple: draft.multiple,
-        answer: draft.options?.length && draft.answer?.length ? draft.answer.map(ans => draft.options!.find(option => option.id === ans)!.value) : [],
+        answer:
+            draft.choices?.length && draft.answer?.length
+                ? draft.answer.map(ans => draft.choices!.find(option => option.id === ans.id)!)
+                : [],
     };
 };

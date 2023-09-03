@@ -1,4 +1,3 @@
-
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
@@ -39,11 +38,11 @@ $learning-style-web-warn: mat.define-palette(mat.$red-palette);
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
 $learning-style-web-theme: mat.define-light-theme((
-  color: (
-    primary: $learning-style-web-primary,
-    accent: $learning-style-web-accent,
-    warn: $learning-style-web-warn,
-  )
+    color: (
+        primary: $learning-style-web-primary,
+        accent: $learning-style-web-accent,
+        warn: $learning-style-web-warn,
+    )
 ));
 
 // Include theme styles for core and each component used in your app.
@@ -53,223 +52,235 @@ $learning-style-web-theme: mat.define-light-theme((
 
 /* Common */
 ::-webkit-scrollbar {
-  width: $scroll-bar-size !important;
-  height: $scroll-bar-size !important;
+    width: $scroll-bar-size !important;
+    height: $scroll-bar-size !important;
 }
 
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 $scroll-bar-size $scroll-bar-size #aaa !important;
-  border: solid 3px transparent !important;
-  border-radius: 5px !important;
+    box-shadow: inset 0 0 $scroll-bar-size $scroll-bar-size #aaa !important;
+    border: solid 3px transparent !important;
+    border-radius: 5px !important;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: transparent !important;
-  box-shadow: inset 0 0 $scroll-bar-size $scroll-bar-size $app-primary-color !important;
-  border: solid 3px transparent !important;
-  border-radius: 5px !important;
+    background-color: transparent !important;
+    box-shadow: inset 0 0 $scroll-bar-size $scroll-bar-size $app-primary-color !important;
+    border: solid 3px transparent !important;
+    border-radius: 5px !important;
 }
 
 /* HTML */
 html, body {
-  height: 100%;
+    height: 100%;
 }
 
 body {
-  margin: 0;
-  //background-color: $app-body-color;
-  height: 100%;
-  width: 100%;
-  color: $app-text-color;
+    margin: 0;
+    //background-color: $app-body-color;
+    height: 100%;
+    width: 100%;
+    color: $app-text-color;
 }
 
 #zmmtg-root {
-  display: none;
+    display: none;
 }
 
 * {
-  font-family: proxima-nova !important;
-  box-sizing: border-box !important;
+    font-family: proxima-nova !important;
+    box-sizing: border-box !important;
 }
 
 :focus {
-  outline: none !important;
+    outline: none !important;
 }
 
 .debug {
-  border: 1px dashed red;
+    border: 1px dashed red;
 }
 
 .overflow-auto {
-  scroll-behavior: smooth !important;
+    scroll-behavior: smooth !important;
 }
 
 /* Text Wrap */
 .nowrap {
-  white-space: nowrap;
+    white-space: nowrap;
 }
 
 /* Ellipsis */
 .ellipsis {
-  text-overflow: ellipsis;
+    text-overflow: ellipsis;
 }
 
 .ellipsis-1 {
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .ellipsis-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .ellipsis-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .ellipsis-4 {
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .ellipsis-5 {
-  display: -webkit-box;
-  -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 /* App Color */
 .bg-app-primary {
-  background-color: $app-primary-color;
+    background-color: $app-primary-color;
 }
 
 .bg-app-secondary {
-  background-color: $app-secondary-color;
+    background-color: $app-secondary-color;
 }
 
 .bg-app-gradient {
-  background: transparent linear-gradient(225deg, $app-primary-color 0, $app-secondary-color 100%) 0 0 no-repeat padding-box;
+    background: transparent linear-gradient(225deg, $app-primary-color 0, $app-secondary-color 100%) 0 0 no-repeat padding-box;
 }
 
 /* Dialog */
 .dialog-container {
-  .mat-dialog-container {
-    border-top: 5px solid;
+    .mat-mdc-dialog-container {
+        .mat-mdc-dialog-title {
+            border-top: 5px solid;
+        }
 
-    .mat-dialog-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 15px;
-      padding: $app-layout-space 0;
+        .mat-mdc-dialog-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            padding: calc($app-layout-space / 2);
 
-      button {
-        text-transform: uppercase !important;
-      }
+            button {
+                text-transform: uppercase !important;
+            }
+        }
     }
-  }
 
-  &.primary {
-    .mat-dialog-container {
-      border-color: $app-primary-color;
+    &.primary {
+        .mat-mdc-dialog-container .mat-mdc-dialog-title {
+            border-color: $app-primary-color;
+        }
     }
-  }
 
-  &.success {
-    .mat-dialog-container {
-      border-color: $success;
+    &.success {
+        .mat-mdc-dialog-container .mat-mdc-dialog-title {
+            border-color: $success;
+        }
     }
-  }
 
-  &.info {
-    .mat-dialog-container {
-      border-color: $info;
+    &.info {
+        .mat-mdc-dialog-container .mat-mdc-dialog-title {
+            border-color: $info;
+        }
     }
-  }
 
-  &.warning {
-    .mat-dialog-container {
-      border-color: $warning;
+    &.warning {
+        .mat-mdc-dialog-container .mat-mdc-dialog-title {
+            border-color: $warning;
+        }
     }
-  }
 
-  &.error {
-    .mat-dialog-container {
-      border-color: $danger;
+    &.error {
+        .mat-mdc-dialog-container .mat-mdc-dialog-title {
+            border-color: $danger;
+        }
     }
-  }
 }
 
 /* Text */
 .text-app-primary {
-  color: $app-primary-color;
+    color: $app-primary-color;
 }
 
 .text-app-secondary {
-  color: $app-secondary-color;
+    color: $app-secondary-color;
 }
 
 .text-app-secondary {
-  color: $app-secondary-color;
+    color: $app-secondary-color;
 }
+
 .sub-text {
-  color: $app-sub-text-color;
+    color: $app-sub-text-color;
 }
 
 /* Checks & Radios */
 
 .form-check-input:checked {
-  background-color: $app-primary-color;
-  border-color: $app-primary-color;
+    background-color: $app-primary-color;
+    border-color: $app-primary-color;
 }
 
 .form-check-input:focus {
-  outline: 0;
-  border-color: $app-accent-color;
-  @include ng-form-control-shadow($app-accent-color);
+    outline: 0;
+    border-color: $app-accent-color;
+    @include ng-form-control-shadow($app-accent-color);
 }
 
 /* Buttons */
 
 @include app-button("dark", $app-text-color, $app-text-invert-color);
-.btn-app-dark {}
+.btn-app-dark {
+}
 
 @include app-button("light", $app-light-color, $app-text-color);
-.btn-app-light {}
+.btn-app-light {
+}
 
 @include app-button("primary", $app-primary-color, $app-light-color);
-.btn-app-primary {}
+.btn-app-primary {
+}
 
 @include app-button("primary-invert", $app-text-invert-color, $app-primary-color);
-.btn-app-primary-invert {}
+.btn-app-primary-invert {
+}
 
 @include app-button("secondary", $app-secondary-color, $app-light-color);
-.btn-app-secondary {}
+.btn-app-secondary {
+}
 
 @include app-button("secondary-invert", $app-text-invert-color, $app-primary-color);
-.btn-app-secondary-invert {}
+.btn-app-secondary-invert {
+}
 
 @include app-button("warning", $orange, $app-text-invert-color);
-.btn-app-warning {}
+.btn-app-warning {
+}
 
 @include app-button("danger", $danger, $app-text-invert-color);
-.btn-app-danger {}
+.btn-app-danger {
+}
 
 @include app-button("zoom", #0B5CFF, $app-text-invert-color);
-.btn-app-zoom{}
+.btn-app-zoom {
+}
 
 .btn {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 .btn-warning:disabled {
@@ -278,136 +289,139 @@ body {
 
 .btn-warning,
 .btn-info {
-  &,
-  &:hover,
-  &:focus,
-  &:disabled {
-    color: white;
-  }
+    &,
+    &:hover,
+    &:focus,
+    &:disabled {
+        color: white;
+    }
 }
 
 .form-text {
-  color: $app-text-color;
+    color: $app-text-color;
 }
 
 /* NG Select */
 .ng-option {
-  &.ng-option-selected {
-    background-color: $app-primary-color !important;
-    color: $app-text-invert-color !important;
+    &.ng-option-selected {
+        background-color: $app-primary-color !important;
+        color: $app-text-invert-color !important;
+
+        .ng-option-label {
+            font-weight: normal !important;
+        }
+    }
+
+    &.ng-option-marked {
+        background-color: $app-secondary-color !important;
+        color: $app-text-invert-color !important;
+
+        .ng-option-label {
+            font-weight: normal !important;
+        }
+    }
 
     .ng-option-label {
-      font-weight: normal !important;
+        white-space: break-spaces;
     }
-  }
-
-  &.ng-option-marked {
-    background-color: $app-secondary-color !important;
-    color: $app-text-invert-color !important;
-
-    .ng-option-label {
-      font-weight: normal !important;
-    }
-  }
-
-  .ng-option-label {
-    white-space: break-spaces;
-  }
 }
 
 .ng-value-container {
-  .ng-value {
-    white-space: normal !important;
-  }
+    .ng-value {
+        white-space: normal !important;
+    }
 }
 
 .mat-slide-toggle.mat-checked {
-  .mat-slide-toggle-bar {
-    background-color: $app-accent-color;
-  }
+    .mat-slide-toggle-bar {
+        background-color: $app-accent-color;
+    }
 
-  .mat-slide-toggle-thumb {
-    background-color: $app-secondary-color;
-  }
+    .mat-slide-toggle-thumb {
+        background-color: $app-secondary-color;
+    }
 }
 
 /* Mat Datepicker */
-.mat-datepicker-dialog .mat-dialog-container {
-  padding: 0 !important;
+.mat-datepicker-dialog .mat-mdc-dialog-container {
+    padding: 0 !important;
 }
 
 .app-card {
-  display: block;
-  background-color: $app-surface-color;
-  border-radius: $app-card-radius;
-  padding: $app-layout-space;
+    display: block;
+    background-color: $app-surface-color;
+    border-radius: $app-card-radius;
+    padding: $app-layout-space;
 
-  .heading {
-    font-size: 25px;
-    font-weight: 800;
-    color: $app-primary-color;
-  }
+    .heading {
+        font-size: 25px;
+        font-weight: 800;
+        color: $app-primary-color;
+    }
 }
 
 .text-right {
-  text-align: right;
+    text-align: right;
 }
 
 a {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 .flex-none {
-  flex: none;
+    flex: none;
 }
 
 .scroll-page {
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100%;
 }
 
 .rounded {
-  border-radius: $app-card-radius;
+    border-radius: $app-card-radius;
 }
 
 .circle {
-  border-radius: 50%;
+    border-radius: 50%;
 }
 
 .bordered {
-  border: 1px solid $app-border-color;
+    border: 1px solid $app-border-color;
 }
 
 .pending {
-  border: 1px solid $warning !important;
-  background-color: #{$warning}20 !important;
+    border: 1px solid $warning !important;
+    background-color: #{$warning}20 !important;
 }
 
 
 .deactivated {
-  border: 1px solid $danger !important;
-  background-color: #{$danger}20 !important;
+    border: 1px solid $danger !important;
+    background-color: #{$danger}20 !important;
 }
 
 /* Bootstrap Fixes*/
 
 .input-group {
-  :not(.icon) + .ng-form-control:not(:first-child) {
-    border-top-left-radius: 0 !important;
-    border-bottom-left-radius: 0 !important;
-  }
-  .ng-form-control:not(:last-child) {
-    border-top-right-radius: 0 !important;
-    border-bottom-right-radius: 0 !important;
-  }
-  .input-group-text:first-child {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-  .input-group-text:last-child {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
+    :not(.icon) + .ng-form-control:not(:first-child) {
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+    }
+
+    .ng-form-control:not(:last-child) {
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+    }
+
+    .input-group-text:first-child {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .input-group-text:last-child {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
 
 }

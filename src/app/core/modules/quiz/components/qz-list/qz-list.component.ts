@@ -1,6 +1,16 @@
-import { AfterContentInit, Component, ContentChildren, EventEmitter, Input, OnChanges, Output, QueryList, SimpleChanges } from "@angular/core";
+import {
+    AfterContentInit,
+    Component,
+    ContentChildren,
+    EventEmitter,
+    Input,
+    OnChanges,
+    Output,
+    QueryList,
+    SimpleChanges,
+} from "@angular/core";
 import { QzComponent } from "../qz/qz.component";
-import { Quiz, QuizAnswer } from "../../../core/interfaces/quiz.interfaces";
+import { IQuiz, IQuizAnswer, IQuizChoice } from "../../../../interfaces/quiz.interfaces";
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
@@ -8,14 +18,17 @@ import { Quiz, QuizAnswer } from "../../../core/interfaces/quiz.interfaces";
     templateUrl: "./qz-list.component.html",
     styleUrls: ["./qz-list.component.scss"],
 })
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class QzListComponent implements OnChanges, AfterContentInit {
-    @Input() items?: Quiz[] = [];
+    @Input() items?: IQuiz<IQuizChoice>[] = [];
 
-    @Input() answers: QuizAnswer[] = [];
+    @Input() answers: IQuizAnswer[] = [];
+
+    @Input() readonly = false;
 
     @Input() assess = false;
 
-    @Output() answersChange: EventEmitter<QuizAnswer[]> = new EventEmitter<QuizAnswer[]>();
+    @Output() answersChange: EventEmitter<IQuizAnswer[]> = new EventEmitter<IQuizAnswer[]>();
 
     @ContentChildren(QzComponent) qzComponents?: QueryList<QzComponent>;
 
@@ -47,7 +60,7 @@ export class QzListComponent implements OnChanges, AfterContentInit {
         });
     }
 
-    onAnswerChange(id: string, answer: string[]): void {
+    onAnswerChange(id: string, answer: IQuizChoice[]): void {
         const qAns = this.answers.find(ans => ans.id === id);
         if (qAns) {
             qAns.answer = answer;
@@ -57,7 +70,7 @@ export class QzListComponent implements OnChanges, AfterContentInit {
         this.answersChange.emit(this.answers);
     }
 
-    getAnswer(quiz: Quiz): string[] {
-        return this.answers.find(ans => ans.id === quiz.id)?.answer ?? [];
+    getAnswer(quiz: IQuiz<IQuizChoice>): IQuizChoice[] {
+        return this.answers?.find(ans => ans.id === quiz.id)?.answer ?? [];
     }
 }

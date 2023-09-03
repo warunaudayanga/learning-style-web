@@ -4,6 +4,7 @@
         {{ title }}
     </div>
     <ul *ngIf="opened" class="dropdown-menu d-block">
+        <!--suppress AngularUndefinedTag -->
         <div *ngFor="let item of items" class="dropdown-item" (click)="item.action(); autoClose ? (opened = false) : ''">
             {{ item.label }}
         </div>

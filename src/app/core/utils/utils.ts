@@ -12,7 +12,10 @@ import { AppService } from "../../app.service";
  * @param format - Format to apply to the dropdown list.
  * @returns - Dropdown list.
  */
-export const enumToDropdownList = <T>(object: { [s: string]: T } | ArrayLike<T>, format?: IEnumToDropdownFormat): IDropdownValue[] => {
+export const enumToDropdownList = <T>(
+    object: { [s: string]: T } | ArrayLike<T>,
+    format?: IEnumToDropdownFormat,
+): IDropdownValue[] => {
     const values: IDropdownValue[] = Object.entries(object)
         .filter(([key]: [string, T]): boolean => isNaN(Number(key)))
         .map(([name, value]) => ({
@@ -28,7 +31,10 @@ export const enumToDropdownList = <T>(object: { [s: string]: T } | ArrayLike<T>,
     return values;
 };
 
-export const handleObserver = <T, Component extends CustomComponentType>(handler: (res: T) => void, comp: Component): Partial<Observer<T>> => {
+export const handleObserver = <T, Component extends CustomComponentType>(
+    handler: (res: T) => void,
+    comp: Component,
+): Partial<Observer<T>> => {
     return {
         next: (res): void => {
             comp.loading = false;

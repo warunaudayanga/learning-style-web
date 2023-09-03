@@ -1,38 +1,43 @@
-export interface QuizAnswer {
+import { QuizType } from "../enums/quiz-type.eum";
+import { IUser } from "./models";
+
+export interface IQuizChoice {
     id: string;
-    answer: string[];
+    value: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [k: string]: any;
 }
 
-export interface Quiz {
+export interface IQuiz<QuizChoice extends IQuizChoice> {
     id: string;
     heading?: string;
     question: string;
-    options?: string[];
+    choices?: QuizChoice[];
     multiple?: boolean;
-    answer?: string[];
+    answer?: QuizChoice[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [k: string]: any;
 }
 
-export interface QuizDraft {
+export interface IQuizAnswer {
+    id: string;
+    answer: { id: string; value: string }[];
+}
+
+export interface IQuizDraft {
     id: string;
     heading?: string;
     question?: string;
-    options?: { id: string; value: string }[];
+    choices?: IQuizChoice[];
     choice?: boolean;
     multiple?: boolean;
-    answer?: (string | undefined)[];
+    answer?: IQuizChoice[];
 }
 
-export interface QuizAnswerList {
-    assessmentId: number;
-    answers: QuizAnswer[];
-}
-
-export interface AssessmentDraft {
-    classRoomId: number;
-    name?: string;
-    description?: string;
-    passMarks?: number;
-    startTime?: string;
-    endTime?: string;
-    drafts?: QuizDraft[];
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export interface IQuizAnswers<QuizResult = any> {
+    quizType: QuizType;
+    answers: IQuizAnswer[];
+    result?: QuizResult;
+    user?: IUser;
 }

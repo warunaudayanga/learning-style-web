@@ -1,7 +1,7 @@
 @import '../ng-form-control';
 
 :host {
-    display: block;
+    min-width: 100px;
 }
 
 button {

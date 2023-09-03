@@ -1,7 +1,9 @@
 @import "src/style/scss";
 
 :host {
-  display: block;
-  margin-top: $app-layout-space;
-  padding: $app-layout-space;
+    display: block;
+    @if $app-footer > 0px {
+        margin-top: $app-layout-space;
+        padding: $app-layout-space;
+    }
 }

@@ -1,0 +1,31 @@
+<div class="quiz" [class.incorrect]="this.assess && !isCorrect()">
+    <div class="quiz-heading">{{ quiz.heading }}</div>
+    <div class="quiz-title">{{ quiz.question }}</div>
+    <div class="quiz-body pt-2">
+        <div *ngIf="assess && quiz.choices?.length" class="marking">
+            <i class="marking correct-marking bi bi-check font-8xl"></i>
+            <i class="marking incorrect-marking bi bi-x font-8xl"></i>
+        </div>
+
+        <div class="quiz-choices" *ngIf="quiz.choices?.length">
+            <div class="form-check" *ngFor="let option of quiz.choices; let i = index" [class.answer]="assess && quiz.answer?.map(mapChoiceId)?.includes(option.id)">
+                <input
+                    [type]="quiz.multiple ? 'checkbox' : 'radio'"
+                    class="form-check-input"
+                    #input
+                    [checked]="checkedValues?.map(mapChoiceId)?.includes(option.id)"
+                    [id]="quiz.id + '_' + i"
+                    [value]="option.value"
+                    (change)="quiz.multiple ? onCheckChange(option, input.checked) : onRadioChange(option)"
+                    [attr.name]="quiz.id"
+                    [disabled]="assess || readonly"
+                />
+                <label class="form-check-label" [for]="quiz.id + '_' + i">{{ option.value }}</label>
+            </div>
+        </div>
+
+        <div *ngIf="!quiz.choices?.length" class="quiz-input">
+            <ng-input noValidation ngTextarea size="sm" [(ngModel)]="answer[0]" (valueChange)="onInputChange()" [disabled]="assess || readonly"></ng-input>
+        </div>
+    </div>
+</div>

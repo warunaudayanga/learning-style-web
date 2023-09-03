@@ -3,8 +3,6 @@ import { CommonModule } from "@angular/common";
 import { AuthLayoutComponent } from "./auth-layout/auth-layout.component";
 import { AdminLayoutComponent } from "./admin-layout/admin-layout.component";
 import { StudentLayoutComponent } from "./student-layout/student-layout.component";
-import { NgxsModule } from "@ngxs/store";
-import { AuthState } from "../core/store/auth/auth.state";
 import { RouterModule, RouterOutlet } from "@angular/router";
 import { SidebarComponent } from "./shared/sidebar/sidebar.component";
 import { HeaderComponent } from "./shared/header/header.component";
@@ -28,7 +26,7 @@ import { SectionHeadingDirective } from "../core/directives/section-heading.dire
         SectionComponent,
         SectionHeadingDirective,
     ],
-    imports: [CommonModule, NgxsModule.forFeature([AuthState]), RouterOutlet, RouterModule, NgControlModule],
+    imports: [CommonModule, RouterOutlet, RouterModule, NgControlModule],
     exports: [SectionComponent, SectionHeadingDirective],
 })
 export class LayoutModule {}

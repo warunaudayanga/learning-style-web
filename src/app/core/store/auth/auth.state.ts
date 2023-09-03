@@ -4,13 +4,13 @@ import { ClearLoggedUser, Login, Logout, SetLoggedUser } from "./auth.action";
 import { catchError, Observable, of, take } from "rxjs";
 import { tap } from "rxjs/operators";
 import { HttpErrorResponse } from "@angular/common/http";
-import { StateClear } from "ngxs-reset-plugin";
 import { AppService } from "src/app/app.service";
 import { AuthService } from "src/app/core/services/http/auth.service";
 import { IUser } from "../../interfaces/models";
 import { UserRole } from "../../enums/user-role.enum";
 import { HttpError, SuccessResponse } from "../../interfaces";
 import { AuthError } from "../../enums/errors/auth.error.enum";
+import { ClearState } from "../shared/state.actions";
 
 interface AuthStateModel {
     loggedIn: boolean;
@@ -84,16 +84,16 @@ export class AuthState {
         return this.authService.logout().pipe(
             tap(() => {
                 this.ngZone.run(() => {
+                    this.store.dispatch(new ClearState());
                     this.app.user = undefined;
-                    this.store.dispatch(new StateClear());
-                    this.app.load("/");
+                    this.app.load("/auth");
                 });
             }),
             catchError((err: HttpErrorResponse) => {
                 this.ngZone.run(() => {
                     this.app.error(err.error?.message || "Something went wrong!");
-                    this.store.dispatch(new StateClear());
-                    this.app.load("/");
+                    this.store.dispatch(new ClearState());
+                    this.app.load("/auth");
                 });
                 return of(null);
             }),
@@ -114,5 +114,10 @@ export class AuthState {
             loggedIn: false,
             user: undefined,
         });
+    }
+
+    @Action(ClearState)
+    clearState({ setState }: StateContext<AuthStateModel>): void {
+        setState({ loggedIn: false, user: undefined });
     }
 }

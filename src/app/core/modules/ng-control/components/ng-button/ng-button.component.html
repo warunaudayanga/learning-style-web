@@ -6,7 +6,9 @@
     [ngClass]="size === 'sm' ? 'ng-control-sm' : size === 'lg' ? 'ng-control-lg' : ''"
     [disabled]="disabled"
 >
+    <!--suppress AngularUndefinedTag -->
     <div class="button-text" *ngIf="!spin">{{ label }}<ng-content></ng-content></div>
+    <!--suppress AngularUndefinedTag -->
     <div *ngIf="spin" class="spinner-wrapper d-flex gap-3">
         <ng-spinner [size]="spinSize" [width]="spinWidth" [invert]="!spinInvert"></ng-spinner>
         <div>{{ loadingText }}</div>

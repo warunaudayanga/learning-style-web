@@ -1,6 +1,0 @@
-<ng-container *ngIf="!items?.length">
-    <ng-content></ng-content>
-</ng-container>
-<ng-container *ngIf="items?.length">
-    <qz *ngFor="let item of items" [assess]="assess" [quiz]="item" [answer]="getAnswer(item)" (answerChange)="onAnswerChange(item.id, $event)"></qz>
-</ng-container>
