@@ -2,34 +2,34 @@
 
 import { IQuizCollection } from "../interfaces/models/quiz";
 import {
-    IStyleQuiz,
-    IStyleQuizResult,
-    IStyleQuizResultPaired,
-    IStyleQuizResultSingledRecord,
-    IStyleQuizResultSingle,
-    IStyleQuizResultPairedRecord,
-    IStyleQuizResultFinalRecord,
-} from "../interfaces/result-quiz.interfaces";
+    ISelfRatingQuiz,
+    ISelfRatingQuizResult,
+    ISelfRatingQuizResultPaired,
+    ISelfRatingQuizResultSingledRecord,
+    ISelfRatingQuizResultSingle,
+    ISelfRatingQuizResultPairedRecord,
+    ISelfRatingQuizResultFinalRecord,
+} from "../interfaces/self-rating-quiz.interfaces";
 import { StyleCategory } from "../enums/style-category.enum";
 import { IQuizAnswer } from "../interfaces/quiz.interfaces";
 import { toFirstCase } from "hichchi-utils";
 
-export class StyleQuizResult {
-    public readonly collection?: IQuizCollection<IStyleQuiz>;
+export class SelfRatingQuizResult {
+    public readonly collection?: IQuizCollection<ISelfRatingQuiz>;
 
-    readonly #result?: IStyleQuizResult;
+    readonly #result?: ISelfRatingQuizResult;
 
-    readonly #singled: Partial<IStyleQuizResultSingle>;
+    readonly #singled: Partial<ISelfRatingQuizResultSingle>;
 
-    readonly #paired: Partial<IStyleQuizResultPaired>;
+    readonly #paired: Partial<ISelfRatingQuizResultPaired>;
 
     readonly #total: number;
 
-    readonly #final?: IStyleQuizResultFinalRecord;
+    readonly #final?: ISelfRatingQuizResultFinalRecord;
 
-    get result(): IStyleQuizResult {
+    get result(): ISelfRatingQuizResult {
         return {
-            singled: (this.#singled as IStyleQuizResultSingle) ?? {
+            singled: (this.#singled as ISelfRatingQuizResultSingle) ?? {
                 activist: { count: 0, percentage: 0 },
                 reflector: { count: 0, percentage: 0 },
                 sensing: { count: 0, percentage: 0 },
@@ -39,7 +39,7 @@ export class StyleQuizResult {
                 sequential: { count: 0, percentage: 0 },
                 global: { count: 0, percentage: 0 },
             },
-            paired: (this.#paired as IStyleQuizResultPaired) ?? {
+            paired: (this.#paired as ISelfRatingQuizResultPaired) ?? {
                 activistReflector: { count: 0, percentage: 0 },
                 sensingIntuitive: { count: 0, percentage: 0 },
                 visualVerbal: { count: 0, percentage: 0 },
@@ -53,19 +53,19 @@ export class StyleQuizResult {
         return this.#total;
     }
 
-    get singled(): IStyleQuizResultSingle {
+    get singled(): ISelfRatingQuizResultSingle {
         return this.result.singled;
     }
 
-    get singles(): IStyleQuizResultSingledRecord[] {
+    get singles(): ISelfRatingQuizResultSingledRecord[] {
         return Object.values(this.result.singled);
     }
 
-    get paired(): IStyleQuizResultPaired {
+    get paired(): ISelfRatingQuizResultPaired {
         return this.result.paired;
     }
 
-    get pairs(): IStyleQuizResultSingledRecord[][] {
+    get pairs(): ISelfRatingQuizResultSingledRecord[][] {
         return [
             [this.result.singled.activist, this.result.singled.reflector],
             [this.result.singled.sensing, this.result.singled.intuitive],
@@ -74,21 +74,21 @@ export class StyleQuizResult {
         ];
     }
 
-    get final(): IStyleQuizResultFinalRecord {
+    get final(): ISelfRatingQuizResultFinalRecord {
         return this.#final!;
     }
 
-    constructor(result: IStyleQuizResult);
+    constructor(result: ISelfRatingQuizResult);
 
-    constructor(collection: IQuizCollection<IStyleQuiz>, answers?: IQuizAnswer[]);
+    constructor(collection: IQuizCollection<ISelfRatingQuiz>, answers?: IQuizAnswer[]);
 
-    constructor(resultOrCollection: IStyleQuizResult | IQuizCollection<IStyleQuiz>, answers?: IQuizAnswer[]) {
-        if ((resultOrCollection as IStyleQuizResult).singled) {
-            this.#result = resultOrCollection as IStyleQuizResult;
+    constructor(resultOrCollection: ISelfRatingQuizResult | IQuizCollection<ISelfRatingQuiz>, answers?: IQuizAnswer[]) {
+        if ((resultOrCollection as ISelfRatingQuizResult).singled) {
+            this.#result = resultOrCollection as ISelfRatingQuizResult;
             this.collection = undefined;
-        } else if ((resultOrCollection as IQuizCollection<IStyleQuiz>).quizzes) {
+        } else if ((resultOrCollection as IQuizCollection<ISelfRatingQuiz>).quizzes) {
             this.#result = undefined;
-            this.collection = resultOrCollection as IQuizCollection<IStyleQuiz>;
+            this.collection = resultOrCollection as IQuizCollection<ISelfRatingQuiz>;
             this.collection.userAnswers = answers ?? [];
         } else {
             throw new Error("Either collection or result must be provided");
@@ -127,7 +127,7 @@ export class StyleQuizResult {
         }
     }
 
-    private generateSingle(category: StyleCategory): IStyleQuizResultSingledRecord {
+    private generateSingle(category: StyleCategory): ISelfRatingQuizResultSingledRecord {
         const count = this.collection?.quizzes
             ?.filter(q => q.choiceCategories?.includes(category))
             ?.filter(
@@ -153,9 +153,9 @@ export class StyleQuizResult {
     }
 
     private generatePair(
-        one?: IStyleQuizResultPairedRecord,
-        two?: IStyleQuizResultPairedRecord,
-    ): IStyleQuizResultPairedRecord {
+        one?: ISelfRatingQuizResultPairedRecord,
+        two?: ISelfRatingQuizResultPairedRecord,
+    ): ISelfRatingQuizResultPairedRecord {
         if (!one || !two) {
             return {
                 count: 0,

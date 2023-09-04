@@ -5,16 +5,16 @@ import { QuizState } from "../../../core/store/quiz/quiz.state";
 import { QuizService } from "../../../core/services/http/quiz.service";
 import { AppService } from "../../../app.service";
 import { ProgressbarType } from "ngx-bootstrap/progressbar";
-import { StyleQuizResult } from "../../../core/utils/style-quiz-result";
+import { SelfRatingQuizResult } from "../../../core/utils/self-rating-quiz-result";
 import { HttpError } from "../../../core/interfaces";
 
 @Component({
-    selector: "app-student-style-result",
-    templateUrl: "./student-style-result.component.html",
-    styleUrls: ["./student-style-result.component.scss"],
+    selector: "app-student-self-rating-analysis",
+    templateUrl: "./student-self-rating-analysis.component.html",
+    styleUrls: ["./student-self-rating-analysis.component.scss"],
 })
-export class StudentStyleResultComponent implements OnInit {
-    result?: StyleQuizResult;
+export class StudentSelfRatingAnalysisComponent implements OnInit {
+    result?: SelfRatingQuizResult;
 
     loading = false;
 
@@ -29,9 +29,9 @@ export class StudentStyleResultComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        const result = this.store.selectSnapshot(QuizState.getQuizAnswers)(QuizType.STYLE)?.result;
+        const result = this.store.selectSnapshot(QuizState.getQuizAnswers)(QuizType.SELF_RATING)?.result;
         if (this.result) {
-            this.result = new StyleQuizResult(result);
+            this.result = new SelfRatingQuizResult(result);
         } else {
             this.getQuizCollection();
         }
@@ -40,10 +40,10 @@ export class StudentStyleResultComponent implements OnInit {
     getQuizCollection(): void {
         this.loading = true;
         this.error = false;
-        this.quizService.getAnswers(QuizType.STYLE).subscribe({
+        this.quizService.getAnswers(QuizType.SELF_RATING).subscribe({
             next: quizCollection => {
                 this.loading = false;
-                this.result = new StyleQuizResult(quizCollection.result);
+                this.result = new SelfRatingQuizResult(quizCollection.result);
             },
             error: (err: HttpError) => {
                 this.error = true;

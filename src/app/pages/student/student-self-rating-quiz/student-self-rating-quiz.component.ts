@@ -11,16 +11,16 @@ import { HttpError } from "../../../core/interfaces";
 import { IQuizCollection } from "../../../core/interfaces/models/quiz";
 import { QuizType } from "../../../core/enums/quiz-type.eum";
 import { StudentMenu } from "../../../core/enums/menus/student-menu.enum";
-import { IStyleQuiz } from "../../../core/interfaces/result-quiz.interfaces";
-import { StyleQuizResult } from "../../../core/utils/style-quiz-result";
+import { ISelfRatingQuiz } from "../../../core/interfaces/self-rating-quiz.interfaces";
+import { SelfRatingQuizResult } from "../../../core/utils/self-rating-quiz-result";
 
 @Component({
     selector: "app-student-quiz",
-    templateUrl: "./student-style-quiz.component.html",
-    styleUrls: ["./student-style-quiz.component.scss"],
+    templateUrl: "./student-self-rating-quiz.component.html",
+    styleUrls: ["./student-self-rating-quiz.component.scss"],
 })
-export class StudentStyleQuizComponent implements OnInit {
-    quizCollection?: IQuizCollection<IStyleQuiz>;
+export class StudentSelfRatingQuizComponent implements OnInit {
+    quizCollection?: IQuizCollection<ISelfRatingQuiz>;
 
     get quizzes(): IQuiz<IQuizChoice>[] {
         return this.quizCollection?.quizzes ?? [];
@@ -49,8 +49,8 @@ export class StudentStyleQuizComponent implements OnInit {
 
     localQuizCollection(): void {
         this.quizCollection = this.store.selectSnapshot(QuizState.getQuiz)(
-            QuizType.STYLE,
-        ) as IQuizCollection<IStyleQuiz>;
+            QuizType.SELF_RATING,
+        ) as IQuizCollection<ISelfRatingQuiz>;
         if (this.quizCollection?.quizzes?.length) {
             if (!this.loadAnswers(this.quizCollection)) {
                 this.getQuizCollection();
@@ -71,11 +71,13 @@ export class StudentStyleQuizComponent implements OnInit {
     getQuizCollection(): void {
         this.loading = true;
         this.error = false;
-        this.quizService.getQuizCollection<IStyleQuiz>(QuizType.STYLE).subscribe({
+        this.quizService.getQuizCollection<ISelfRatingQuiz>(QuizType.SELF_RATING).subscribe({
             next: qc => {
                 this.quizCollection = qc;
                 this.loading = false;
-                this.store.dispatch(new SaveQuizAnswersDraft({ quizType: QuizType.STYLE, answers: qc.userAnswers }));
+                this.store.dispatch(
+                    new SaveQuizAnswersDraft({ quizType: QuizType.SELF_RATING, answers: qc.userAnswers }),
+                );
                 this.loadAnswers(qc);
             },
             error: (err: HttpError) => {
@@ -88,7 +90,8 @@ export class StudentStyleQuizComponent implements OnInit {
 
     loadAnswers(qc: IQuizCollection<IQuiz<IQuizChoice>>): boolean {
         if (!qc.userAnswers?.length) {
-            this.answers = this.store.selectSnapshot(QuizState.getQuizAnswersDraft)(QuizType.STYLE)?.answers ?? [];
+            this.answers =
+                this.store.selectSnapshot(QuizState.getQuizAnswersDraft)(QuizType.SELF_RATING)?.answers ?? [];
         } else {
             this.answers = qc.userAnswers;
             this.submitted = true;
@@ -98,7 +101,7 @@ export class StudentStyleQuizComponent implements OnInit {
     }
 
     onAnswersChange(): void {
-        this.store.dispatch(new SaveQuizAnswersDraft({ quizType: QuizType.STYLE, answers: this.answers }));
+        this.store.dispatch(new SaveQuizAnswersDraft({ quizType: QuizType.SELF_RATING, answers: this.answers }));
     }
 
     onSubmit(): void {
@@ -112,10 +115,10 @@ export class StudentStyleQuizComponent implements OnInit {
         }
 
         this.submitting = true;
-        const result = new StyleQuizResult(this.quizCollection!, this.answers).result;
-        this.quizService.saveAnswers<IStyleQuiz>(QuizType.STYLE, this.answers, result).subscribe({
+        const result = new SelfRatingQuizResult(this.quizCollection!, this.answers).result;
+        this.quizService.saveAnswers<ISelfRatingQuiz>(QuizType.SELF_RATING, this.answers, result).subscribe({
             next: answers => {
-                this.store.dispatch(new SaveQuizAnswers({ quizType: QuizType.STYLE, answers }));
+                this.store.dispatch(new SaveQuizAnswers({ quizType: QuizType.SELF_RATING, answers }));
                 this.submitting = false;
                 this.submitted = true;
                 this.app.scrollToTop();

@@ -29,7 +29,7 @@ export class AppComponent {
 
     loadFromState(): void {
         if (this.role === UserRole.STUDENT) {
-            this.store.dispatch(new LoadQuiz(QuizType.STYLE));
+            this.store.dispatch(new LoadQuiz(QuizType.SELF_RATING));
         }
     }
 }

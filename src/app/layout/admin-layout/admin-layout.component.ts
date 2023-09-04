@@ -10,10 +10,22 @@ import { AdinMenu } from "../../core/enums/menus/adin-menu.enum";
 export class AdminLayoutComponent {
     items: MenuItem<AdinMenu>[] = [
         {
-            key: AdinMenu.LEARNING_STYLE,
-            label: "Learning Style",
-            icon: "bi bi-mortarboard",
-            routerLink: "/admin/classes",
+            key: AdinMenu.SELF_RATING_QUESTIONNAIRE,
+            label: "Self Rating",
+            icon: "bi bi-alexa",
+            routerLink: "/admin",
+        },
+        {
+            key: AdinMenu.BEFORE_LECTURE_QUESTIONNAIRE,
+            label: "Before Lecture Feedback",
+            icon: "bi bi-bar-chart-line",
+            routerLink: "/admin/pre-questionnaire",
+        },
+        {
+            key: AdinMenu.AFTER_LECTURE_QUESTIONNAIRE,
+            label: "After Lecture Feedback",
+            icon: "bi bi-bar-chart-line-fill",
+            routerLink: "/admin/post-questionnaire",
         },
     ];
 }

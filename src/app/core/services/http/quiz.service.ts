@@ -4,7 +4,7 @@ import { Observable, take } from "rxjs";
 import { IQuizCollection, IQuizUserAnswers } from "../../interfaces/models/quiz";
 import { QuizType } from "../../enums/quiz-type.eum";
 import { IQuiz, IQuizAnswer, IQuizChoice } from "../../interfaces/quiz.interfaces";
-import { IStyleQuizResult } from "../../interfaces/result-quiz.interfaces";
+import { ISelfRatingQuizResult } from "../../interfaces/self-rating-quiz.interfaces";
 
 export const QUIZ_URL = "quiz";
 export const QUIZ_ANSWER_URL = "quiz-answer";
@@ -29,7 +29,7 @@ export class QuizService {
     saveAnswers<Quiz extends IQuiz<IQuizChoice>>(
         type: QuizType,
         answers: IQuizAnswer[],
-        result: IStyleQuizResult,
+        result: ISelfRatingQuizResult,
     ): Observable<IQuizUserAnswers<Quiz>> {
         return this.http.post<IQuizUserAnswers<Quiz>>(`${QUIZ_ANSWER_URL}/${type}`, { answers, result }).pipe(take(1));
     }
