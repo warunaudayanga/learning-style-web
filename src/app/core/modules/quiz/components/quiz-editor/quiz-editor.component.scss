@@ -1,4 +1,8 @@
- @import "src/style/scss";
+@import "src/style/scss";
+
+:host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option .ng-option-label {
+
+}
 
 .quiz {
     position: relative;
@@ -36,4 +40,13 @@ th, td {
 
 .form-check, .form-check-input, .form-check-label {
     cursor: pointer;
+}
+
+.extender-select {
+    display: block;
+    height: 39px
+}
+
+.form-check-input, .choice-remove {
+    width: 16px;
 }

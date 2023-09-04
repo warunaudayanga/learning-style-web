@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { IQuiz, IQuizChoice } from "../../../../interfaces/quiz.interfaces";
+import { IQuiz, IQuizChoice, IQuizChoiceExtenders } from "../../../../interfaces/quiz.interfaces";
 import { v4 as uuid } from "uuid";
 import { DialogService } from "../../../dialog";
 
@@ -11,6 +11,8 @@ import { DialogService } from "../../../dialog";
 })
 export class QuizListEditorComponent {
     @Input() quizzes: IQuiz<IQuizChoice>[] = [];
+
+    @Input() extenders?: IQuizChoiceExtenders;
 
     @Output() quizAdd: EventEmitter<IQuiz<IQuizChoice>> = new EventEmitter<IQuiz<IQuizChoice>>();
 

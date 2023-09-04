@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { v4 as uuid } from "uuid";
-import { IQuiz, IQuizChoice } from "../../../../interfaces/quiz.interfaces";
+import { IQuiz, IQuizChoice, IQuizChoiceExtender, IQuizChoiceExtenders } from "../../../../interfaces/quiz.interfaces";
 import { mapChoiceId } from "../../../../utils/quiz.utils";
 
 @Component({
@@ -9,7 +10,7 @@ import { mapChoiceId } from "../../../../utils/quiz.utils";
     templateUrl: "./quiz-editor.component.html",
     styleUrls: ["./quiz-editor.component.scss"],
 })
-export class QuizEditorComponent {
+export class QuizEditorComponent implements OnInit {
     @Input() quiz: IQuiz<IQuizChoice> = {
         id: uuid(),
         question: "",
@@ -17,11 +18,29 @@ export class QuizEditorComponent {
 
     @Input() index?: number;
 
+    @Input() extenders?: IQuizChoiceExtenders;
+
     @Output() onRemove: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
 
     @Output() quizChange: EventEmitter<IQuiz<IQuizChoice>> = new EventEmitter<IQuiz<IQuizChoice>>();
 
+    selectedExtenders: (IQuizChoiceExtender<any> | IQuizChoiceExtender<any>[] | null)[] = [];
+
+    ngOnInit(): void {
+        if (this.extenders?.items?.length) {
+            this.quiz.choices?.forEach((choice, index) => {
+                this.selectedExtenders[index] =
+                    this.extenders?.items.find(extender => {
+                        return extender.extend[this.extenders!.key] === choice[this.extenders!.key as any];
+                    }) ?? null;
+            });
+        }
+    }
+
     addChoice(): void {
+        if (this.extenders?.items?.length) {
+            this.selectedExtenders.push(this.extenders.items[0]);
+        }
         this.quiz.choices = [...(this.quiz.choices ?? []), { id: uuid(), value: "" }];
         this.onQuizChange();
     }
@@ -33,6 +52,17 @@ export class QuizEditorComponent {
     }
 
     onQuizChange(): void {
+        if (this.extenders?.items?.length) {
+            if (this.quiz.choices?.length) {
+                for (let i = 0; i < this.quiz.choices!.length; i++) {
+                    for (const key of Object.keys(this.selectedExtenders[i] as IQuizChoiceExtender<any>)) {
+                        this.quiz.choices![i][key] = (this.selectedExtenders[i] as IQuizChoiceExtender<any>).extend[
+                            key
+                        ];
+                    }
+                }
+            }
+        }
         this.quizChange.emit(this.quiz);
     }
 

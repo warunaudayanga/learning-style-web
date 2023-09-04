@@ -5,31 +5,31 @@
     <div class="">
         <div class="font-bold mt-3 mb-2">Choices</div>
         <div class="choices">
-            <table>
-                <tr *ngFor="let choice of quiz.choices; let i = index">
-                    <td>
-                        <ng-input class="choice flex-grow-1" noValidation size="sm" [(ngModel)]="choice.value" (ngModelChange)="onQuizChange()"></ng-input>
-                    </td>
-                    <td class="text-center ps-3">
-                        <input
-                            class="form-check-input"
-                            [type]="quiz.multiple ? 'checkbox' : 'radio'"
-                            [name]="quiz.id + 'choice'"
-                            [id]="quiz.id + '_choice_' + (i + 1)"
-                            [checked]="quiz.answer?.map(mapChoiceId)?.includes(choice.id)"
-                            (click)="answerChange(choice)"
-                        />
-                    </td>
-                    <td class="ps-3">
-                        <button *ngIf="(quiz.choices?.length ?? 0) > 2" type="button" class="btn-close btn" (click)="removeChoice(choice)"></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <ng-button class="flex-grow-1" size="sm" styleClass="btn-app-primary" (onClick)="addChoice()"> <i class="bi bi-plus"></i> Add Choice </ng-button>
-                    </td>
-                </tr>
-            </table>
+            <div class="d-flex gap-3 align-items-center mb-3" *ngFor="let choice of quiz.choices; let i = index">
+                <ng-select-box
+                    class="extender-select"
+                    size="sm"
+                    [ngStyle]="{ width: extenders!.width }"
+                    [items]="extenders!.items"
+                    [(ngModel)]="selectedExtenders[i]"
+                    bindLabel="label"
+                    [searchable]="false"
+                    [clearable]="false"
+                ></ng-select-box>
+                <ng-input class="choice flex-grow-1" noValidation size="sm" [(ngModel)]="choice.value" (ngModelChange)="onQuizChange()"></ng-input>
+                <input
+                    class="form-check-input"
+                    [type]="quiz.multiple ? 'checkbox' : 'radio'"
+                    [name]="quiz.id + 'choice'"
+                    [id]="quiz.id + '_choice_' + (i + 1)"
+                    [checked]="quiz.answer?.map(mapChoiceId)?.includes(choice.id)"
+                    (click)="answerChange(choice)"
+                />
+                <div class="choice-remove">
+                    <button *ngIf="(quiz.choices?.length ?? 0) > 2" type="button" class="btn-close btn" (click)="removeChoice(choice)"></button>
+                </div>
+            </div>
+            <ng-button class="flex-grow-1" size="sm" styleClass="btn-app-primary" (onClick)="addChoice()"> <i class="bi bi-plus"></i> Add Choice </ng-button>
         </div>
     </div>
 </div>

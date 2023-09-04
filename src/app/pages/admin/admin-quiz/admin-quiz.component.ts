@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { IQuizCollection } from "../../../core/interfaces/models/quiz";
 import { ISelfRatingQuiz } from "../../../core/interfaces/self-rating-quiz.interfaces";
-import { IQuiz, IQuizChoice } from "../../../core/interfaces/quiz.interfaces";
+import { IQuiz, IQuizChoice, IQuizChoiceExtenders } from "../../../core/interfaces/quiz.interfaces";
 import { AppService } from "../../../app.service";
 import { Store } from "@ngxs/store";
 import { QuizService } from "../../../core/services/http/quiz.service";
@@ -20,6 +20,8 @@ export class AdminQuizComponent implements OnInit {
     @Input() quizType!: QuizType;
 
     @Input() title!: string;
+
+    @Input() extenders?: IQuizChoiceExtenders;
 
     quizCollection?: IQuizCollection<ISelfRatingQuiz>;
 

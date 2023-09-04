@@ -1,5 +1,12 @@
 <div>
-    <quiz-editor *ngFor="let quiz of quizzes; let i = index" [(quiz)]="quizzes[i]" [index]="i" (onRemove)="onQuizRemove(quiz)" (quizChange)="onQuizChange()"></quiz-editor>
+    <quiz-editor
+        *ngFor="let quiz of quizzes; let i = index"
+        [(quiz)]="quizzes[i]"
+        [index]="i"
+        [extenders]="extenders"
+        (onRemove)="onQuizRemove(quiz)"
+        (quizChange)="onQuizChange()"
+    ></quiz-editor>
 
     <ng-button class="d-block mt-5" *ngIf="quizzes !== undefined" size="sm" styleClass="btn-app-primary" (onClick)="onQuizAdd()">
         <i class="bi bi-plus"></i> Add Question

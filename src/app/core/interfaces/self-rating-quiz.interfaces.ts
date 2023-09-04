@@ -2,6 +2,10 @@ import { IQuiz, IQuizAnswer, IQuizAnswers, IQuizChoice } from "./quiz.interfaces
 import { StyleCategory } from "../enums/style-category.enum";
 import { QuizType } from "../enums/quiz-type.eum";
 
+export interface ISelfRatingQuizChoiceExtendData {
+    category: StyleCategory;
+}
+
 export interface ISelfRatingQuizChoice extends IQuizChoice {
     id: string;
     value: string;

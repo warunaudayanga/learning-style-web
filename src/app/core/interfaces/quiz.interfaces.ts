@@ -1,6 +1,19 @@
 import { QuizType } from "../enums/quiz-type.eum";
 import { IUser } from "./models";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export interface IQuizChoiceExtender<Extend extends { [k: string]: any }> {
+    label: string;
+    extend: Extend;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export interface IQuizChoiceExtenders<Extend extends { [k: string]: any } = any> {
+    key: keyof Extend;
+    width?: string;
+    items: IQuizChoiceExtender<Extend>[];
+}
+
 export interface IQuizChoice {
     id: string;
     value: string;
