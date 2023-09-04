@@ -7,6 +7,7 @@ import {
     ClearQuizAnswers,
     LoadQuiz,
     SaveQuiz,
+    ClearQuiz,
 } from "./quiz.action";
 import { deepCopy } from "hichchi-utils";
 import { IQuiz, IQuizAnswers, IQuizChoice } from "../../interfaces/quiz.interfaces";
@@ -19,6 +20,7 @@ import { HttpError } from "../../interfaces";
 import { IQuizCollection } from "../../interfaces/models/quiz";
 import { AppService } from "../../../app.service";
 import { StudentMenu } from "../../enums/menus/student-menu.enum";
+import { QuizError } from "../../enums/errors/quiz.error.enum";
 
 interface QuizStateModel {
     quizCollectionList: IQuizCollection<IQuiz<IQuizChoice>>[];
@@ -88,9 +90,11 @@ export class QuizState implements NgxsOnInit {
                     this.store.dispatch(new SaveQuiz(quizCollection));
                 }
             }),
-            catchError((err: HttpError) => {
+            catchError((err: HttpError<QuizError>) => {
                 this.ngZone.run(() => {
-                    this.app.error(err.error?.message || "Failed to Login!");
+                    if (err.error?.code !== QuizError.QUIZ_404_TYPE) {
+                        this.app.error(err.error?.message || "Failed to load Questions!");
+                    }
                 });
                 return of(null);
             }),
@@ -140,6 +144,12 @@ export class QuizState implements NgxsOnInit {
             answersDraftList.push(action.payload);
         }
         patchState({ quizAnswersDraftList: deepCopy(answersDraftList) });
+    }
+
+    @Action(ClearQuiz)
+    clearQuiz({ patchState, getState }: StateContext<QuizStateModel>, action: ClearQuiz): void {
+        const quizCollectionList = [...getState().quizCollectionList].filter(list => list.type !== action.payload);
+        patchState({ quizCollectionList: deepCopy(quizCollectionList) });
     }
 
     @Action(ClearQuizAnswers)

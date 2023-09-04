@@ -19,6 +19,13 @@ export class QuizService {
         return this.http.get<IQuizCollection<Quiz>>(`${QUIZ_URL}/${type}`).pipe(take(1));
     }
 
+    saveQuizCollection<Quiz extends IQuiz<IQuizChoice>>(
+        type: QuizType,
+        quizzes: Quiz[],
+    ): Observable<IQuizCollection<Quiz>> {
+        return this.http.post<IQuizCollection<Quiz>>(`${QUIZ_URL}`, { type, quizzes }).pipe(take(1));
+    }
+
     saveAnswers<Quiz extends IQuiz<IQuizChoice>>(
         type: QuizType,
         answers: IQuizAnswer[],

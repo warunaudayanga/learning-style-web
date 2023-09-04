@@ -26,6 +26,12 @@ export class SaveQuizAnswersDraft {
     constructor(public payload: IQuizAnswers) {}
 }
 
+export class ClearQuiz {
+    static readonly type = "[Quiz] ClearQuiz";
+
+    constructor(public payload: QuizType) {}
+}
+
 export class ClearQuizAnswers {
     static readonly type = "[Quiz] ClearQuizAnswers";
 

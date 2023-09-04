@@ -1,0 +1,18 @@
+<app-section [full]="true" [loading]="loading" [error]="error" (onRefresh)="refresh()">
+    <ng-template appSectionHeading>
+        <h4 class="mb-4 font-bold">Index of Learning Styles (ILS) Questionnaire</h4>
+    </ng-template>
+
+    <div *ngIf="quizzes.length && !submitted" class="mb-5">
+        <div class="alert alert-warning">
+            <h4 class="alert-heading">Questions Not Saved</h4>
+            <p>Your questions has unsaved changes.</p>
+        </div>
+    </div>
+
+    <quiz-list-editor [(quizzes)]="quizzes" (quizAdd)="onQuizAdd()" (quizzesChange)="onQuizChange()"></quiz-list-editor>
+
+    <ng-button class="d-block mt-5" *ngIf="quizzes.length" size="sm" styleClass="btn-app-dark" (onClick)="saveQuizzes()" [spin]="saving" loadingText="Saving..."
+        >Save Questions
+    </ng-button>
+</app-section>

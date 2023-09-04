@@ -1,4 +1,4 @@
-@import "src/style/scss";
+ @import "src/style/scss";
 
 .quiz {
     position: relative;
@@ -12,7 +12,7 @@ th, td {
     padding-bottom: $spacer-2;
 }
 
-.choice-answer {
+.choice {
     max-width: 400px;
 }
 

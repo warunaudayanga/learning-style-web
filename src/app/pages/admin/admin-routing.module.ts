@@ -1,9 +1,9 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { AdminHomeComponent } from "./admin-home/admin-home.component";
+import { AdminStyleQuizComponent } from "./admin-style-quiz/admin-style-quiz.component";
 
 const routes: Routes = [
-    { path: "", component: AdminHomeComponent },
+    { path: "", component: AdminStyleQuizComponent },
     { path: "**", redirectTo: "", pathMatch: "full" },
 ];
 
