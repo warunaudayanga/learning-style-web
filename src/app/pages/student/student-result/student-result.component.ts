@@ -7,6 +7,7 @@ import { QuizService } from "../../../core/services/http/quiz.service";
 import { QuizState } from "../../../core/store/quiz/quiz.state";
 import { QuizType } from "../../../core/enums/quiz-type.eum";
 import { HttpError } from "../../../core/interfaces";
+import { QuizError } from "../../../core/enums/errors/quiz.error.enum";
 
 @Component({
     selector: "app-student-result",
@@ -17,6 +18,8 @@ export class StudentResultComponent implements OnInit {
     result?: SelfRatingQuizResult;
 
     loading = false;
+
+    loaded = false;
 
     error = false;
 
@@ -43,11 +46,14 @@ export class StudentResultComponent implements OnInit {
         this.quizService.getAnswers(QuizType.SELF_RATING).subscribe({
             next: quizCollection => {
                 this.loading = false;
+                this.loaded = true;
                 this.result = new SelfRatingQuizResult(quizCollection.result);
             },
             error: (err: HttpError) => {
                 this.error = true;
-                this.app.error(err.error?.message || "Something went wrong!");
+                if (err.error?.code !== QuizError.QUIZ_404_TYPE) {
+                    this.app.error(err.error?.message || "Failed to load Questions!");
+                }
             },
         });
     }
