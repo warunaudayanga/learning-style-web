@@ -11,6 +11,8 @@ import { AdminStudentsComponent } from "./admin-students/admin-students.componen
 import { StudentCardComponent } from "./admin-students/student-card/student-card.component";
 import { ProgressbarModule } from "ngx-bootstrap/progressbar";
 import { AdminStudentResultComponent } from "./admin-student-result/admin-student-result.component";
+import { AdminQuizAnswersComponent } from "./admin-quiz-answers/admin-quiz-answers.component";
+import { StudentModule } from "../student/student.module";
 
 @NgModule({
     declarations: [
@@ -21,7 +23,8 @@ import { AdminStudentResultComponent } from "./admin-student-result/admin-studen
         AdminStudentsComponent,
         StudentCardComponent,
         AdminStudentResultComponent,
+        AdminQuizAnswersComponent,
     ],
-    imports: [CommonModule, AdminRoutingModule, SharedModule, LayoutModule, ProgressbarModule],
+    imports: [CommonModule, AdminRoutingModule, SharedModule, LayoutModule, ProgressbarModule, StudentModule],
 })
 export class AdminModule {}

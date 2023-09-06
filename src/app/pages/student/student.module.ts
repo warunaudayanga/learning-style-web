@@ -19,5 +19,6 @@ import { StudentQuizComponent } from "./student-quiz/student-quiz.component";
         StudentQuizComponent,
     ],
     imports: [CommonModule, StudentRoutingModule, SharedModule, LayoutModule, ProgressbarModule],
+    exports: [StudentQuizComponent],
 })
 export class StudentModule {}

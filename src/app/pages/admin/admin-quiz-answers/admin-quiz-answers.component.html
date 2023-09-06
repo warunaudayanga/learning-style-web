@@ -1,10 +1,11 @@
 <app-section [loading]="loading" [error]="error" (onRefresh)="refresh()" class="mb-4">
     <ng-template appSectionHeading>
         <div class="d-flex align-items-start justify-content-between">
-            <h4 class="mb-4 font-bold">Students Info</h4>
-            <a class="view-link font-bold" routerLink="/admin/students">Back</a>
+            <h4 class="mb-4 font-bold">Student's Answers</h4>
+            <a class="view-link font-bold" [routerLink]="['/admin/students', studentId]">Back</a>
         </div>
     </ng-template>
+
     <table>
         <tr>
             <td class="label">Name:</td>
@@ -25,4 +26,4 @@
     </table>
 </app-section>
 
-<app-self-rating-analysis [result]="getResult(student?.answers)"></app-self-rating-analysis>
+<app-student-quiz *ngIf="quizType && studentId" [quizType]="quizType" [studentId]="studentId" [readonly]="true"></app-student-quiz>

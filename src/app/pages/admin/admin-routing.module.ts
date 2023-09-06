@@ -5,6 +5,7 @@ import { AdminAfterLessonFeedbackQuizComponent } from "./admin-after-lesson-feed
 import { AdminBeforeLessonFeedbackQuizComponent } from "./admin-before-lesson-feedback-quiz/admin-before-lesson-feedback-quiz.component";
 import { AdminStudentsComponent } from "./admin-students/admin-students.component";
 import { AdminStudentResultComponent } from "./admin-student-result/admin-student-result.component";
+import { AdminQuizAnswersComponent } from "./admin-quiz-answers/admin-quiz-answers.component";
 
 const routes: Routes = [
     { path: "", component: AdminSelfRatingQuizComponent },
@@ -12,6 +13,7 @@ const routes: Routes = [
     { path: "post-questionnaire", component: AdminBeforeLessonFeedbackQuizComponent },
     { path: "students", component: AdminStudentsComponent },
     { path: "students/:id", component: AdminStudentResultComponent },
+    { path: "students/:id/:quizType", component: AdminQuizAnswersComponent },
     { path: "**", redirectTo: "", pathMatch: "full" },
 ];
 

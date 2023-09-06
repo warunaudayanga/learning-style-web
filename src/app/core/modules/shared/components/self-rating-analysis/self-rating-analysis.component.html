@@ -1,9 +1,12 @@
 <app-section [transparent]="child">
     <ng-template appSectionHeading>
-        <h4 class="mb-4 font-bold">Index of Learning Styles (ILS) Result</h4>
+        <div class="d-flex align-items-start justify-content-between">
+            <h4 class="mb-4 font-bold">Index of Learning Styles (ILS) Result</h4>
+            <a *ngIf="result" class="view-link font-bold" [routerLink]="[QuizType.SELF_RATING]">View Answers</a>
+        </div>
     </ng-template>
 
-    <ng-container *ngIf="result">
+    <ng-container *ngIf="result; else notParticipated">
         <ng-container *ngFor="let pair of result.pairs; let i = index">
             <div class="d-flex justify-content-between px-4 py-2 font-lg">
                 <div *ngFor="let single of pair">{{ single.label }} ({{ single.percentage }}%)</div>
@@ -22,4 +25,13 @@
             <h5>Percentage: {{ result.final.percentage }}%</h5>
         </div>
     </ng-container>
+
+    <ng-template #notParticipated>
+        <div>
+            <div class="alert alert-warning mb-0">
+                <h4 class="alert-heading">Not Participated</h4>
+                <p>This student has not participated in the quiz.</p>
+            </div>
+        </div>
+    </ng-template>
 </app-section>

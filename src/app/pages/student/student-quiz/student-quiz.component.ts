@@ -23,6 +23,10 @@ export class StudentQuizComponent implements OnInit {
 
     @Input() title?: string;
 
+    @Input() studentId?: string;
+
+    @Input() readonly?: boolean;
+
     quizCollection?: IQuizCollection<ISelfRatingQuiz>;
 
     get quizzes(): IQuiz<IQuizChoice>[] {
@@ -54,11 +58,7 @@ export class StudentQuizComponent implements OnInit {
         this.quizCollection = this.store.selectSnapshot(QuizState.getQuiz)(
             this.quizType,
         ) as IQuizCollection<ISelfRatingQuiz>;
-        if (this.quizCollection?.quizzes?.length) {
-            if (!this.loadAnswers(this.quizCollection)) {
-                this.getQuizCollection();
-            }
-        } else {
+        if (this.studentId || !this.quizCollection?.quizzes?.length || !this.loadAnswers(this.quizCollection)) {
             this.getQuizCollection();
         }
 
@@ -74,11 +74,11 @@ export class StudentQuizComponent implements OnInit {
     getQuizCollection(): void {
         this.loading = true;
         this.error = false;
-        this.quizService.getQuizCollection<ISelfRatingQuiz>(this.quizType).subscribe({
+        this.quizService.getQuizCollection<ISelfRatingQuiz>(this.quizType, this.studentId).subscribe({
             next: qc => {
                 this.quizCollection = qc;
                 this.loading = false;
-                this.store.dispatch(new SaveQuizAnswersDraft({ quizType: this.quizType, answers: qc.userAnswers }));
+                // this.store.dispatch(new SaveQuizAnswersDraft({ quizType: this.quizType, answers: qc.userAnswers }));
                 this.loadAnswers(qc);
             },
             error: (err: HttpError) => {
@@ -96,7 +96,7 @@ export class StudentQuizComponent implements OnInit {
             this.answers = qc.userAnswers;
             this.submitted = true;
         }
-        return Boolean(this.answers);
+        return Boolean(this.answers.length);
     }
 
     onAnswersChange(): void {

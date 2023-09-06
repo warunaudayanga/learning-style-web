@@ -15,8 +15,11 @@ export const QUIZ_ANSWER_URL = "quiz-answer";
 export class QuizService {
     constructor(protected http: HttpClient) {}
 
-    getQuizCollection<Quiz extends IQuiz<IQuizChoice>>(type: QuizType): Observable<IQuizCollection<Quiz>> {
-        return this.http.get<IQuizCollection<Quiz>>(`${QUIZ_URL}/${type}`).pipe(take(1));
+    getQuizCollection<Quiz extends IQuiz<IQuizChoice>>(
+        type: QuizType,
+        studentId?: string,
+    ): Observable<IQuizCollection<Quiz>> {
+        return this.http.get<IQuizCollection<Quiz>>(`${QUIZ_URL}/${type}?studentId=${studentId ?? ""}`).pipe(take(1));
     }
 
     saveQuizCollection<Quiz extends IQuiz<IQuizChoice>>(
