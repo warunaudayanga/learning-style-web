@@ -1,0 +1,25 @@
+<app-section [loading]="loading" [error]="error" (onRefresh)="refresh()" class="mb-4">
+    <ng-template appSectionHeading>
+        <h4 class="font-bold mb-4">Students Info</h4>
+    </ng-template>
+    <table>
+        <tr>
+            <td class="label">Name:</td>
+            <td class="value">{{ student?.name }}</td>
+        </tr>
+        <tr>
+            <td class="label">Reg No:</td>
+            <td class="value">{{ student?.regNo }}</td>
+        </tr>
+        <tr>
+            <td class="label">Birthday:</td>
+            <td class="value">{{ student?.dob }}</td>
+        </tr>
+        <tr>
+            <td class="label">Gender:</td>
+            <td class="value">{{ toFirstCase(student?.role) }}</td>
+        </tr>
+    </table>
+</app-section>
+
+<app-self-rating-analysis [result]="getResult(student?.answers)"></app-self-rating-analysis>

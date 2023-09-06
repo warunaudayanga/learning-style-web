@@ -20,6 +20,7 @@
         margin: 0 $app-layout-space;
         padding: 0;
         background-color: transparent;
+        box-shadow: none;
     }
 
     &.app-section-loading, &.app-section-error {

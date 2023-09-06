@@ -1,0 +1,12 @@
+<app-self-rating-analysis *ngIf="result" [result]="result"></app-self-rating-analysis>
+
+<app-section *ngIf="!result">
+    <ng-template appSectionHeading>
+        <h4 class="mb-4 font-bold">Index of Learning Styles (ILS) Result</h4>
+    </ng-template>
+
+    <div class="alert alert-warning">
+        <h4 class="alert-heading">No Results!</h4>
+        <p>You have not completed this questionnaire yet.</p>
+    </div>
+</app-section>

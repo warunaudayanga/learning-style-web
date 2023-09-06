@@ -10,17 +10,28 @@ import { StudentMenu } from "../../core/enums/menus/student-menu.enum";
 export class StudentLayoutComponent {
     items: MenuItem<StudentMenu>[] = [
         {
-            key: StudentMenu.LEARNING_STYLE,
-            label: "Learning Style",
-            icon: "bi bi-mortarboard",
-            routerLink: "/",
+            key: StudentMenu.SELF_RATING_QUESTIONNAIRE,
+            label: "Self Rating",
+            icon: "bi bi-alexa",
+            routerLink: "",
         },
         {
-            key: StudentMenu.LEARNING_STYLE_RESULT,
-            label: "Learning Style Result",
-            icon: "bi bi-search",
-            routerLink: "/style-result",
-            hidden: true,
+            key: StudentMenu.BEFORE_LECTURE_QUESTIONNAIRE,
+            label: "Before Lecture Feedback",
+            icon: "bi bi-bar-chart-line",
+            routerLink: "/pre-questionnaire",
+        },
+        {
+            key: StudentMenu.AFTER_LECTURE_QUESTIONNAIRE,
+            label: "After Lecture Feedback",
+            icon: "bi bi-bar-chart-line-fill",
+            routerLink: "/post-questionnaire",
+        },
+        {
+            key: StudentMenu.RESULT,
+            label: "Your Results",
+            icon: "bi bi-list-check",
+            routerLink: "/result",
         },
     ];
 }

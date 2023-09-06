@@ -27,5 +27,11 @@ export class AdminLayoutComponent {
             icon: "bi bi-bar-chart-line-fill",
             routerLink: "/admin/post-questionnaire",
         },
+        {
+            key: AdinMenu.STUDENTS,
+            label: "Students",
+            icon: "bi bi-mortarboard-fill",
+            routerLink: "/admin/students",
+        },
     ];
 }

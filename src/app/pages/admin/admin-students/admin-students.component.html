@@ -1,0 +1,15 @@
+<app-section [full]="true" [loading]="loading" [error]="error" (onRefresh)="refresh()">
+    <ng-template appSectionHeading>
+        <h4 class="mb-4 font-bold">Students</h4>
+    </ng-template>
+
+    <div>
+        <app-student-card
+            *ngFor="let student of students"
+            [name]="student.name"
+            [category]="getResult(student.answers)?.result?.final?.category"
+            [percentage]="getResult(student.answers)?.result?.final?.percentage ?? null"
+            [routerLink]="[student.id]"
+        ></app-student-card>
+    </div>
+</app-section>

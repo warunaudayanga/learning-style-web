@@ -20,8 +20,6 @@ import { API } from "./core/tokens/injection-tokens";
 import { ApiInterceptorService } from "./core/interceptors/api-interceptor.service";
 import { QuizState } from "./core/store/quiz/quiz.state";
 import { SharedModule } from "./core/modules/shared/shared.module";
-// import { HTTP_INTERCEPTORS } from "@angular/common/http";
-// import { AuthInterceptor } from "./core/interceptors";
 
 @NgModule({
     declarations: [AppComponent],
@@ -47,6 +45,5 @@ import { SharedModule } from "./core/modules/shared/shared.module";
         { provide: HTTP_INTERCEPTORS, useClass: ErrorResponseInterceptor, multi: true },
     ],
     bootstrap: [AppComponent],
-    exports: [],
 })
 export class AppModule {}

@@ -87,9 +87,9 @@ export class AppService {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    public load(path: any | any[], params?: { [key: string]: any }): void {
+    public load(path: any | any[], params?: { [key: string]: any }, state?: { [key: string]: any }): void {
         if (params || typeof path !== "string") {
-            this.router.navigate(path, { queryParams: params }).then();
+            this.router.navigate(path, { queryParams: params, state }).then();
         } else {
             this.router.navigateByUrl(path).then();
         }

@@ -5,6 +5,7 @@ import {
     EventEmitter,
     Input,
     OnChanges,
+    OnInit,
     Output,
     QueryList,
     SimpleChanges,
@@ -19,7 +20,7 @@ import { IQuiz, IQuizAnswer, IQuizChoice } from "../../../../interfaces/quiz.int
     styleUrls: ["./qz-list.component.scss"],
 })
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export class QzListComponent implements OnChanges, AfterContentInit {
+export class QzListComponent implements OnInit, OnChanges, AfterContentInit {
     @Input() items?: IQuiz<IQuizChoice>[] = [];
 
     @Input() answers: IQuizAnswer[] = [];
@@ -31,6 +32,10 @@ export class QzListComponent implements OnChanges, AfterContentInit {
     @Output() answersChange: EventEmitter<IQuizAnswer[]> = new EventEmitter<IQuizAnswer[]>();
 
     @ContentChildren(QzComponent) qzComponents?: QueryList<QzComponent>;
+
+    ngOnInit(): void {
+        this.answersChange.emit(this.answers);
+    }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes["answers"]) {

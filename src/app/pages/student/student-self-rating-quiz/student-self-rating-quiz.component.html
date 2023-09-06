@@ -1,18 +1,1 @@
-<app-section [full]="true" [loading]="loading" [error]="error" (onRefresh)="refresh()">
-    <ng-template appSectionHeading>
-        <h4 class="mb-4 font-bold">Index of Learning Styles (ILS) Questionnaire</h4>
-    </ng-template>
-
-    <div *ngIf="submitted" class="mb-5">
-        <div class="alert alert-success">
-            <h4 class="alert-heading">Thank you!</h4>
-            <p>Your answers have been submitted.</p>
-        </div>
-    </div>
-
-    <qz-list [items]="quizzes" [(answers)]="answers" (answersChange)="onAnswersChange()" [readonly]="submitted"></qz-list>
-
-    <div *ngIf="!submitted && quizCollection" class="d-flex justify-content-end">
-        <ng-button type="submit" class="mt-3" styleClass="btn-app-primary" label="Submit" [spin]="submitting" loadingText="Submitting..." (onClick)="onSubmit()"></ng-button>
-    </div>
-</app-section>
+<app-student-quiz [quizType]="QuizType.SELF_RATING" title="Index of Learning Styles (ILS) Questionnaire"></app-student-quiz>

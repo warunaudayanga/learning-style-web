@@ -13,8 +13,8 @@ export interface IQuizCollection<Quiz extends IQuiz<IQuizChoice>> extends IBaseM
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface IQuizUserAnswers<Quiz extends IQuiz<IQuizChoice>, QuizResult = any> extends IBaseModel {
-    quizCollection: IQuizCollection<Quiz>;
-    quizCollectionId: number;
+    quizCollection?: IQuizCollection<Quiz>;
+    quizCollectionId?: number;
     user: IUser;
     userId: number;
     answers: IQuizAnswer[];

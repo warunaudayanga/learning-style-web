@@ -7,6 +7,7 @@
         <div class="choices">
             <div class="d-flex gap-3 align-items-center mb-3" *ngFor="let choice of quiz.choices; let i = index">
                 <ng-select-box
+                    *ngIf="extenders"
                     class="extender-select"
                     size="sm"
                     [ngStyle]="{ width: extenders!.width }"
@@ -29,7 +30,7 @@
                     <button *ngIf="(quiz.choices?.length ?? 0) > 2" type="button" class="btn-close btn" (click)="removeChoice(choice)"></button>
                 </div>
             </div>
-            <ng-button class="flex-grow-1" size="sm" styleClass="btn-app-primary" (onClick)="addChoice()"> <i class="bi bi-plus"></i> Add Choice </ng-button>
+            <ng-button class="flex-grow-1" size="sm" styleClass="btn-app-primary" (onClick)="addChoice()"><i class="bi bi-plus"></i> Add Choice </ng-button>
         </div>
     </div>
 </div>

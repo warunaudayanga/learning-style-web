@@ -45,7 +45,13 @@ export class SelfRatingQuizResult {
                 visualVerbal: { count: 0, percentage: 0 },
                 sequentialGlobal: { count: 0, percentage: 0 },
             },
-            total: this.#total,
+            total: this.#total || 0,
+            final: this.#final ?? {
+                count: 0,
+                percentage: 0,
+                label: "",
+                category: undefined,
+            },
         };
     }
 

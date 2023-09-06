@@ -19,7 +19,6 @@ import { tap } from "rxjs/operators";
 import { HttpError } from "../../interfaces";
 import { IQuizCollection } from "../../interfaces/models/quiz";
 import { AppService } from "../../../app.service";
-import { StudentMenu } from "../../enums/menus/student-menu.enum";
 import { QuizError } from "../../enums/errors/quiz.error.enum";
 
 interface QuizStateModel {
@@ -111,9 +110,6 @@ export class QuizState implements NgxsOnInit {
             collectionList.push(action.payload);
         }
         patchState({ quizCollectionList: deepCopy(collectionList) });
-        if (action.payload.userAnswers?.length) {
-            this.app.toggleMenu(true, StudentMenu.LEARNING_STYLE_RESULT);
-        }
     }
 
     @Action(SaveQuizAnswers)

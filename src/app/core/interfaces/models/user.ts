@@ -1,5 +1,6 @@
 import { IBaseModel } from "./base-model";
 import { UserRole } from "../../enums/user-role.enum";
+import { IQuizUserAnswers } from "./quiz";
 
 export interface IUser extends IBaseModel {
     name: string;
@@ -8,4 +9,6 @@ export interface IUser extends IBaseModel {
     regNo: string;
     dob: string;
     gender: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    answers?: IQuizUserAnswers<any>[];
 }

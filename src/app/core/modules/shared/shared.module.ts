@@ -13,10 +13,20 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MomentModule } from "ngx-moment";
 import { QuizModule } from "../quiz/quiz.module";
+import { LayoutModule } from "../../../layout/layout.module";
+import { ProgressbarModule } from "ngx-bootstrap/progressbar";
+import { SelfRatingAnalysisComponent } from "./components/self-rating-analysis/self-rating-analysis.component";
 
 @NgModule({
-    declarations: [PageNotFoundComponent, CarouselComponent, NgDataViewComponent, SlideComponent],
+    declarations: [
+        PageNotFoundComponent,
+        CarouselComponent,
+        NgDataViewComponent,
+        SlideComponent,
+        SelfRatingAnalysisComponent,
+    ],
     imports: [
+        ProgressbarModule,
         CommonModule,
         RouterModule,
         PipeModule,
@@ -28,8 +38,10 @@ import { QuizModule } from "../quiz/quiz.module";
         MomentModule,
         FormsModule,
         QuizModule,
+        LayoutModule,
     ],
     exports: [
+        ProgressbarModule,
         PageNotFoundComponent,
         CarouselComponent,
         NgDataViewComponent,
@@ -44,6 +56,7 @@ import { QuizModule } from "../quiz/quiz.module";
         MomentModule,
         FormsModule,
         QuizModule,
+        SelfRatingAnalysisComponent,
     ],
 })
 export class SharedModule {}

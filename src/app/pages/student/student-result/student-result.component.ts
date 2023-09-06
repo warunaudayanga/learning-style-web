@@ -1,19 +1,19 @@
 import { Component, OnInit } from "@angular/core";
-import { Store } from "@ngxs/store";
-import { QuizType } from "../../../core/enums/quiz-type.eum";
-import { QuizState } from "../../../core/store/quiz/quiz.state";
-import { QuizService } from "../../../core/services/http/quiz.service";
-import { AppService } from "../../../app.service";
-import { ProgressbarType } from "ngx-bootstrap/progressbar";
 import { SelfRatingQuizResult } from "../../../core/utils/self-rating-quiz-result";
+import { ProgressbarType } from "ngx-bootstrap/progressbar";
+import { AppService } from "../../../app.service";
+import { Store } from "@ngxs/store";
+import { QuizService } from "../../../core/services/http/quiz.service";
+import { QuizState } from "../../../core/store/quiz/quiz.state";
+import { QuizType } from "../../../core/enums/quiz-type.eum";
 import { HttpError } from "../../../core/interfaces";
 
 @Component({
-    selector: "app-student-self-rating-analysis",
-    templateUrl: "./student-self-rating-analysis.component.html",
-    styleUrls: ["./student-self-rating-analysis.component.scss"],
+    selector: "app-student-result",
+    templateUrl: "./student-result.component.html",
+    styleUrls: ["./student-result.component.scss"],
 })
-export class StudentSelfRatingAnalysisComponent implements OnInit {
+export class StudentResultComponent implements OnInit {
     result?: SelfRatingQuizResult;
 
     loading = false;

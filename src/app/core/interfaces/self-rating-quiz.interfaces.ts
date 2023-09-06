@@ -59,6 +59,7 @@ export interface ISelfRatingQuizResult {
     singled: ISelfRatingQuizResultSingle;
     paired: ISelfRatingQuizResultPaired;
     total: number;
+    final: ISelfRatingQuizResultFinalRecord;
 }
 // noinspection JSUnusedGlobalSymbols
 export interface ISelfRatingQuizAnswers extends IQuizAnswers {
