@@ -13,6 +13,8 @@ export class QzComponent implements OnChanges {
 
     @Input() answer: IQuizChoice[] = [];
 
+    @Input() rating?: boolean;
+
     @Input() readonly = false;
 
     @Input() assess = false;

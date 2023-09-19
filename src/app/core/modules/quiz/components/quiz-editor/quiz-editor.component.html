@@ -2,7 +2,7 @@
     <button type="button" class="btn-remove-quiz btn-close btn" (click)="onRemove.emit($event)"></button>
     <div class="font-bold font-lg mb-2">Question {{ index !== undefined ? index + 1 : "" }}</div>
     <ng-input required class="flex-grow-1" noValidation ngTextarea size="sm" [(ngModel)]="quiz.question" (ngModelChange)="onQuizChange()"></ng-input>
-    <div class="">
+    <div *ngIf="!rating" class="">
         <div class="font-bold mt-3 mb-2">Choices</div>
         <div class="choices">
             <div class="d-flex gap-3 align-items-center mb-3" *ngFor="let choice of quiz.choices; let i = index">
@@ -31,6 +31,12 @@
                 </div>
             </div>
             <ng-button class="flex-grow-1" size="sm" styleClass="btn-app-primary" (onClick)="addChoice()"><i class="bi bi-plus"></i> Add Choice </ng-button>
+        </div>
+    </div>
+    <div *ngIf="rating" class="rating-choices">
+        <div class="font-bold mt-3 mb-2">Choices</div>
+        <div class="choices d-flex gap-3">
+            <ng-input *ngFor="let choice of quiz.choices; let i = index" class="choice" noValidation size="sm" [(ngModel)]="choice.value" [readonly]="true"></ng-input>
         </div>
     </div>
 </div>

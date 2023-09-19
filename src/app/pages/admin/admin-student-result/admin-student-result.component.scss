@@ -1,5 +1,11 @@
+@import "src/style/scss";
+
 .label {
-    width: 150px;
+    font-weight: bold;
+}
+.value {
+    margin-bottom: 15px;
+    color: $app-sub-text-color;
 }
 
 .view-link {

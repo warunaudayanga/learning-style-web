@@ -1,6 +1,7 @@
 <div>
     <quiz-editor
         *ngFor="let quiz of quizzes; let i = index"
+        [rating]="rating"
         [(quiz)]="quizzes[i]"
         [index]="i"
         [extenders]="extenders"

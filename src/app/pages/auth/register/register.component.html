@@ -2,15 +2,166 @@
     <form *ngIf="registerForm" [formGroup]="registerForm!" (ngSubmit)="register()" class="pb-5">
         <h1 class="title font-bold mb-3 mt-5">Register</h1>
 
-        <ng-input label="Username" size="lg" formControlName="username"></ng-input>
-        <ng-input ngPassword label="Password" size="lg" formControlName="password"></ng-input>
-        <ng-input ngPassword label="Confirm Password" size="lg" formControlName="confirm"></ng-input>
-        <ng-input label="Name" size="lg" formControlName="name"></ng-input>
-        <ng-input label="Registration Number" size="lg" formControlName="regNo"></ng-input>
-        <ng-input ngDatepicker label="Date of Birth" size="lg" formControlName="dob"></ng-input>
-        <ng-select-box label="Gender" size="lg" formControlName="gender" [items]="genders" bindLabel="name" bindValue="value" [clearable]="false"></ng-select-box>
+        <ng-input label="Full Name" size="sm" formControlName="name"></ng-input>
+        <ng-input label="Username" size="sm" formControlName="username"></ng-input>
+        <ng-input ngPassword label="Password" size="sm" formControlName="password"></ng-input>
+        <ng-input ngPassword label="Confirm Password" size="sm" formControlName="confirm"></ng-input>
 
-        <ng-button type="submit" class="w-100 mt-3" styleClass="btn-app-primary" label="Register" size="lg" [spin]="loading" loadingText="Please wait..."></ng-button>
+        <div>
+            <label class="form-label font-bold">Please select your College of Technology</label>
+            <div class="form-check mb-1">
+                <input class="form-check-input" type="radio" formControlName="cot" id="cotMaradana" value="Maradana" />
+                <label class="form-check-label" for="cotMaradana">Maradana</label>
+            </div>
+            <div class="form-check mb-1">
+                <input class="form-check-input" type="radio" formControlName="cot" id="cotGall" value="Galle" />
+                <label class="form-check-label" for="cotGall">Galle</label>
+            </div>
+            <div class="form-check ng-input-group mb-1 d-flex align-items-start gap-2">
+                <input class="form-check-input" type="radio" formControlName="cot" id="cotOther" value="Other" />
+                <ng-input size="sm" formControlName="cotOther" class="w-100" (onFocus)="registerForm.patchValue({ cot: 'Other' })"></ng-input>
+            </div>
+        </div>
+
+        <ng-input label="Registration Number" size="sm" formControlName="regNo"></ng-input>
+        <ng-input label="E-mail" size="sm" formControlName="email"></ng-input>
+        <ng-input ngDatepicker label="Date of Birth" size="sm" formControlName="dob"></ng-input>
+        <ng-select-box label="Gender" size="sm" formControlName="gender" [items]="genders" bindLabel="name" bindValue="value" [clearable]="false"></ng-select-box>
+
+        <div class="mb-30">
+            <label class="form-label font-bold">Please mention your GCE O/L results for the following subject</label>
+            <table class="table grid-table">
+                <tr class="">
+                    <td></td>
+                    <td>S</td>
+                    <td>C</td>
+                    <td>B</td>
+                    <td>A</td>
+                </tr>
+                <tr>
+                    <td>Maths</td>
+                    <td><input class="form-check-input" type="radio" formControlName="olMaths" id="mathsA" value="A" /></td>
+                    <td><input class="form-check-input" type="radio" formControlName="olMaths" id="mathsB" value="B" /></td>
+                    <td><input class="form-check-input" type="radio" formControlName="olMaths" id="mathsC" value="C" /></td>
+                    <td><input class="form-check-input" type="radio" formControlName="olMaths" id="mathsS" value="S" /></td>
+                    <td><input class="form-check-input" type="radio" formControlName="olMaths" id="mathsW" value="W" /></td>
+                </tr>
+                <tr>
+                    <td>Science</td>
+                    <td><input class="form-check-input" type="radio" formControlName="olScience" id="scienceA" value="A" /></td>
+                    <td><input class="form-check-input" type="radio" formControlName="olScience" id="scienceB" value="B" /></td>
+                    <td><input class="form-check-input" type="radio" formControlName="olScience" id="scienceC" value="C" /></td>
+                    <td><input class="form-check-input" type="radio" formControlName="olScience" id="scienceS" value="S" /></td>
+                    <td><input class="form-check-input" type="radio" formControlName="olScience" id="scienceW" value="W" /></td>
+                </tr>
+                <tr>
+                    <td>English</td>
+                    <td><input class="form-check-input" type="radio" formControlName="olEnglish" id="englishA" value="A" /></td>
+                    <td><input class="form-check-input" type="radio" formControlName="olEnglish" id="englishB" value="B" /></td>
+                    <td><input class="form-check-input" type="radio" formControlName="olEnglish" id="englishC" value="C" /></td>
+                    <td><input class="form-check-input" type="radio" formControlName="olEnglish" id="englishS" value="S" /></td>
+                    <td><input class="form-check-input" type="radio" formControlName="olEnglish" id="englishW" value="W" /></td>
+                </tr>
+            </table>
+        </div>
+
+        <div>
+            <label class="form-label font-bold">Please mention your G.C.E A/L stream</label>
+            <div class="form-check mb-1">
+                <input class="form-check-input" type="radio" formControlName="alStream" id="alMaths" value="Physical Science (Maths)" />
+                <label class="form-check-label" for="alMaths">Physical Science (Maths)</label>
+            </div>
+            <div class="form-check mb-1">
+                <input class="form-check-input" type="radio" formControlName="alStream" id="alBio" value="Bio Science" />
+                <label class="form-check-label" for="alBio">Bio Science</label>
+            </div>
+            <div class="form-check mb-1">
+                <input class="form-check-input" type="radio" formControlName="alStream" id="alCommerce" value="Commerce" />
+                <label class="form-check-label" for="alCommerce">Commerce</label>
+            </div>
+            <div class="form-check mb-1">
+                <input class="form-check-input" type="radio" formControlName="alStream" id="alArts" value="Arts" />
+                <label class="form-check-label" for="alArts">Arts</label>
+            </div>
+            <div class="form-check mb-1">
+                <input class="form-check-input" type="radio" formControlName="alStream" id="alTech" value="Technology" />
+                <label class="form-check-label" for="alTech">Technology</label>
+            </div>
+            <div class="form-check ng-input-group mb-1 d-flex align-items-start gap-2">
+                <input class="form-check-input" type="radio" formControlName="alStream" id="alOther" value="Other" />
+                <ng-input size="sm" formControlName="alOther" class="w-100" (onFocus)="registerForm.patchValue({ alStream: 'Other' })"></ng-input>
+            </div>
+        </div>
+
+        <div class="mb-30">
+            <label class="form-label font-bold">Have you passed 3 subjects in G.C.E. A/L?</label>
+            <div class="form-check mb-1">
+                <input class="form-check-input" type="radio" formControlName="alPassed" id="alPassYes" value="Yes" />
+                <label class="form-check-label" for="alPassYes">Yes</label>
+            </div>
+            <div class="form-check mb-1">
+                <input class="form-check-input" type="radio" formControlName="alPassed" id="alPassNo" value="No" />
+                <label class="form-check-label" for="alPassNo">No</label>
+            </div>
+        </div>
+
+        <div class="mb-30">
+            <label class="form-label font-bold">Have you done G.C.E. O/L or A/L ICT subject?</label>
+            <div class="form-check mb-1">
+                <input class="form-check-input" type="radio" formControlName="doneIct" id="doneOlIct" value="O/L" />
+                <label class="form-check-label" for="doneOlIct">Yes, O/L ICT</label>
+            </div>
+            <div class="form-check mb-1">
+                <input class="form-check-input" type="radio" formControlName="doneIct" id="doneAlIct" value="A/L" />
+                <label class="form-check-label" for="doneAlIct">Yes. A/L ICT</label>
+            </div>
+            <div class="form-check mb-1">
+                <input class="form-check-input" type="radio" formControlName="doneIct" id="doneBothIct" value="Both" />
+                <label class="form-check-label" for="doneBothIct">Yes. Both</label>
+            </div>
+            <div class="form-check mb-1">
+                <input class="form-check-input" type="radio" formControlName="doneIct" id="doneNoIct" value="None" />
+                <label class="form-check-label" for="doneNoIct">No, I have not done either</label>
+            </div>
+        </div>
+
+        <div>
+            <label class="form-label font-bold">Which of the following course/courses you have followed?</label>
+            <div class="form-check mb-1">
+                <input class="form-check-input" type="checkbox" formControlName="comAppAssist3" id="comAppAssist3" />
+                <label class="form-check-label" for="comAppAssist3">Computer Application Assistant - NVQ Level 3</label>
+            </div>
+            <div class="form-check mb-1">
+                <input class="form-check-input" type="checkbox" formControlName="ict4" id="ict4" />
+                <label class="form-check-label" for="ict4">ICT Technician - NVQ Level 4</label>
+            </div>
+            <div class="form-check mb-1">
+                <input class="form-check-input" type="checkbox" formControlName="hardware4" id="hardware4" />
+                <label class="form-check-label" for="hardware4">Computer Hardware Technician - NVQ Level 4</label>
+            </div>
+            <div class="form-check mb-1">
+                <input class="form-check-input" type="checkbox" formControlName="network4" id="network4" />
+                <label class="form-check-label" for="network4">Computer Network Technician - NVQ Level 4</label>
+            </div>
+            <div class="form-check mb-1">
+                <input class="form-check-input" type="checkbox" formControlName="graphic4" id="graphic4" />
+                <label class="form-check-label" for="graphic4">Computer Graphic Designer - NVQ Level 4</label>
+            </div>
+            <div class="form-check mb-1">
+                <input class="form-check-input" type="checkbox" formControlName="icSupporter4" id="icSupporter4" />
+                <label class="form-check-label" for="icSupporter4">IT Supporter - NVQ Level 4</label>
+            </div>
+            <div class="form-check mb-1">
+                <input class="form-check-input" type="checkbox" formControlName="softwareDev4" id="softwareDev4" />
+                <label class="form-check-label" for="softwareDev4">Software Developer - NVQ Level 4</label>
+            </div>
+            <div class="form-check mb-1">
+                <input class="form-check-input" type="checkbox" formControlName="followOther" id="followOther" />
+                <ng-input size="sm" formControlName="followedOther" class="w-100" (onFocus)="registerForm.patchValue({ followOther: true })"></ng-input>
+            </div>
+        </div>
+
+        <ng-button type="submit" class="w-100 mt-3" styleClass="btn-app-primary" label="Register" size="sm" [spin]="loading" loadingText="Please wait..."></ng-button>
 
         <div class="text-center mt-3 pb-3">
             <a routerLink="/auth/login">Already Registered?</a>

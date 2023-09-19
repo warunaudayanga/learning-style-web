@@ -25,6 +25,8 @@ export class QzListComponent implements OnInit, OnChanges, AfterContentInit {
 
     @Input() answers: IQuizAnswer[] = [];
 
+    @Input() rating?: boolean;
+
     @Input() readonly = false;
 
     @Input() assess = false;

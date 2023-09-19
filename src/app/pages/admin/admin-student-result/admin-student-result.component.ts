@@ -9,6 +9,7 @@ import { ISelfRatingQuiz } from "../../../core/interfaces/self-rating-quiz.inter
 import { QuizType } from "../../../core/enums/quiz-type.eum";
 import { SelfRatingQuizResult } from "../../../core/utils/self-rating-quiz-result";
 import { toFirstCase } from "hichchi-utils";
+import { DoneICT } from "../../../core/enums/done-ict.enum";
 
 @Component({
     selector: "app-admin-student-result",
@@ -62,4 +63,6 @@ export class AdminStudentResultComponent implements OnInit {
     }
 
     protected readonly toFirstCase = toFirstCase;
+
+    protected readonly DoneICT = DoneICT;
 }

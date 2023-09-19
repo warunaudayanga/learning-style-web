@@ -8,7 +8,12 @@
         </div>
 
         <div class="quiz-choices" *ngIf="quiz.choices?.length">
-            <div class="form-check" *ngFor="let option of quiz.choices; let i = index" [class.answer]="assess && quiz.answer?.map(mapChoiceId)?.includes(option.id)">
+            <div
+                class="form-check"
+                [class.form-check-inline]="rating"
+                *ngFor="let option of quiz.choices; let i = index"
+                [class.answer]="assess && quiz.answer?.map(mapChoiceId)?.includes(option.id)"
+            >
                 <input
                     [type]="quiz.multiple ? 'checkbox' : 'radio'"
                     class="form-check-input"

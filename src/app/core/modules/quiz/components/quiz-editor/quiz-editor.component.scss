@@ -50,3 +50,14 @@ th, td {
 .form-check-input, .choice-remove {
     width: 16px;
 }
+
+.rating-choices {
+    .choices {
+        .choice {
+            width: 60px;
+            ::ng-deep input {
+                text-align: center;
+            }
+        }
+    }
+}

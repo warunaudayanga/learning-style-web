@@ -31,18 +31,47 @@ export class RegisterComponent implements OnInit {
     ngOnInit(): void {
         this.registerForm = this.fb.group(
             {
+                name: ["", [Validators.required]],
                 username: ["", [Validators.required]],
                 password: ["", [Validators.required]],
                 confirm: ["", [Validators.required]],
-                name: ["", [Validators.required]],
+                email: ["", [Validators.required, Validators.email]],
                 regNo: ["", [Validators.required]],
                 dob: ["", [Validators.required]],
                 gender: ["", [Validators.required]],
+                cot: [""],
+                cotOther: [""],
+                olMaths: [""],
+                olScience: [""],
+                olEnglish: [""],
+                alStream: [""],
+                alOther: [""],
+                alPassed: [null],
+                doneIct: [null],
+                comAppAssist3: [false],
+                ict4: [false],
+                hardware4: [false],
+                network4: [false],
+                graphic4: [false],
+                icSupporter4: [false],
+                softwareDev4: [false],
+                followOther: [false],
+                followedOther: [""],
             },
             {
                 validators: matched("password", "confirm"),
             } as AbstractControlOptions,
         );
+        this.registerForm?.patchValue({
+            username: "admin",
+            password: "admin",
+            confirm: "admin",
+            name: "Admin",
+            email: "admin@123.com",
+            regNo: "123456",
+            dob: new Date("1990-01-01"),
+            gender: Gender.MALE,
+        });
     }
 
     register(): void {

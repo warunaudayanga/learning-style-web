@@ -12,6 +12,8 @@ import { DialogService } from "../../../dialog";
 export class QuizListEditorComponent {
     @Input() quizzes: IQuiz<IQuizChoice>[] = [];
 
+    @Input() rating?: number;
+
     @Input() extenders?: IQuizChoiceExtenders;
 
     @Output() quizAdd: EventEmitter<IQuiz<IQuizChoice>> = new EventEmitter<IQuiz<IQuizChoice>>();

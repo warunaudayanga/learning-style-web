@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <quiz-list-editor [(quizzes)]="quizzes" [extenders]="extenders" (quizAdd)="onQuizAdd()" (quizzesChange)="onQuizChange()"></quiz-list-editor>
+    <quiz-list-editor [(quizzes)]="quizzes" [rating]="rating" [extenders]="extenders" (quizAdd)="onQuizAdd()" (quizzesChange)="onQuizChange()"></quiz-list-editor>
 
     <ng-button class="d-block mt-5" *ngIf="quizzes.length" size="sm" styleClass="btn-app-dark" (onClick)="saveQuizzes()" [spin]="saving" loadingText="Saving..."
         >Save Questions

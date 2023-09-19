@@ -11,7 +11,7 @@ export class StudentLayoutComponent {
     items: MenuItem<StudentMenu>[] = [
         {
             key: StudentMenu.SELF_RATING_QUESTIONNAIRE,
-            label: "Self Rating",
+            label: "ILS Questionnaire",
             icon: "bi bi-alexa",
             routerLink: "",
         },
@@ -32,6 +32,12 @@ export class StudentLayoutComponent {
             label: "Your Results",
             icon: "bi bi-list-check",
             routerLink: "/result",
+        },
+        {
+            key: StudentMenu.FELDER_SILVERMAN_MODEL,
+            label: "Felder-Silverman Model",
+            icon: "bi bi-info-circle-fill",
+            routerLink: "/felder-silverman-model",
         },
     ];
 }

@@ -25,6 +25,8 @@ export class StudentQuizComponent implements OnInit {
 
     @Input() studentId?: string;
 
+    @Input() rating?: boolean;
+
     @Input() readonly?: boolean;
 
     quizCollection?: IQuizCollection<ISelfRatingQuiz>;

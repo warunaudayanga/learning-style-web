@@ -11,7 +11,7 @@ export class AdminLayoutComponent {
     items: MenuItem<AdinMenu>[] = [
         {
             key: AdinMenu.SELF_RATING_QUESTIONNAIRE,
-            label: "Self Rating",
+            label: "ILS Questionnaire",
             icon: "bi bi-alexa",
             routerLink: "/admin",
         },

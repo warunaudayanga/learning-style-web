@@ -80,6 +80,8 @@ export class NgInputComponent extends NgFormControl<Date | string> implements On
 
     @Output() valueChange: EventEmitter<Date | string | null> = new EventEmitter<Date | string | null>();
 
+    @Output() onFocus: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
+
     @ViewChild("input") inputRef!: ElementRef<HTMLInputElement | HTMLTextAreaElement>;
 
     constructor(

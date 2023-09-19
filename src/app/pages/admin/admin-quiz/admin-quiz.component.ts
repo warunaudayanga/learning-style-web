@@ -23,6 +23,8 @@ export class AdminQuizComponent implements OnInit {
 
     @Input() extenders?: IQuizChoiceExtenders;
 
+    @Input() rating?: number;
+
     quizCollection?: IQuizCollection<ISelfRatingQuiz>;
 
     get quizzes(): IQuiz<IQuizChoice>[] {

@@ -22,6 +22,7 @@
         [max]="max"
         [min]="min"
         (ngModelChange)="changeValue($event)"
+        (focus)="onFocus.emit($event)"
     />
 
     <!--suppress JSUnusedGlobalSymbols -->

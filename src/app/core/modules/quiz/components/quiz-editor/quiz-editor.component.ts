@@ -16,6 +16,8 @@ export class QuizEditorComponent implements OnInit {
         question: "",
     };
 
+    @Input() rating?: number;
+
     @Input() index?: number;
 
     @Input() extenders?: IQuizChoiceExtenders;
@@ -34,6 +36,12 @@ export class QuizEditorComponent implements OnInit {
                         return extender.extend[this.extenders!.key] === choice[this.extenders!.key as any];
                     }) ?? null;
             });
+        }
+        if (this.rating) {
+            this.quiz.choices = Array.from({ length: this.rating }).map((_v, i) => ({
+                id: uuid(),
+                value: `${i + 1}`,
+            }));
         }
     }
 

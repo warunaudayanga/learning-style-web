@@ -23,6 +23,19 @@
             <h3>Category: {{ result.final.label }}</h3>
             <h5>Result: {{ result.final.count }}</h5>
             <h5>Percentage: {{ result.final.percentage }}%</h5>
+            <h6>
+                <span style="color: red">* </span>
+                <ng-container [ngSwitch]="result.final.category">
+                    <span *ngSwitchCase="StyleCategory.ACTIVIST">{{ who }} prefers to try things out, working with others in groups</span>
+                    <span *ngSwitchCase="StyleCategory.REFLECTOR">{{ who }} prefers thinking things through, working alone or with familiar partner</span>
+                    <span *ngSwitchCase="StyleCategory.SENSING">{{ who }} prefers concrete thinking, practical, concerned with facts and procedures</span>
+                    <span *ngSwitchCase="StyleCategory.INTUITIVE">{{ who }} prefers conceptual thinking, innovative, concerned with theories and meanings</span>
+                    <span *ngSwitchCase="StyleCategory.VISUAL">{{ who }} prefers visual representations, pictures, diagrams, and flow charts</span>
+                    <span *ngSwitchCase="StyleCategory.VERBAL">{{ who }} prefers written and spoken explanations</span>
+                    <span *ngSwitchCase="StyleCategory.SEQUENTIAL">{{ who }} prefers linear thinking, orderly, learns in small incremental steps</span>
+                    <span *ngSwitchCase="StyleCategory.GLOBAL">{{ who }} prefers holistic thinking, systems thinkers, learns in large leaps</span>
+                </ng-container>
+            </h6>
         </div>
     </ng-container>
 

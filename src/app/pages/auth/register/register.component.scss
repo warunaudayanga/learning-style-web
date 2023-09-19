@@ -1,0 +1,21 @@
+.ng-input-group {
+    .form-check-input {
+        position: relative;
+        top: 5px;
+    }
+}
+
+.grid-table {
+    td:first-child {
+        width: 60px;
+    }
+
+    td:not(:first-child) {
+        text-align: center;
+        width: 40px;
+    }
+}
+
+.mb-30 {
+    margin-bottom: 30px;
+}
