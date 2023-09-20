@@ -15,12 +15,12 @@ export class StudentLayoutComponent {
             icon: "bi bi-alexa",
             routerLink: "",
         },
-        {
-            key: StudentMenu.BEFORE_LECTURE_QUESTIONNAIRE,
-            label: "Before Lecture Feedback",
-            icon: "bi bi-bar-chart-line",
-            routerLink: "/pre-questionnaire",
-        },
+        // {
+        //     key: StudentMenu.BEFORE_LECTURE_QUESTIONNAIRE,
+        //     label: "Before Lecture Feedback",
+        //     icon: "bi bi-bar-chart-line",
+        //     routerLink: "/pre-questionnaire",
+        // },
         {
             key: StudentMenu.AFTER_LECTURE_QUESTIONNAIRE,
             label: "After Lecture Feedback",

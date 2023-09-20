@@ -15,12 +15,12 @@ export class AdminLayoutComponent {
             icon: "bi bi-alexa",
             routerLink: "/admin",
         },
-        {
-            key: AdinMenu.BEFORE_LECTURE_QUESTIONNAIRE,
-            label: "Before Lecture Feedback",
-            icon: "bi bi-bar-chart-line",
-            routerLink: "/admin/pre-questionnaire",
-        },
+        // {
+        //     key: AdinMenu.BEFORE_LECTURE_QUESTIONNAIRE,
+        //     label: "Before Lecture Feedback",
+        //     icon: "bi bi-bar-chart-line",
+        //     routerLink: "/admin/pre-questionnaire",
+        // },
         {
             key: AdinMenu.AFTER_LECTURE_QUESTIONNAIRE,
             label: "After Lecture Feedback",
@@ -32,6 +32,12 @@ export class AdminLayoutComponent {
             label: "Students",
             icon: "bi bi-mortarboard-fill",
             routerLink: "/admin/students",
+        },
+        {
+            key: AdinMenu.FELDER_SILVERMAN_MODEL,
+            label: "Felder-Silverman Model",
+            icon: "bi bi-info-circle-fill",
+            routerLink: "/admin/felder-silverman-model",
         },
     ];
 }

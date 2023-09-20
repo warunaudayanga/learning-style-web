@@ -6,6 +6,7 @@ import { AdminBeforeLessonFeedbackQuizComponent } from "./admin-before-lesson-fe
 import { AdminStudentsComponent } from "./admin-students/admin-students.component";
 import { AdminStudentResultComponent } from "./admin-student-result/admin-student-result.component";
 import { AdminQuizAnswersComponent } from "./admin-quiz-answers/admin-quiz-answers.component";
+import { FelderSilvermanModelComponent } from "../shared/felder-silverman-model/felder-silverman-model.component";
 
 const routes: Routes = [
     { path: "", component: AdminSelfRatingQuizComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
     { path: "students", component: AdminStudentsComponent },
     { path: "students/:id", component: AdminStudentResultComponent },
     { path: "students/:id/:quizType", component: AdminQuizAnswersComponent },
+    { path: "felder-silverman-model", component: FelderSilvermanModelComponent },
     { path: "**", redirectTo: "", pathMatch: "full" },
 ];
 

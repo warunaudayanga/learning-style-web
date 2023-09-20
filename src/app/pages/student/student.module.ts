@@ -9,7 +9,7 @@ import { StudentResultComponent } from "./student-result/student-result.componen
 import { StudentAfterLessonFeedbackQuizComponent } from "./student-after-lesson-feedback-quiz/student-after-lesson-feedback-quiz.component";
 import { StudentBeforeLessonFeedbackQuizComponent } from "./student-before-lesson-feedback-quiz/student-before-lesson-feedback-quiz.component";
 import { StudentQuizComponent } from "./student-quiz/student-quiz.component";
-import { FelderSilvermanModelComponent } from "./felder-silverman-model/felder-silverman-model.component";
+import { FelderSilvermanModelComponent } from "../shared/felder-silverman-model/felder-silverman-model.component";
 
 @NgModule({
     declarations: [

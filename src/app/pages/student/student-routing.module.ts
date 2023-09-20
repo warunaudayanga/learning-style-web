@@ -4,7 +4,7 @@ import { StudentSelfRatingQuizComponent } from "./student-self-rating-quiz/stude
 import { StudentResultComponent } from "./student-result/student-result.component";
 import { StudentBeforeLessonFeedbackQuizComponent } from "./student-before-lesson-feedback-quiz/student-before-lesson-feedback-quiz.component";
 import { StudentAfterLessonFeedbackQuizComponent } from "./student-after-lesson-feedback-quiz/student-after-lesson-feedback-quiz.component";
-import { FelderSilvermanModelComponent } from "./felder-silverman-model/felder-silverman-model.component";
+import { FelderSilvermanModelComponent } from "../shared/felder-silverman-model/felder-silverman-model.component";
 
 const routes: Routes = [
     { path: "", component: StudentSelfRatingQuizComponent },
