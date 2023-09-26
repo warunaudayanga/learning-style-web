@@ -40,7 +40,7 @@ export class AdminStudentsComponent implements OnInit {
                 this.students = students;
                 this.studentGroups = Array.from(
                     groupBy(students, (student: IUser) => student.regNo?.split("/")?.[1]).entries(),
-                );
+                ).sort((a, b) => (a[0] && b[0] ? a[0].localeCompare(b[0]) : 0));
             },
             error: (err: HttpError) => {
                 this.loading = false;
