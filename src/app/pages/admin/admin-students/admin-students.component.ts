@@ -30,6 +30,7 @@ export class AdminStudentsComponent implements OnInit {
 
     ngOnInit(): void {
         this.getStudents();
+        // this.app.setTitle("Students");
     }
 
     getStudents(): void {
