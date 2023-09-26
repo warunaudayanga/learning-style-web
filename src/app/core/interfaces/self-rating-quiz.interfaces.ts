@@ -31,7 +31,7 @@ export interface ISelfRatingQuizResultPairedRecord extends ISelfRatingQuizResult
 }
 
 export interface ISelfRatingQuizResultFinalRecord {
-    category?: StyleCategory;
+    categories?: StyleCategory[];
     label?: string;
     count: number;
     percentage: number;

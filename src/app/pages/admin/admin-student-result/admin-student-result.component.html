@@ -1,7 +1,7 @@
 <app-section [loading]="loading" [error]="error" (onRefresh)="refresh()" class="mb-4">
     <ng-template appSectionHeading>
         <div class="d-flex align-items-center justify-content-between">
-            <h4 class="mb-0 font-bold">Student's Result</h4>
+            <h4 class="mb-0 font-bold">{{ student?.name }} ({{ student?.regNo }})</h4>
             <a class="view-link font-bold" routerLink="/admin/students">Back</a>
         </div>
     </ng-template>

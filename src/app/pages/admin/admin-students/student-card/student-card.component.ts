@@ -1,5 +1,7 @@
 import { Component, Input } from "@angular/core";
 import { toFirstCase } from "hichchi-utils";
+import { StyleCategory } from "../../../../core/enums/style-category.enum";
+import { IUser } from "../../../../core/interfaces/models";
 
 @Component({
     selector: "app-student-card",
@@ -7,9 +9,9 @@ import { toFirstCase } from "hichchi-utils";
     styleUrls: ["./student-card.component.scss"],
 })
 export class StudentCardComponent {
-    @Input() name!: string;
+    @Input() student!: IUser;
 
-    @Input() category?: string;
+    @Input() categories?: StyleCategory[];
 
     @Input() percentage: number | null = null;
 

@@ -4,9 +4,10 @@ import { IUser } from "../../../core/interfaces/models";
 import { AppService } from "../../../app.service";
 import { HttpError } from "../../../core/interfaces";
 import { IQuizUserAnswers } from "../../../core/interfaces/models/quiz";
-import { ISelfRatingQuiz, ISelfRatingQuizResult } from "../../../core/interfaces/self-rating-quiz.interfaces";
+import { ISelfRatingQuiz } from "../../../core/interfaces/self-rating-quiz.interfaces";
 import { QuizType } from "../../../core/enums/quiz-type.eum";
 import { groupBy } from "hichchi-utils";
+import { SelfRatingQuizResult } from "../../../core/utils/self-rating-quiz-result";
 
 @Component({
     selector: "app-admin-students",
@@ -37,7 +38,7 @@ export class AdminStudentsComponent implements OnInit {
         this.userService.getStudents().subscribe({
             next: students => {
                 this.loading = false;
-                this.students = students;
+                this.students = students.sort((a, b) => (a.name && b.name ? a.name.localeCompare(b.name) : 0));
                 this.studentGroups = Array.from(
                     groupBy(students, (student: IUser) => student.regNo?.split("/")?.[1]).entries(),
                 ).sort((a, b) => (a[0] && b[0] ? a[0].localeCompare(b[0]) : 0));
@@ -50,10 +51,11 @@ export class AdminStudentsComponent implements OnInit {
         });
     }
 
-    getResult(
-        answers?: IQuizUserAnswers<ISelfRatingQuiz>[],
-    ): IQuizUserAnswers<ISelfRatingQuiz, ISelfRatingQuizResult> | undefined {
-        return answers?.find(answer => answer.quizCollection?.type === QuizType.SELF_RATING);
+    getResult(answers?: IQuizUserAnswers<ISelfRatingQuiz>[]): SelfRatingQuizResult | undefined {
+        const answer: IQuizUserAnswers<ISelfRatingQuiz> | undefined = answers?.find(
+            answer => answer.quizCollection?.type === QuizType.SELF_RATING,
+        );
+        return answer ? new SelfRatingQuizResult(answer.result) : undefined;
     }
 
     refresh(): void {

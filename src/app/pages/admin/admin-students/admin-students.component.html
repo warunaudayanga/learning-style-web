@@ -8,8 +8,8 @@
             <div class="batch-year font-bold font-lg my-3" [class.mt-5]="i > 0">20{{ group[0] }} Batch</div>
             <app-student-card
                 *ngFor="let student of group[1]"
-                [name]="student.name"
-                [category]="getResult(student.answers)?.result?.final?.category"
+                [student]="student"
+                [categories]="getResult(student.answers)?.result?.final?.categories"
                 [percentage]="getResult(student.answers)?.result?.final?.percentage ?? null"
                 [routerLink]="[student.id]"
             ></app-student-card>

@@ -50,7 +50,7 @@ export class SelfRatingQuizResult {
                 count: 0,
                 percentage: 0,
                 label: "",
-                category: undefined,
+                categories: undefined,
             },
         };
     }
@@ -122,11 +122,16 @@ export class SelfRatingQuizResult {
             sequentialGlobal: this.generatePair(this.#singled.sequential, this.#singled.global),
         };
 
-        const finalCategory = this.pairs.sort((a, b) => b[0].count - a[0].count)[0][0].category;
+        const finalCategory = this.singles.sort((a, b) => b.count - a.count)[0].category;
+
+        const equals: ISelfRatingQuizResultSingledRecord[] = this.singles.filter(
+            s => s.percentage === this.singles.find(s => s.category === finalCategory)?.percentage,
+        );
+
         if (finalCategory) {
             this.#final = {
-                category: finalCategory,
-                label: toFirstCase(finalCategory),
+                categories: equals.map(e => e.category!),
+                label: equals.map(e => e.category!).join(" / "),
                 count: this.singles.find(s => s.category === finalCategory)?.count ?? 0,
                 percentage: this.singles.find(s => s.category === finalCategory)?.percentage ?? 0,
             };

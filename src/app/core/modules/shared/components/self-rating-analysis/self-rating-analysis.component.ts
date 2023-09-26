@@ -6,6 +6,7 @@ import { StyleCategory } from "../../../../enums/style-category.enum";
 import { Store } from "@ngxs/store";
 import { AuthState } from "../../../../store/auth/auth.state";
 import { UserRole } from "../../../../enums/user-role.enum";
+import { ISelfRatingQuizResultFinalRecord } from "../../../../interfaces/self-rating-quiz.interfaces";
 
 @Component({
     selector: "app-self-rating-analysis",
@@ -27,5 +28,32 @@ export class SelfRatingAnalysisComponent {
 
     constructor(private readonly store: Store) {
         this.who = this.store.selectSnapshot(AuthState.role) === UserRole.STUDENT ? "You" : "This student";
+    }
+
+    getDescription(final: ISelfRatingQuizResultFinalRecord): string | undefined {
+        return final.categories
+            ?.map(category => {
+                switch (category) {
+                    case StyleCategory.ACTIVIST:
+                        return "prefers to try things out, working with others in groups";
+                    case StyleCategory.REFLECTOR:
+                        return "prefers thinking things through, working alone or with familiar partner";
+                    case StyleCategory.SENSING:
+                        return "prefers concrete thinking, practical, concerned with facts and procedures";
+                    case StyleCategory.INTUITIVE:
+                        return "prefers conceptual thinking, innovative, concerned with theories and meanings";
+                    case StyleCategory.VISUAL:
+                        return "prefers visual representations, pictures, diagrams, and flow charts";
+                    case StyleCategory.VERBAL:
+                        return "prefers written and spoken explanations";
+                    case StyleCategory.SEQUENTIAL:
+                        return "prefers linear thinking, orderly, learns in small incremental steps";
+                    case StyleCategory.GLOBAL:
+                        return "prefers holistic thinking, systems thinkers, learns in large leaps";
+                    default:
+                        return "";
+                }
+            })
+            .join(`, and also ${this.who.toLowerCase()} `);
     }
 }
