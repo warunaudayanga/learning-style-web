@@ -31,6 +31,8 @@ export class QzListComponent implements OnInit, OnChanges, AfterContentInit {
 
     @Input() rating?: boolean;
 
+    @Input() heading = true;
+
     @Input() readonly = false;
 
     @Input() assess = false;
@@ -60,7 +62,7 @@ export class QzListComponent implements OnInit, OnChanges, AfterContentInit {
         if (changes["items"]) {
             this.items = changes["items"].currentValue;
             this.items?.forEach((qz, i) => {
-                if (!qz.heading) {
+                if (this.heading && !qz.heading) {
                     qz.heading = `Question ${i + 1}`;
                 }
                 if (qz.answer?.length === 0) {

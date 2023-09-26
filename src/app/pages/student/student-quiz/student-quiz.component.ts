@@ -31,6 +31,8 @@ export class StudentQuizComponent implements OnInit {
 
     @Input() rating?: boolean;
 
+    @Input() heading = true;
+
     @Input() readonly?: boolean;
 
     quizCollection?: IQuizCollection<ISelfRatingQuiz>;
