@@ -7,10 +7,27 @@
             <i class="marking incorrect-marking bi bi-x font-8xl"></i>
         </div>
 
-        <div class="quiz-choices" *ngIf="quiz.choices?.length">
+        <div class="quiz-choices" *ngIf="quiz.choices?.length && !rating">
+            <div class="form-check" *ngFor="let option of quiz.choices; let i = index" [class.answer]="assess && quiz.answer?.map(mapChoiceId)?.includes(option.id)">
+                <input
+                    [type]="quiz.multiple ? 'checkbox' : 'radio'"
+                    class="form-check-input"
+                    #input
+                    [checked]="checkedValues?.map(mapChoiceId)?.includes(option.id)"
+                    [id]="quiz.id + '_' + i"
+                    [value]="option.value"
+                    (change)="quiz.multiple ? onCheckChange(option, input.checked) : onRadioChange(option)"
+                    [attr.name]="quiz.id"
+                    [disabled]="assess || readonly"
+                />
+                <label class="form-check-label" [for]="quiz.id + '_' + i">{{ option.value }}</label>
+            </div>
+        </div>
+
+        <div class="quiz-choices rating-choices" *ngIf="quiz.choices?.length && rating">
+            <div class="pe-3">Strongly Disagree</div>
             <div
-                class="form-check"
-                [class.form-check-inline]="rating"
+                class="form-check form-check-inline"
                 *ngFor="let option of quiz.choices; let i = index"
                 [class.answer]="assess && quiz.answer?.map(mapChoiceId)?.includes(option.id)"
             >
@@ -27,6 +44,7 @@
                 />
                 <label class="form-check-label" [for]="quiz.id + '_' + i">{{ option.value }}</label>
             </div>
+            <div class="ps-3">Strongly Agree</div>
         </div>
 
         <div *ngIf="!quiz.choices?.length" class="quiz-input">

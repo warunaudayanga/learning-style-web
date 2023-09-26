@@ -4,12 +4,15 @@
     </ng-template>
 
     <div>
-        <app-student-card
-            *ngFor="let student of students"
-            [name]="student.name"
-            [category]="getResult(student.answers)?.result?.final?.category"
-            [percentage]="getResult(student.answers)?.result?.final?.percentage ?? null"
-            [routerLink]="[student.id]"
-        ></app-student-card>
+        <ng-container *ngFor="let group of studentGroups; let i = index">
+            <div class="batch-year font-bold font-lg my-3" [class.mt-5]="i > 0">20{{ group[0] }} Batch</div>
+            <app-student-card
+                *ngFor="let student of group[1]"
+                [name]="student.name"
+                [category]="getResult(student.answers)?.result?.final?.category"
+                [percentage]="getResult(student.answers)?.result?.final?.percentage ?? null"
+                [routerLink]="[student.id]"
+            ></app-student-card>
+        </ng-container>
     </div>
 </app-section>

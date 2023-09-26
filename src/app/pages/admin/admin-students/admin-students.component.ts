@@ -6,6 +6,7 @@ import { HttpError } from "../../../core/interfaces";
 import { IQuizUserAnswers } from "../../../core/interfaces/models/quiz";
 import { ISelfRatingQuiz, ISelfRatingQuizResult } from "../../../core/interfaces/self-rating-quiz.interfaces";
 import { QuizType } from "../../../core/enums/quiz-type.eum";
+import { groupBy } from "hichchi-utils";
 
 @Component({
     selector: "app-admin-students",
@@ -14,6 +15,8 @@ import { QuizType } from "../../../core/enums/quiz-type.eum";
 })
 export class AdminStudentsComponent implements OnInit {
     students: IUser[] = [];
+
+    studentGroups?: [string | undefined, IUser[]][];
 
     loading = false;
 
@@ -35,6 +38,9 @@ export class AdminStudentsComponent implements OnInit {
             next: students => {
                 this.loading = false;
                 this.students = students;
+                this.studentGroups = Array.from(
+                    groupBy(students, (student: IUser) => student.regNo?.split("/")?.[1]).entries(),
+                );
             },
             error: (err: HttpError) => {
                 this.loading = false;

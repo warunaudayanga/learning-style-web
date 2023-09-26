@@ -23,7 +23,11 @@ export class StudentQuizComponent implements OnInit {
 
     @Input() title?: string;
 
+    @Input() desc?: string;
+
     @Input() studentId?: string;
+
+    @Input() limit?: number;
 
     @Input() rating?: boolean;
 

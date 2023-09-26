@@ -19,8 +19,6 @@ export class StudentResultComponent implements OnInit {
 
     loading = false;
 
-    loaded = false;
-
     error = false;
 
     colors: ProgressbarType[] = ["success", "warning", "danger", "info"];
@@ -46,12 +44,17 @@ export class StudentResultComponent implements OnInit {
         this.quizService.getAnswers(QuizType.SELF_RATING).subscribe({
             next: quizCollection => {
                 this.loading = false;
-                this.loaded = true;
                 this.result = new SelfRatingQuizResult(quizCollection.result);
             },
             error: (err: HttpError) => {
+                this.loading = false;
                 this.error = true;
-                if (err.error?.code !== QuizError.QUIZ_404_TYPE) {
+                if (
+                    !(
+                        err.error?.code === QuizError.QUIZ_404_TYPE ||
+                        err.error?.code === QuizError.QUIZ_ANSWERS_404_CONDITION
+                    )
+                ) {
                     this.app.error(err.error?.message || "Failed to load Questions!");
                 }
             },

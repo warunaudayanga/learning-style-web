@@ -12,6 +12,8 @@ import {
 } from "@angular/core";
 import { QzComponent } from "../qz/qz.component";
 import { IQuiz, IQuizAnswer, IQuizChoice } from "../../../../interfaces/quiz.interfaces";
+import { DialogLevel } from "../../../dialog/enums";
+import { DialogService } from "../../../dialog";
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
@@ -25,15 +27,27 @@ export class QzListComponent implements OnInit, OnChanges, AfterContentInit {
 
     @Input() answers: IQuizAnswer[] = [];
 
+    @Input() submitted = false;
+
     @Input() rating?: boolean;
 
     @Input() readonly = false;
 
     @Input() assess = false;
 
+    @Input() limit?: number;
+
     @Output() answersChange: EventEmitter<IQuizAnswer[]> = new EventEmitter<IQuizAnswer[]>();
 
+    @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
+
+    @Output() onSubmit: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
+
     @ContentChildren(QzComponent) qzComponents?: QueryList<QzComponent>;
+
+    page = 1;
+
+    constructor(private readonly dialogService: DialogService) {}
 
     ngOnInit(): void {
         this.answersChange.emit(this.answers);
@@ -79,5 +93,43 @@ export class QzListComponent implements OnInit, OnChanges, AfterContentInit {
 
     getAnswer(quiz: IQuiz<IQuizChoice>): IQuizChoice[] {
         return this.answers?.find(ans => ans.id === quiz.id)?.answer ?? [];
+    }
+
+    isAnswered(): boolean {
+        if (
+            this.limit &&
+            this.items
+                ?.slice(this.limit * (this.page - 1), this.limit * this.page)
+                .some(q => !this.answers.map(a => a.id).includes(q.id))
+        ) {
+            this.dialogService.alert({
+                title: "Error",
+                message: "Please answer all questions",
+                level: DialogLevel.ERROR,
+            });
+            return false;
+        }
+        return true;
+    }
+
+    next(): void {
+        if (this.isAnswered()) {
+            this.page++;
+            this.pageChange.emit(this.page);
+        }
+    }
+
+    prev(): void {
+        if (this.limit) {
+            this.page--;
+            this.pageChange.emit(this.page);
+        }
+    }
+
+    submit(e: MouseEvent): void {
+        if (this.isAnswered()) {
+            this.onSubmit.emit(e);
+            this.page = 1;
+        }
     }
 }
