@@ -47,7 +47,6 @@ module.exports = {
           }
         ],
         "@angular-eslint/no-output-on-prefix": "off",
-        "@typescript-eslint/ban-ts-comment": "off",
         "@typescript-eslint/explicit-function-return-type": "error",
         "@typescript-eslint/no-non-null-assertion": "off",
         "@typescript-eslint/no-unused-vars": "off",
