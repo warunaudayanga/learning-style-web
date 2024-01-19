@@ -23,7 +23,7 @@ export class StudentLayoutComponent {
         // },
         {
             key: StudentMenu.AFTER_LECTURE_QUESTIONNAIRE,
-            label: "After Lecture Feedback",
+            label: "After Lesson Feedback",
             icon: "bi bi-bar-chart-line-fill",
             routerLink: "/post-questionnaire",
         },

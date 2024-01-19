@@ -23,7 +23,7 @@ export class AdminLayoutComponent {
         // },
         {
             key: AdinMenu.AFTER_LECTURE_QUESTIONNAIRE,
-            label: "After Lecture Feedback",
+            label: "After Lesson Feedback",
             icon: "bi bi-bar-chart-line-fill",
             routerLink: "/admin/post-questionnaire",
         },
