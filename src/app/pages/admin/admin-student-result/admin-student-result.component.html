@@ -9,6 +9,8 @@
 
 <app-self-rating-analysis class="d-block mb-4" [result]="getResult(student?.answers)"></app-self-rating-analysis>
 
+<app-after-lesson-feedback [result]="getAfterLectureResult(student?.answers)" class="d-block mb-4"></app-after-lesson-feedback>
+
 <app-section [loading]="loading" [error]="error" (onRefresh)="refresh()" class="mb-4">
     <ng-template appSectionHeading>
         <div class="d-flex align-items-start justify-content-between">

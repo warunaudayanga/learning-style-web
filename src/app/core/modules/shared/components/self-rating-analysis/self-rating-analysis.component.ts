@@ -24,8 +24,6 @@ export class SelfRatingAnalysisComponent {
 
     protected readonly QuizType = QuizType;
 
-    protected readonly StyleCategory = StyleCategory;
-
     constructor(private readonly store: Store) {
         this.who = this.store.selectSnapshot(AuthState.role) === UserRole.STUDENT ? "You" : "This student";
     }

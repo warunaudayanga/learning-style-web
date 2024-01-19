@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { IQuizCollection } from "../../../core/interfaces/models/quiz";
-import { ISelfRatingQuiz } from "../../../core/interfaces/self-rating-quiz.interfaces";
+import { ISelfRatingQuiz, ISelfRatingQuizResult } from "../../../core/interfaces/self-rating-quiz.interfaces";
 import { IQuiz, IQuizAnswer, IQuizChoice } from "../../../core/interfaces/quiz.interfaces";
 import { AppService } from "../../../app.service";
 import { Store } from "@ngxs/store";
@@ -34,6 +34,9 @@ export class StudentQuizComponent implements OnInit {
     @Input() heading = true;
 
     @Input() readonly?: boolean;
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    @Input() resultTransform?: (quizCollection: IQuizCollection<any>, answers: IQuizAnswer[]) => any;
 
     quizCollection?: IQuizCollection<ISelfRatingQuiz>;
 
@@ -122,19 +125,24 @@ export class StudentQuizComponent implements OnInit {
         }
 
         this.submitting = true;
-        const result = new SelfRatingQuizResult(this.quizCollection!, this.answers).result;
-        this.quizService.saveAnswers<ISelfRatingQuiz>(this.quizType, this.answers, result).subscribe({
-            next: answers => {
-                this.store.dispatch(new SaveQuizAnswers({ quizType: this.quizType, answers }));
-                this.submitting = false;
-                this.submitted = true;
-                this.app.scrollToTop();
-            },
-            error: (err: HttpError) => {
-                this.submitting = false;
-                this.app.error(err.error?.message || "Something went wrong!");
-            },
-        });
+        this.quizService
+            .saveAnswers<ISelfRatingQuiz>(
+                this.quizType,
+                this.answers,
+                this.resultTransform?.(this.quizCollection!, this.answers),
+            )
+            .subscribe({
+                next: answers => {
+                    this.store.dispatch(new SaveQuizAnswers({ quizType: this.quizType, answers }));
+                    this.submitting = false;
+                    this.submitted = true;
+                    this.app.scrollToTop();
+                },
+                error: (err: HttpError) => {
+                    this.submitting = false;
+                    this.app.error(err.error?.message || "Something went wrong!");
+                },
+            });
     }
 
     refresh(): void {

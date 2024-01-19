@@ -1,6 +1,6 @@
-<app-self-rating-analysis *ngIf="result" [result]="result"></app-self-rating-analysis>
+<app-self-rating-analysis *ngIf="selfRatingQuizResult" [result]="selfRatingQuizResult"></app-self-rating-analysis>
 
-<app-section *ngIf="!loading && !result">
+<app-section *ngIf="!loading && !selfRatingQuizResult">
     <ng-template appSectionHeading>
         <h4 class="mb-4 font-bold">Index of Learning Styles (ILS) Result</h4>
     </ng-template>
@@ -10,3 +10,5 @@
         <p>You have not completed this questionnaire yet.</p>
     </div>
 </app-section>
+
+<app-after-lesson-feedback [result]="afterLectureFeedbackResult" class="d-block mt-4"></app-after-lesson-feedback>

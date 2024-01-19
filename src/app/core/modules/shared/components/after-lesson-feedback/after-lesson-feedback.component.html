@@ -1,0 +1,14 @@
+<app-section>
+    <ng-template appSectionHeading>
+        <div class="d-flex align-items-start justify-content-between">
+            <h4 class="mb-4 font-bold">After Lesson Feedback</h4>
+        </div>
+    </ng-template>
+
+    <div>
+        <div *ngFor="let item of result?.quizCollection?.quizzes">
+            <div class="label">{{ item.question }}</div>
+            <div class="value">{{ getAnswer(item.id) }}</div>
+        </div>
+    </div>
+</app-section>

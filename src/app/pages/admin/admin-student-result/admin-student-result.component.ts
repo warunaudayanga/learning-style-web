@@ -10,6 +10,7 @@ import { QuizType } from "../../../core/enums/quiz-type.eum";
 import { SelfRatingQuizResult } from "../../../core/utils/self-rating-quiz-result";
 import { toFirstCase } from "hichchi-utils";
 import { DoneICT } from "../../../core/enums/done-ict.enum";
+import { IQuiz, IQuizChoice } from "../../../core/interfaces/quiz.interfaces";
 
 @Component({
     selector: "app-admin-student-result",
@@ -26,9 +27,9 @@ export class AdminStudentResultComponent implements OnInit {
     error = false;
 
     constructor(
-        private app: AppService,
+        private readonly app: AppService,
         private readonly route: ActivatedRoute,
-        private userService: UserService,
+        private readonly userService: UserService,
     ) {
         this.studentId = this.route.snapshot.params["id"];
     }
@@ -56,6 +57,13 @@ export class AdminStudentResultComponent implements OnInit {
     getResult(answers?: IQuizUserAnswers<ISelfRatingQuiz>[]): SelfRatingQuizResult | undefined {
         const answer = answers?.find(answer => answer.quizCollection?.type === QuizType.SELF_RATING);
         return answer ? new SelfRatingQuizResult(answer.result) : undefined;
+    }
+
+    getAfterLectureResult(
+        answers?: IQuizUserAnswers<IQuiz<IQuizChoice>>[],
+    ): IQuizUserAnswers<IQuiz<IQuizChoice>> | undefined {
+        const answer = answers?.find(answer => answer.quizCollection?.type === QuizType.AFTER_LECTURE);
+        return answer ? answer : undefined;
     }
 
     refresh(): void {

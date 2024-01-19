@@ -20,6 +20,7 @@ import { API } from "./core/tokens/injection-tokens";
 import { ApiInterceptorService } from "./core/interceptors/api-interceptor.service";
 import { QuizState } from "./core/store/quiz/quiz.state";
 import { SharedModule } from "./core/modules/shared/shared.module";
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
     declarations: [AppComponent],
@@ -35,6 +36,7 @@ import { SharedModule } from "./core/modules/shared/shared.module";
         SharedModule,
         LayoutModule,
         BrowserAnimationsModule,
+        NgChartsModule,
     ],
     providers: [
         { provide: APP_BASE_HREF, useValue: "/" },

@@ -8,6 +8,7 @@ import { ISelfRatingQuiz } from "../../../core/interfaces/self-rating-quiz.inter
 import { QuizType } from "../../../core/enums/quiz-type.eum";
 import { groupBy } from "hichchi-utils";
 import { SelfRatingQuizResult } from "../../../core/utils/self-rating-quiz-result";
+import { StyleCategory } from "../../../core/enums/style-category.enum";
 
 @Component({
     selector: "app-admin-students",
@@ -62,4 +63,18 @@ export class AdminStudentsComponent implements OnInit {
     refresh(): void {
         this.getStudents();
     }
+
+    filterByCategory(students: IUser[], category?: StyleCategory | "mixed"): IUser[] {
+        return students.filter(student => {
+            const categories = this.getResult(student.answers)?.result?.final?.categories;
+            if (category === "mixed") {
+                return categories && categories?.length > 1;
+            } else if (category) {
+                return categories && categories?.length === 1 && categories?.includes(category);
+            }
+            return !categories || categories?.length === 0;
+        });
+    }
+
+    protected readonly StyleCategory = StyleCategory;
 }

@@ -1,5 +1,5 @@
 import { QuizType } from "../../enums/quiz-type.eum";
-import { IQuiz, IQuizAnswer, IQuizChoice } from "../quiz.interfaces";
+import { IQuiz, IQuizAnswer, IQuizAnswers, IQuizChoice } from "../quiz.interfaces";
 import { IUser } from "./user";
 import { IBaseModel } from "./base-model";
 
@@ -7,7 +7,7 @@ export interface IQuizCollection<Quiz extends IQuiz<IQuizChoice>> extends IBaseM
     id: string;
     type: QuizType;
     quizzes: Quiz[];
-    answers: IQuizAnswer[];
+    answers: IQuizAnswers[];
     userAnswers: IQuizAnswer[];
 }
 

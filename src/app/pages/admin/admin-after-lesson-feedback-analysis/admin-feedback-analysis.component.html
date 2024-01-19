@@ -1,0 +1,15 @@
+<app-section [loading]="loading" [error]="error">
+    <ng-template appSectionHeading>
+        <h4 class="mb-4 font-bold">After Lesson Feedback Analysis</h4>
+    </ng-template>
+
+    <div>
+        <div *ngFor="let quiz of quizzes?.quizzes; let i = index" class="mb-5">
+            <div class="font-bold mb-3">{{ quiz.question }}</div>
+            <div>
+                <canvas baseChart [data]="barChartDataSet[i]" [options]="barChartOptions" [type]="'bar'"> </canvas>
+            </div>
+            <div class="ps-5 ms-4">Weighted Average: {{ weightedAverage[i] }}</div>
+        </div>
+    </div>
+</app-section>

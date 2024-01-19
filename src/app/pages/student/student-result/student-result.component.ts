@@ -8,6 +8,8 @@ import { QuizState } from "../../../core/store/quiz/quiz.state";
 import { QuizType } from "../../../core/enums/quiz-type.eum";
 import { HttpError } from "../../../core/interfaces";
 import { QuizError } from "../../../core/enums/errors/quiz.error.enum";
+import { IQuizUserAnswers } from "../../../core/interfaces/models/quiz";
+import { IQuiz, IQuizChoice } from "../../../core/interfaces/quiz.interfaces";
 
 @Component({
     selector: "app-student-result",
@@ -15,7 +17,9 @@ import { QuizError } from "../../../core/enums/errors/quiz.error.enum";
     styleUrls: ["./student-result.component.scss"],
 })
 export class StudentResultComponent implements OnInit {
-    result?: SelfRatingQuizResult;
+    selfRatingQuizResult?: SelfRatingQuizResult;
+
+    afterLectureFeedbackResult?: IQuizUserAnswers<IQuiz<IQuizChoice>>;
 
     loading = false;
 
@@ -30,21 +34,29 @@ export class StudentResultComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        const result = this.store.selectSnapshot(QuizState.getQuizAnswers)(QuizType.SELF_RATING)?.result;
-        if (this.result) {
-            this.result = new SelfRatingQuizResult(result);
+        const selfRatingQuizResult = this.store.selectSnapshot(QuizState.getQuizAnswers)(QuizType.SELF_RATING)?.result;
+        if (this.selfRatingQuizResult) {
+            this.selfRatingQuizResult = new SelfRatingQuizResult(selfRatingQuizResult);
         } else {
-            this.getQuizCollection();
+            this.getSelfRatingQuizCollection();
+        }
+
+        const afterLectureFeedbackResult = this.store.selectSnapshot(QuizState.getQuizAnswers)(QuizType.AFTER_LECTURE)
+            ?.result;
+        if (this.afterLectureFeedbackResult) {
+            this.afterLectureFeedbackResult = afterLectureFeedbackResult;
+        } else {
+            this.getAfterLectureQuizCollection();
         }
     }
 
-    getQuizCollection(): void {
+    getSelfRatingQuizCollection(): void {
         this.loading = true;
         this.error = false;
         this.quizService.getAnswers(QuizType.SELF_RATING).subscribe({
             next: quizCollection => {
                 this.loading = false;
-                this.result = new SelfRatingQuizResult(quizCollection.result);
+                this.selfRatingQuizResult = new SelfRatingQuizResult(quizCollection.result);
             },
             error: (err: HttpError) => {
                 this.loading = false;
@@ -61,7 +73,26 @@ export class StudentResultComponent implements OnInit {
         });
     }
 
-    refresh(): void {
-        this.getQuizCollection();
+    getAfterLectureQuizCollection(): void {
+        this.loading = true;
+        this.error = false;
+        this.quizService.getAnswers(QuizType.AFTER_LECTURE).subscribe({
+            next: quizCollection => {
+                this.loading = false;
+                this.afterLectureFeedbackResult = quizCollection;
+            },
+            error: (err: HttpError) => {
+                this.loading = false;
+                this.error = true;
+                if (
+                    !(
+                        err.error?.code === QuizError.QUIZ_404_TYPE ||
+                        err.error?.code === QuizError.QUIZ_ANSWERS_404_CONDITION
+                    )
+                ) {
+                    this.app.error(err.error?.message || "Failed to load Questions!");
+                }
+            },
+        });
     }
 }

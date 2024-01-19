@@ -34,6 +34,12 @@ export class AdminLayoutComponent {
             routerLink: "/admin/students",
         },
         {
+            key: AdinMenu.FEEDBACK_ANALYSIS,
+            label: "Feedback Analysis",
+            icon: "bi bi-graph-up-arrow",
+            routerLink: "/admin/feedback-analysis",
+        },
+        {
             key: AdinMenu.FELDER_SILVERMAN_MODEL,
             label: "Felder-Silverman Model",
             icon: "bi bi-info-circle-fill",

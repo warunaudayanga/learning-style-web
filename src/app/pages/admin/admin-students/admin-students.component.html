@@ -6,13 +6,98 @@
     <div>
         <ng-container *ngFor="let group of studentGroups; let i = index">
             <div class="batch-year font-bold font-lg my-3" [class.mt-5]="i > 0">20{{ group[0] }} Batch</div>
-            <app-student-card
-                *ngFor="let student of group[1]"
-                [student]="student"
-                [categories]="getResult(student.answers)?.result?.final?.categories"
-                [percentage]="getResult(student.answers)?.result?.final?.percentage ?? null"
-                [routerLink]="[student.id]"
-            ></app-student-card>
+
+            <div class="ps-5">
+                <div class="category-heading font-bold" *ngIf="filterByCategory(group[1], StyleCategory.ACTIVIST).length">Activist</div>
+                <app-student-card
+                    *ngFor="let student of filterByCategory(group[1], StyleCategory.ACTIVIST)"
+                    [student]="student"
+                    [categories]="getResult(student.answers)?.result?.final?.categories"
+                    [percentage]="getResult(student.answers)?.result?.final?.percentage ?? null"
+                    [routerLink]="[student.id]"
+                ></app-student-card>
+
+                <div class="category-heading font-bold" *ngIf="filterByCategory(group[1], StyleCategory.REFLECTOR).length">Reflector</div>
+                <app-student-card
+                    *ngFor="let student of filterByCategory(group[1], StyleCategory.REFLECTOR)"
+                    [student]="student"
+                    [categories]="getResult(student.answers)?.result?.final?.categories"
+                    [percentage]="getResult(student.answers)?.result?.final?.percentage ?? null"
+                    [routerLink]="[student.id]"
+                ></app-student-card>
+
+                <div class="category-heading font-bold" *ngIf="filterByCategory(group[1], StyleCategory.SENSING).length">Sensing</div>
+                <app-student-card
+                    *ngFor="let student of filterByCategory(group[1], StyleCategory.SENSING)"
+                    [student]="student"
+                    [categories]="getResult(student.answers)?.result?.final?.categories"
+                    [percentage]="getResult(student.answers)?.result?.final?.percentage ?? null"
+                    [routerLink]="[student.id]"
+                ></app-student-card>
+
+                <div class="category-heading font-bold" *ngIf="filterByCategory(group[1], StyleCategory.INTUITIVE).length">Intuitive</div>
+                <app-student-card
+                    *ngFor="let student of filterByCategory(group[1], StyleCategory.INTUITIVE)"
+                    [student]="student"
+                    [categories]="getResult(student.answers)?.result?.final?.categories"
+                    [percentage]="getResult(student.answers)?.result?.final?.percentage ?? null"
+                    [routerLink]="[student.id]"
+                ></app-student-card>
+
+                <div class="category-heading font-bold" *ngIf="filterByCategory(group[1], StyleCategory.VISUAL).length">Visual</div>
+                <app-student-card
+                    *ngFor="let student of filterByCategory(group[1], StyleCategory.VISUAL)"
+                    [student]="student"
+                    [categories]="getResult(student.answers)?.result?.final?.categories"
+                    [percentage]="getResult(student.answers)?.result?.final?.percentage ?? null"
+                    [routerLink]="[student.id]"
+                ></app-student-card>
+
+                <div class="category-heading font-bold" *ngIf="filterByCategory(group[1], StyleCategory.VERBAL).length">Verbal</div>
+                <app-student-card
+                    *ngFor="let student of filterByCategory(group[1], StyleCategory.VERBAL)"
+                    [student]="student"
+                    [categories]="getResult(student.answers)?.result?.final?.categories"
+                    [percentage]="getResult(student.answers)?.result?.final?.percentage ?? null"
+                    [routerLink]="[student.id]"
+                ></app-student-card>
+
+                <div class="category-heading font-bold" *ngIf="filterByCategory(group[1], StyleCategory.SEQUENTIAL).length">Sequential</div>
+                <app-student-card
+                    *ngFor="let student of filterByCategory(group[1], StyleCategory.SEQUENTIAL)"
+                    [student]="student"
+                    [categories]="getResult(student.answers)?.result?.final?.categories"
+                    [percentage]="getResult(student.answers)?.result?.final?.percentage ?? null"
+                    [routerLink]="[student.id]"
+                ></app-student-card>
+
+                <div class="category-heading font-bold" *ngIf="filterByCategory(group[1], StyleCategory.GLOBAL).length">Global</div>
+                <app-student-card
+                    *ngFor="let student of filterByCategory(group[1], StyleCategory.GLOBAL)"
+                    [student]="student"
+                    [categories]="getResult(student.answers)?.result?.final?.categories"
+                    [percentage]="getResult(student.answers)?.result?.final?.percentage ?? null"
+                    [routerLink]="[student.id]"
+                ></app-student-card>
+
+                <div class="category-heading font-bold" *ngIf="filterByCategory(group[1], 'mixed').length">Mixed</div>
+                <app-student-card
+                    *ngFor="let student of filterByCategory(group[1], 'mixed')"
+                    [student]="student"
+                    [categories]="getResult(student.answers)?.result?.final?.categories"
+                    [percentage]="getResult(student.answers)?.result?.final?.percentage ?? null"
+                    [routerLink]="[student.id]"
+                ></app-student-card>
+
+                <div class="category-heading font-bold" *ngIf="filterByCategory(group[1]).length">Not Participated</div>
+                <app-student-card
+                    *ngFor="let student of filterByCategory(group[1])"
+                    [student]="student"
+                    [categories]="getResult(student.answers)?.result?.final?.categories"
+                    [percentage]="getResult(student.answers)?.result?.final?.percentage ?? null"
+                    [routerLink]="[student.id]"
+                ></app-student-card>
+            </div>
         </ng-container>
     </div>
 </app-section>

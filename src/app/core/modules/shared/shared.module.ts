@@ -16,6 +16,7 @@ import { QuizModule } from "../quiz/quiz.module";
 import { LayoutModule } from "../../../layout/layout.module";
 import { ProgressbarModule } from "ngx-bootstrap/progressbar";
 import { SelfRatingAnalysisComponent } from "./components/self-rating-analysis/self-rating-analysis.component";
+import { AfterLessonFeedbackComponent } from "./components/after-lesson-feedback/after-lesson-feedback.component";
 
 @NgModule({
     declarations: [
@@ -24,6 +25,7 @@ import { SelfRatingAnalysisComponent } from "./components/self-rating-analysis/s
         NgDataViewComponent,
         SlideComponent,
         SelfRatingAnalysisComponent,
+        AfterLessonFeedbackComponent,
     ],
     imports: [
         ProgressbarModule,
@@ -57,6 +59,7 @@ import { SelfRatingAnalysisComponent } from "./components/self-rating-analysis/s
         FormsModule,
         QuizModule,
         SelfRatingAnalysisComponent,
+        AfterLessonFeedbackComponent,
     ],
 })
 export class SharedModule {}
