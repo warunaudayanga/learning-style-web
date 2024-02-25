@@ -62,16 +62,16 @@ export class RegisterComponent implements OnInit {
                 validators: matched("password", "confirm"),
             } as AbstractControlOptions,
         );
-        this.registerForm?.patchValue({
-            username: "admin",
-            password: "admin",
-            confirm: "admin",
-            name: "Admin",
-            email: "admin@123.com",
-            regNo: "123456",
-            dob: new Date("1990-01-01"),
-            gender: Gender.MALE,
-        });
+        // this.registerForm?.patchValue({
+        //     username: "admin",
+        //     password: "admin",
+        //     confirm: "admin",
+        //     name: "Admin",
+        //     email: "admin@123.com",
+        //     regNo: "123456",
+        //     dob: new Date("1990-01-01"),
+        //     gender: Gender.MALE,
+        // });
     }
 
     register(): void {

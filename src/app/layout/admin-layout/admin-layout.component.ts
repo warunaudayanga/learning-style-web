@@ -10,17 +10,11 @@ import { AdinMenu } from "../../core/enums/menus/adin-menu.enum";
 export class AdminLayoutComponent {
     items: MenuItem<AdinMenu>[] = [
         {
-            key: AdinMenu.SELF_RATING_QUESTIONNAIRE,
-            label: "ILS Questionnaire",
-            icon: "bi bi-alexa",
-            routerLink: "/admin",
+            key: AdinMenu.STUDENTS,
+            label: "Students",
+            icon: "bi bi-mortarboard-fill",
+            routerLink: "/admin/students",
         },
-        // {
-        //     key: AdinMenu.BEFORE_LECTURE_QUESTIONNAIRE,
-        //     label: "Before Lecture Feedback",
-        //     icon: "bi bi-bar-chart-line",
-        //     routerLink: "/admin/pre-questionnaire",
-        // },
         {
             key: AdinMenu.AFTER_LECTURE_QUESTIONNAIRE,
             label: "After Lesson Feedback",
@@ -28,11 +22,17 @@ export class AdminLayoutComponent {
             routerLink: "/admin/post-questionnaire",
         },
         {
-            key: AdinMenu.STUDENTS,
-            label: "Students",
-            icon: "bi bi-mortarboard-fill",
-            routerLink: "/admin/students",
+            key: AdinMenu.SELF_RATING_QUESTIONNAIRE,
+            label: "ILS Questionnaire",
+            icon: "bi bi-alexa",
+            routerLink: "/admin/self-rating-quiz",
         },
+        // {
+        //     key: AdinMenu.BEFORE_LECTURE_QUESTIONNAIRE,
+        //     label: "Before Lecture Feedback",
+        //     icon: "bi bi-bar-chart-line",
+        //     routerLink: "/admin/pre-questionnaire",
+        // },
         {
             key: AdinMenu.FEEDBACK_ANALYSIS,
             label: "Feedback Analysis",

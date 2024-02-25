@@ -10,7 +10,7 @@ import { FelderSilvermanModelComponent } from "../shared/felder-silverman-model/
 import { AdminFeedbackAnalysisComponent } from "./admin-after-lesson-feedback-analysis/admin-feedback-analysis.component";
 
 const routes: Routes = [
-    { path: "", component: AdminSelfRatingQuizComponent },
+    { path: "self-rating-quiz", component: AdminSelfRatingQuizComponent },
     { path: "pre-questionnaire", component: AdminAfterLessonFeedbackQuizComponent },
     { path: "post-questionnaire", component: AdminBeforeLessonFeedbackQuizComponent },
     { path: "students", component: AdminStudentsComponent },
@@ -18,7 +18,7 @@ const routes: Routes = [
     { path: "students/:id", component: AdminStudentResultComponent },
     { path: "students/:id/:quizType", component: AdminQuizAnswersComponent },
     { path: "felder-silverman-model", component: FelderSilvermanModelComponent },
-    { path: "**", redirectTo: "", pathMatch: "full" },
+    { path: "**", redirectTo: "students", pathMatch: "full" },
 ];
 
 @NgModule({
