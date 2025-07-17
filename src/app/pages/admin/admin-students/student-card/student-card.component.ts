@@ -1,7 +1,7 @@
 import { Component, Input } from "@angular/core";
 import { toFirstCase } from "hichchi-utils";
 import { StyleCategory } from "../../../../core/enums/style-category.enum";
-import { IUser } from "../../../../core/interfaces/models";
+import { User } from "../../../../core/interfaces/models";
 
 @Component({
     selector: "app-student-card",
@@ -9,7 +9,7 @@ import { IUser } from "../../../../core/interfaces/models";
     styleUrls: ["./student-card.component.scss"],
 })
 export class StudentCardComponent {
-    @Input() student!: IUser;
+    @Input() student!: User;
 
     @Input() categories?: StyleCategory[];
 

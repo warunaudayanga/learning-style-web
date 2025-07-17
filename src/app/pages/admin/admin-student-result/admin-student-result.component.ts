@@ -3,14 +3,14 @@ import { ActivatedRoute } from "@angular/router";
 import { UserService } from "../../../core/services/http/user.service";
 import { HttpError } from "../../../core/interfaces";
 import { AppService } from "../../../app.service";
-import { IUser } from "../../../core/interfaces/models";
-import { IQuizUserAnswers } from "../../../core/interfaces/models/quiz";
-import { ISelfRatingQuiz } from "../../../core/interfaces/self-rating-quiz.interfaces";
+import { User } from "../../../core/interfaces/models";
+import { QuizUserAnswers } from "../../../core/interfaces/models/quiz";
+import { SelfRatingQuiz } from "../../../core/interfaces/self-rating-quiz.interfaces";
 import { QuizType } from "../../../core/enums/quiz-type.eum";
-import { SelfRatingQuizResult } from "../../../core/utils/self-rating-quiz-result";
+import { SelfRatingQuizResultDto } from "../../../core/utils/self-rating-quiz-result.dto";
 import { toFirstCase } from "hichchi-utils";
 import { DoneICT } from "../../../core/enums/done-ict.enum";
-import { IQuiz, IQuizChoice } from "../../../core/interfaces/quiz.interfaces";
+import { Quiz, QuizChoice } from "../../../core/interfaces/quiz.interfaces";
 
 @Component({
     selector: "app-admin-student-result",
@@ -20,7 +20,7 @@ import { IQuiz, IQuizChoice } from "../../../core/interfaces/quiz.interfaces";
 export class AdminStudentResultComponent implements OnInit {
     studentId?: string;
 
-    student?: IUser;
+    student?: User;
 
     loading = false;
 
@@ -54,14 +54,14 @@ export class AdminStudentResultComponent implements OnInit {
         });
     }
 
-    getResult(answers?: IQuizUserAnswers<ISelfRatingQuiz>[]): SelfRatingQuizResult | undefined {
+    getResult(answers?: QuizUserAnswers<SelfRatingQuiz>[]): SelfRatingQuizResultDto | undefined {
         const answer = answers?.find(answer => answer.quizCollection?.type === QuizType.SELF_RATING);
-        return answer ? new SelfRatingQuizResult(answer.result) : undefined;
+        return answer ? new SelfRatingQuizResultDto(answer.result) : undefined;
     }
 
     getAfterLectureResult(
-        answers?: IQuizUserAnswers<IQuiz<IQuizChoice>>[],
-    ): IQuizUserAnswers<IQuiz<IQuizChoice>> | undefined {
+        answers?: QuizUserAnswers<Quiz<QuizChoice>>[],
+    ): QuizUserAnswers<Quiz<QuizChoice>> | undefined {
         const answer = answers?.find(answer => answer.quizCollection?.type === QuizType.AFTER_LECTURE);
         return answer ? answer : undefined;
     }

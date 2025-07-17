@@ -1,12 +1,12 @@
 // noinspection JSUnusedGlobalSymbols
 
-import { IQuiz, IQuizChoice, IQuizDraft } from "../interfaces/quiz.interfaces";
+import { Quiz, QuizChoice, QuizDraft } from "../interfaces/quiz.interfaces";
 
-export const mapChoiceId = (q: IQuizChoice, _i: number, _array: IQuizChoice[]): string => q.id;
+export const mapChoiceId = (q: QuizChoice, _i: number, _array: QuizChoice[]): string => q.id;
 
-export const mapChoiceValue = (q: IQuizChoice, _i: number, _array: IQuizChoice[]): string => q.value;
+export const mapChoiceValue = (q: QuizChoice, _i: number, _array: QuizChoice[]): string => q.value;
 
-export const quizToDraft = (quiz: IQuiz<IQuizChoice>): IQuizDraft => {
+export const quizToDraft = (quiz: Quiz<QuizChoice>): QuizDraft => {
     const answer = quiz.answer?.map(ans => quiz.choices!.find(option => option.value === ans.value)!) ?? [];
     return {
         id: quiz.id,
@@ -18,7 +18,7 @@ export const quizToDraft = (quiz: IQuiz<IQuizChoice>): IQuizDraft => {
     };
 };
 
-export const draftToQuiz = (draft: IQuizDraft): IQuiz<IQuizChoice> => {
+export const draftToQuiz = (draft: QuizDraft): Quiz<QuizChoice> => {
     return {
         id: draft.id,
         question: draft.question ?? "",

@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { QuizType } from "../../../core/enums/quiz-type.eum";
-import { IQuizChoiceExtenders } from "../../../core/interfaces/quiz.interfaces";
+import { QuizChoiceExtenders } from "../../../core/interfaces/quiz.interfaces";
 import { ISelfRatingQuizChoiceExtendData } from "../../../core/interfaces/self-rating-quiz.interfaces";
 import { StyleCategory } from "../../../core/enums/style-category.enum";
 import { toFirstCase } from "hichchi-utils";
@@ -11,7 +11,7 @@ import { toFirstCase } from "hichchi-utils";
     styleUrls: ["./admin-self-rating-quiz.component.scss"],
 })
 export class AdminSelfRatingQuizComponent {
-    extenders: IQuizChoiceExtenders<ISelfRatingQuizChoiceExtendData> = {
+    extenders: QuizChoiceExtenders<ISelfRatingQuizChoiceExtendData> = {
         key: "category",
         width: "130px",
         items: Object.entries(StyleCategory).map(([key, value]) => ({

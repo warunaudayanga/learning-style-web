@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
-import { IQuiz, IQuizChoice } from "../../../../interfaces/quiz.interfaces";
+import { Quiz, QuizChoice } from "../../../../interfaces/quiz.interfaces";
 import { mapChoiceId } from "../../../../utils/quiz.utils";
 
 @Component({
@@ -9,9 +9,9 @@ import { mapChoiceId } from "../../../../utils/quiz.utils";
     styleUrls: ["./qz.component.scss"],
 })
 export class QzComponent implements OnChanges {
-    @Input() quiz!: IQuiz<IQuizChoice>;
+    @Input() quiz!: Quiz<QuizChoice>;
 
-    @Input() answer: IQuizChoice[] = [];
+    @Input() answer: QuizChoice[] = [];
 
     @Input() heading = true;
 
@@ -21,10 +21,10 @@ export class QzComponent implements OnChanges {
 
     @Input() assess = false;
 
-    @Output() answerChange: EventEmitter<IQuizChoice[]> = new EventEmitter<IQuizChoice[]>();
+    @Output() answerChange: EventEmitter<QuizChoice[]> = new EventEmitter<QuizChoice[]>();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    checkedValues?: IQuizChoice[];
+    checkedValues?: QuizChoice[];
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes["quiz"]) {
@@ -36,12 +36,12 @@ export class QzComponent implements OnChanges {
         this.updateChecked();
     }
 
-    onRadioChange(value: IQuizChoice): void {
+    onRadioChange(value: QuizChoice): void {
         this.answer = [value];
         this.answerChange.emit(this.answer);
     }
 
-    onCheckChange(value: IQuizChoice, checked: boolean): void {
+    onCheckChange(value: QuizChoice, checked: boolean): void {
         if (checked) {
             if (this.answer) {
                 this.answer.push(value);

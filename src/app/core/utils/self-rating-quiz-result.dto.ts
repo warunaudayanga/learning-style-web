@@ -1,35 +1,35 @@
 // noinspection JSUnusedGlobalSymbols
 
-import { IQuizCollection } from "../interfaces/models/quiz";
+import { QuizCollection } from "../interfaces/models/quiz";
 import {
-    ISelfRatingQuiz,
-    ISelfRatingQuizResult,
-    ISelfRatingQuizResultPaired,
-    ISelfRatingQuizResultSingledRecord,
-    ISelfRatingQuizResultSingle,
-    ISelfRatingQuizResultPairedRecord,
-    ISelfRatingQuizResultFinalRecord,
+    SelfRatingQuiz,
+    SelfRatingQuizResult,
+    SelfRatingQuizResultPaired,
+    SelfRatingQuizResultSingledRecord,
+    SelfRatingQuizResultSingle,
+    SelfRatingQuizResultPairedRecord,
+    SelfRatingQuizResultFinalRecord,
 } from "../interfaces/self-rating-quiz.interfaces";
 import { StyleCategory } from "../enums/style-category.enum";
-import { IQuizAnswer } from "../interfaces/quiz.interfaces";
+import { QuizAnswer } from "../interfaces/quiz.interfaces";
 import { toFirstCase } from "hichchi-utils";
 
-export class SelfRatingQuizResult {
-    public readonly collection?: IQuizCollection<ISelfRatingQuiz>;
+export class SelfRatingQuizResultDto {
+    public readonly collection?: QuizCollection<SelfRatingQuiz>;
 
-    readonly #result?: ISelfRatingQuizResult;
+    readonly #result?: SelfRatingQuizResult;
 
-    readonly #singled: Partial<ISelfRatingQuizResultSingle>;
+    readonly #singled: Partial<SelfRatingQuizResultSingle>;
 
-    readonly #paired: Partial<ISelfRatingQuizResultPaired>;
+    readonly #paired: Partial<SelfRatingQuizResultPaired>;
 
     readonly #total: number;
 
-    readonly #final?: ISelfRatingQuizResultFinalRecord;
+    readonly #final?: SelfRatingQuizResultFinalRecord;
 
-    get result(): ISelfRatingQuizResult {
+    get result(): SelfRatingQuizResult {
         return {
-            singled: (this.#singled as ISelfRatingQuizResultSingle) ?? {
+            singled: (this.#singled as SelfRatingQuizResultSingle) ?? {
                 activist: { count: 0, percentage: 0 },
                 reflector: { count: 0, percentage: 0 },
                 sensing: { count: 0, percentage: 0 },
@@ -39,7 +39,7 @@ export class SelfRatingQuizResult {
                 sequential: { count: 0, percentage: 0 },
                 global: { count: 0, percentage: 0 },
             },
-            paired: (this.#paired as ISelfRatingQuizResultPaired) ?? {
+            paired: (this.#paired as SelfRatingQuizResultPaired) ?? {
                 activistReflector: { count: 0, percentage: 0 },
                 sensingIntuitive: { count: 0, percentage: 0 },
                 visualVerbal: { count: 0, percentage: 0 },
@@ -59,19 +59,19 @@ export class SelfRatingQuizResult {
         return this.#total;
     }
 
-    get singled(): ISelfRatingQuizResultSingle {
+    get singled(): SelfRatingQuizResultSingle {
         return this.result.singled;
     }
 
-    get singles(): ISelfRatingQuizResultSingledRecord[] {
+    get singles(): SelfRatingQuizResultSingledRecord[] {
         return Object.values(this.result.singled);
     }
 
-    get paired(): ISelfRatingQuizResultPaired {
+    get paired(): SelfRatingQuizResultPaired {
         return this.result.paired;
     }
 
-    get pairs(): ISelfRatingQuizResultSingledRecord[][] {
+    get pairs(): SelfRatingQuizResultSingledRecord[][] {
         return [
             [this.result.singled.activist, this.result.singled.reflector],
             [this.result.singled.sensing, this.result.singled.intuitive],
@@ -80,21 +80,21 @@ export class SelfRatingQuizResult {
         ];
     }
 
-    get final(): ISelfRatingQuizResultFinalRecord {
+    get final(): SelfRatingQuizResultFinalRecord {
         return this.#final!;
     }
 
-    constructor(result: ISelfRatingQuizResult);
+    constructor(result: SelfRatingQuizResult);
 
-    constructor(collection: IQuizCollection<ISelfRatingQuiz>, answers?: IQuizAnswer[]);
+    constructor(collection: QuizCollection<SelfRatingQuiz>, answers?: QuizAnswer[]);
 
-    constructor(resultOrCollection: ISelfRatingQuizResult | IQuizCollection<ISelfRatingQuiz>, answers?: IQuizAnswer[]) {
-        if ((resultOrCollection as ISelfRatingQuizResult).singled) {
-            this.#result = resultOrCollection as ISelfRatingQuizResult;
+    constructor(resultOrCollection: SelfRatingQuizResult | QuizCollection<SelfRatingQuiz>, answers?: QuizAnswer[]) {
+        if ((resultOrCollection as SelfRatingQuizResult).singled) {
+            this.#result = resultOrCollection as SelfRatingQuizResult;
             this.collection = undefined;
-        } else if ((resultOrCollection as IQuizCollection<ISelfRatingQuiz>).quizzes) {
+        } else if ((resultOrCollection as QuizCollection<SelfRatingQuiz>).quizzes) {
             this.#result = undefined;
-            this.collection = resultOrCollection as IQuizCollection<ISelfRatingQuiz>;
+            this.collection = resultOrCollection as QuizCollection<SelfRatingQuiz>;
             this.collection.userAnswers = answers ?? [];
         } else {
             throw new Error("Either collection or result must be provided");
@@ -124,7 +124,7 @@ export class SelfRatingQuizResult {
 
         const finalCategory = this.singles.sort((a, b) => b.count - a.count)[0].category;
 
-        const equals: ISelfRatingQuizResultSingledRecord[] = this.singles.filter(
+        const equals: SelfRatingQuizResultSingledRecord[] = this.singles.filter(
             s => s.percentage === this.singles.find(s => s.category === finalCategory)?.percentage,
         );
 
@@ -138,7 +138,7 @@ export class SelfRatingQuizResult {
         }
     }
 
-    private generateSingle(category: StyleCategory): ISelfRatingQuizResultSingledRecord {
+    private generateSingle(category: StyleCategory): SelfRatingQuizResultSingledRecord {
         const count = this.collection?.quizzes
             ?.filter(q => q.choiceCategories?.includes(category))
             ?.filter(
@@ -164,9 +164,9 @@ export class SelfRatingQuizResult {
     }
 
     private generatePair(
-        one?: ISelfRatingQuizResultPairedRecord,
-        two?: ISelfRatingQuizResultPairedRecord,
-    ): ISelfRatingQuizResultPairedRecord {
+        one?: SelfRatingQuizResultPairedRecord,
+        two?: SelfRatingQuizResultPairedRecord,
+    ): SelfRatingQuizResultPairedRecord {
         if (!one || !two) {
             return {
                 count: 0,

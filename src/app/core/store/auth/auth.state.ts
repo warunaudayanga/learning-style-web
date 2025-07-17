@@ -6,7 +6,7 @@ import { tap } from "rxjs/operators";
 import { HttpErrorResponse } from "@angular/common/http";
 import { AppService } from "src/app/app.service";
 import { AuthService } from "src/app/core/services/http/auth.service";
-import { IUser } from "../../interfaces/models";
+import { User } from "../../interfaces/models";
 import { UserRole } from "../../enums/user-role.enum";
 import { HttpError, SuccessResponse } from "../../interfaces";
 import { AuthError } from "../../enums/errors/auth.error.enum";
@@ -14,7 +14,7 @@ import { ClearState } from "../shared/state.actions";
 
 interface AuthStateModel {
     loggedIn: boolean;
-    user?: IUser;
+    user?: User;
 }
 
 @State<AuthStateModel>({
@@ -39,7 +39,7 @@ export class AuthState {
     }
 
     @Selector()
-    static user(state: AuthStateModel): IUser | undefined {
+    static user(state: AuthStateModel): User | undefined {
         return state.user;
     }
 
@@ -49,10 +49,10 @@ export class AuthState {
     }
 
     @Action(Login)
-    login({ patchState }: StateContext<AuthStateModel>, action: Login): Observable<IUser | null> {
+    login({ patchState }: StateContext<AuthStateModel>, action: Login): Observable<User | null> {
         return this.authService.login(action.payload).pipe(
             take(1),
-            tap((user: IUser) => {
+            tap((user: User) => {
                 this.authService.setAuthenticationResponse(true);
                 patchState({
                     loggedIn: true,

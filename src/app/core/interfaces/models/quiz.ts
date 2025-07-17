@@ -1,22 +1,21 @@
 import { QuizType } from "../../enums/quiz-type.eum";
-import { IQuiz, IQuizAnswer, IQuizAnswers, IQuizChoice } from "../quiz.interfaces";
-import { IUser } from "./user";
-import { IBaseModel } from "./base-model";
+import { Quiz, QuizAnswer, QuizAnswers, QuizChoice } from "../quiz.interfaces";
+import { User } from "./user";
+import { Model } from "@hichchi/nest-connector/crud";
 
-export interface IQuizCollection<Quiz extends IQuiz<IQuizChoice>> extends IBaseModel {
-    id: string;
+export interface QuizCollection<Q extends Quiz<QuizChoice>> extends Model {
     type: QuizType;
-    quizzes: Quiz[];
-    answers: IQuizAnswers[];
-    userAnswers: IQuizAnswer[];
+    quizzes: Q[];
+    answers: QuizAnswers[];
+    userAnswers: QuizAnswer[];
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export interface IQuizUserAnswers<Quiz extends IQuiz<IQuizChoice>, QuizResult = any> extends IBaseModel {
-    quizCollection?: IQuizCollection<Quiz>;
+export interface QuizUserAnswers<Q extends Quiz<QuizChoice>, QuizResult = any> extends Model {
+    quizCollection?: QuizCollection<Q>;
     quizCollectionId?: number;
-    user: IUser;
+    user: User;
     userId: number;
-    answers: IQuizAnswer[];
+    answers: QuizAnswer[];
     result: QuizResult;
 }

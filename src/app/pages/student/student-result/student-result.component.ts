@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { SelfRatingQuizResult } from "../../../core/utils/self-rating-quiz-result";
+import { SelfRatingQuizResultDto } from "../../../core/utils/self-rating-quiz-result.dto";
 import { ProgressbarType } from "ngx-bootstrap/progressbar";
 import { AppService } from "../../../app.service";
 import { Store } from "@ngxs/store";
@@ -8,8 +8,8 @@ import { QuizState } from "../../../core/store/quiz/quiz.state";
 import { QuizType } from "../../../core/enums/quiz-type.eum";
 import { HttpError } from "../../../core/interfaces";
 import { QuizError } from "../../../core/enums/errors/quiz.error.enum";
-import { IQuizUserAnswers } from "../../../core/interfaces/models/quiz";
-import { IQuiz, IQuizChoice } from "../../../core/interfaces/quiz.interfaces";
+import { QuizUserAnswers } from "../../../core/interfaces/models/quiz";
+import { Quiz, QuizChoice } from "../../../core/interfaces/quiz.interfaces";
 
 @Component({
     selector: "app-student-result",
@@ -17,9 +17,9 @@ import { IQuiz, IQuizChoice } from "../../../core/interfaces/quiz.interfaces";
     styleUrls: ["./student-result.component.scss"],
 })
 export class StudentResultComponent implements OnInit {
-    selfRatingQuizResult?: SelfRatingQuizResult;
+    selfRatingQuizResult?: SelfRatingQuizResultDto;
 
-    afterLectureFeedbackResult?: IQuizUserAnswers<IQuiz<IQuizChoice>>;
+    afterLectureFeedbackResult?: QuizUserAnswers<Quiz<QuizChoice>>;
 
     loading = false;
 
@@ -36,7 +36,7 @@ export class StudentResultComponent implements OnInit {
     ngOnInit(): void {
         const selfRatingQuizResult = this.store.selectSnapshot(QuizState.getQuizAnswers)(QuizType.SELF_RATING)?.result;
         if (this.selfRatingQuizResult) {
-            this.selfRatingQuizResult = new SelfRatingQuizResult(selfRatingQuizResult);
+            this.selfRatingQuizResult = new SelfRatingQuizResultDto(selfRatingQuizResult);
         } else {
             this.getSelfRatingQuizCollection();
         }
@@ -56,7 +56,7 @@ export class StudentResultComponent implements OnInit {
         this.quizService.getAnswers(QuizType.SELF_RATING).subscribe({
             next: quizCollection => {
                 this.loading = false;
-                this.selfRatingQuizResult = new SelfRatingQuizResult(quizCollection.result);
+                this.selfRatingQuizResult = new SelfRatingQuizResultDto(quizCollection.result);
             },
             error: (err: HttpError) => {
                 this.loading = false;

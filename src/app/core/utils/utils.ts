@@ -1,7 +1,7 @@
 // noinspection JSUnusedGlobalSymbols
 
 import { toTitleCase } from "hichchi-utils";
-import { CustomComponentType, HttpError, IDropdownValue, IEnumToDropdownFormat } from "../interfaces";
+import { CustomComponentType, HttpError, DropdownValue, EnumToDropdownFormat } from "../interfaces";
 import { inject } from "@angular/core";
 import { Observer } from "rxjs";
 import { AppService } from "../../app.service";
@@ -14,9 +14,9 @@ import { AppService } from "../../app.service";
  */
 export const enumToDropdownList = <T>(
     object: { [s: string]: T } | ArrayLike<T>,
-    format?: IEnumToDropdownFormat,
-): IDropdownValue[] => {
-    const values: IDropdownValue[] = Object.entries(object)
+    format?: EnumToDropdownFormat,
+): DropdownValue[] => {
+    const values: DropdownValue[] = Object.entries(object)
         .filter(([key]: [string, T]): boolean => isNaN(Number(key)))
         .map(([name, value]) => ({
             name: format?.name ? format.name(name, value) : toTitleCase(name),

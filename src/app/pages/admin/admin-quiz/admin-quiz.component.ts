@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { IQuizCollection } from "../../../core/interfaces/models/quiz";
-import { ISelfRatingQuiz } from "../../../core/interfaces/self-rating-quiz.interfaces";
-import { IQuiz, IQuizChoice, IQuizChoiceExtenders } from "../../../core/interfaces/quiz.interfaces";
+import { QuizCollection } from "../../../core/interfaces/models/quiz";
+import { SelfRatingQuiz } from "../../../core/interfaces/self-rating-quiz.interfaces";
+import { Quiz, QuizChoice, QuizChoiceExtenders } from "../../../core/interfaces/quiz.interfaces";
 import { AppService } from "../../../app.service";
 import { Store } from "@ngxs/store";
 import { QuizService } from "../../../core/services/http/quiz.service";
@@ -21,24 +21,24 @@ export class AdminQuizComponent implements OnInit {
 
     @Input() title!: string;
 
-    @Input() extenders?: IQuizChoiceExtenders;
+    @Input() extenders?: QuizChoiceExtenders;
 
     @Input() rating?: number;
 
-    quizCollection?: IQuizCollection<ISelfRatingQuiz>;
+    quizCollection?: QuizCollection<SelfRatingQuiz>;
 
-    get quizzes(): IQuiz<IQuizChoice>[] {
+    get quizzes(): Quiz<QuizChoice>[] {
         return this.quizCollection?.quizzes ?? [];
     }
 
-    set quizzes(quizzes: IQuiz<IQuizChoice>[]) {
+    set quizzes(quizzes: Quiz<QuizChoice>[]) {
         if (this.quizCollection) {
-            this.quizCollection.quizzes = quizzes as ISelfRatingQuiz[];
+            this.quizCollection.quizzes = quizzes as SelfRatingQuiz[];
         } else {
             this.quizCollection = {
                 type: this.quizType,
-                quizzes: quizzes as ISelfRatingQuiz[],
-            } as IQuizCollection<ISelfRatingQuiz>;
+                quizzes: quizzes as SelfRatingQuiz[],
+            } as QuizCollection<SelfRatingQuiz>;
         }
     }
 
@@ -69,8 +69,8 @@ export class AdminQuizComponent implements OnInit {
         this.error = false;
         const localCollection = this.store.selectSnapshot(QuizState.getQuiz)(
             this.quizType,
-        ) as IQuizCollection<ISelfRatingQuiz>;
-        this.quizService.getQuizCollection<ISelfRatingQuiz>(this.quizType).subscribe({
+        ) as QuizCollection<SelfRatingQuiz>;
+        this.quizService.getQuizCollection<SelfRatingQuiz>(this.quizType).subscribe({
             next: qc => {
                 this.loading = false;
                 if (localCollection) {
@@ -107,7 +107,7 @@ export class AdminQuizComponent implements OnInit {
 
     saveQuizzes(): void {
         this.saving = true;
-        this.quizService.saveQuizCollection<ISelfRatingQuiz>(this.quizType, this.quizCollection!.quizzes).subscribe({
+        this.quizService.saveQuizCollection<SelfRatingQuiz>(this.quizType, this.quizCollection!.quizzes).subscribe({
             next: qc => {
                 this.saving = false;
                 this.quizCollection = qc;

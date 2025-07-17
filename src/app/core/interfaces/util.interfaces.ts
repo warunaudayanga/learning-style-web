@@ -6,12 +6,12 @@ export interface KeyValue<V = any> {
     value: V;
 }
 
-export interface IDropdownValue {
+export interface DropdownValue {
     name: string;
     value: any;
 }
 
-export interface IEnumToDropdownFormat {
+export interface EnumToDropdownFormat {
     all?: boolean;
     name?: (name: string, value: any) => any;
     value?: (value: any) => any;

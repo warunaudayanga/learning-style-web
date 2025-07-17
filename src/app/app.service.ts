@@ -5,7 +5,7 @@ import { Router } from "@angular/router";
 import { environment } from "../environments/environment";
 import { IndividualConfig, ToastrService } from "ngx-toastr";
 import { Observable, ReplaySubject, Subject } from "rxjs";
-import { IUser } from "./core/interfaces/models";
+import { User } from "./core/interfaces/models";
 import { ScrollDir } from "./core/enums/scroll-dir.enum";
 import { StudentMenu } from "./core/enums/menus/student-menu.enum";
 import { AdinMenu } from "./core/enums/menus/adin-menu.enum";
@@ -16,9 +16,9 @@ import { MenuToggleOptions } from "./core/interfaces";
     providedIn: "root",
 })
 export class AppService {
-    private _user?: IUser;
+    private _user?: User;
 
-    private userListener: Subject<IUser | undefined> = new Subject<IUser | undefined>();
+    private userListener: Subject<User | undefined> = new Subject<User | undefined>();
 
     toastConfig: Partial<IndividualConfig>;
 
@@ -41,16 +41,16 @@ export class AppService {
         this.toastConfig = { positionClass: "toast-top-right" };
     }
 
-    get user(): IUser | undefined {
+    get user(): User | undefined {
         return this._user;
     }
 
-    set user(user: IUser | undefined) {
+    set user(user: User | undefined) {
         this.userListener.next(user);
         this._user = user;
     }
 
-    getUserListener(): Observable<IUser | undefined> {
+    getUserListener(): Observable<User | undefined> {
         return this.userListener.asObservable();
     }
 

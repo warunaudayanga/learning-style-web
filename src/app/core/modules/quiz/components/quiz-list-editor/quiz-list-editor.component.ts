@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { IQuiz, IQuizChoice, IQuizChoiceExtenders } from "../../../../interfaces/quiz.interfaces";
+import { Quiz, QuizChoice, QuizChoiceExtenders } from "../../../../interfaces/quiz.interfaces";
 import { v4 as uuid } from "uuid";
 import { DialogService } from "../../../dialog";
 
@@ -10,22 +10,22 @@ import { DialogService } from "../../../dialog";
     styleUrls: ["./quiz-list-editor.component.scss"],
 })
 export class QuizListEditorComponent {
-    @Input() quizzes: IQuiz<IQuizChoice>[] = [];
+    @Input() quizzes: Quiz<QuizChoice>[] = [];
 
     @Input() rating?: number;
 
-    @Input() extenders?: IQuizChoiceExtenders;
+    @Input() extenders?: QuizChoiceExtenders;
 
-    @Output() quizAdd: EventEmitter<IQuiz<IQuizChoice>> = new EventEmitter<IQuiz<IQuizChoice>>();
+    @Output() quizAdd: EventEmitter<Quiz<QuizChoice>> = new EventEmitter<Quiz<QuizChoice>>();
 
-    @Output() quizRemove: EventEmitter<IQuiz<IQuizChoice>> = new EventEmitter<IQuiz<IQuizChoice>>();
+    @Output() quizRemove: EventEmitter<Quiz<QuizChoice>> = new EventEmitter<Quiz<QuizChoice>>();
 
-    @Output() quizzesChange: EventEmitter<IQuiz<IQuizChoice>[]> = new EventEmitter<IQuiz<IQuizChoice>[]>();
+    @Output() quizzesChange: EventEmitter<Quiz<QuizChoice>[]> = new EventEmitter<Quiz<QuizChoice>[]>();
 
     constructor(private readonly dialogService: DialogService) {}
 
     onQuizAdd(): void {
-        const quiz: IQuiz<IQuizChoice> = {
+        const quiz: Quiz<QuizChoice> = {
             id: uuid(),
             question: "",
             multiple: false,
@@ -39,7 +39,7 @@ export class QuizListEditorComponent {
         this.quizzesChange.emit(this.quizzes);
     }
 
-    onQuizRemove(quiz: IQuiz<IQuizChoice>): void {
+    onQuizRemove(quiz: Quiz<QuizChoice>): void {
         this.dialogService
             .confirm("Are you sure you want to remove this question?", { ok: "Remove" })
             .subscribe(confirmation => {

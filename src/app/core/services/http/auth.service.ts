@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable, Subject, take } from "rxjs";
-import { ILoginDto } from "../../dtos/auth/login-dto";
-import { IUser } from "../../interfaces/models";
+import { LoginDto } from "../../dtos/auth/login-dto";
+import { User } from "../../interfaces/models";
 import { SuccessResponse } from "../../interfaces";
 import { AuthError } from "../../enums/errors/auth.error.enum";
 
@@ -16,16 +16,16 @@ export class AuthService {
 
     authResponseListener: Subject<AuthError | boolean> = new Subject<AuthError | boolean>();
 
-    login(loginDto: ILoginDto): Observable<IUser> {
-        return this.http.post<IUser>(`${AUTH_URL}/login`, loginDto).pipe(take(1));
+    login(loginDto: LoginDto): Observable<User> {
+        return this.http.post<User>(`${AUTH_URL}/login`, loginDto).pipe(take(1));
     }
 
-    register(formData: FormData): Observable<IUser> {
-        return this.http.post<IUser>(`${AUTH_URL}/register`, formData).pipe(take(1));
+    register(formData: FormData): Observable<User> {
+        return this.http.post<User>(`${AUTH_URL}/register`, formData).pipe(take(1));
     }
 
-    me(): Observable<IUser> {
-        return this.http.get<IUser>(`${AUTH_URL}/me`).pipe(take(1));
+    me(): Observable<User> {
+        return this.http.get<User>(`${AUTH_URL}/me`).pipe(take(1));
     }
 
     logout(): Observable<SuccessResponse> {

@@ -1,56 +1,56 @@
 import { QuizType } from "../enums/quiz-type.eum";
-import { IUser } from "./models";
+import { User } from "./models";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export interface IQuizChoiceExtender<Extend extends { [k: string]: any }> {
+export interface QuizChoiceExtender<Extend extends { [k: string]: any }> {
     label: string;
     extend: Extend;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export interface IQuizChoiceExtenders<Extend extends { [k: string]: any } = any> {
+export interface QuizChoiceExtenders<Extend extends { [k: string]: any } = any> {
     key: keyof Extend;
     width?: string;
-    items: IQuizChoiceExtender<Extend>[];
+    items: QuizChoiceExtender<Extend>[];
 }
 
-export interface IQuizChoice {
+export interface QuizChoice {
     id: string;
     value: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [k: string]: any;
 }
 
-export interface IQuiz<QuizChoice extends IQuizChoice> {
+export interface Quiz<QC extends QuizChoice> {
     id: string;
     heading?: string;
     question: string;
-    choices?: QuizChoice[];
+    choices?: QC[];
     multiple?: boolean;
-    answer?: QuizChoice[];
+    answer?: QC[];
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [k: string]: any;
 }
 
-export interface IQuizAnswer {
+export interface QuizAnswer {
     id: string;
     answer: { id: string; value: string }[];
 }
 
-export interface IQuizDraft {
+export interface QuizDraft {
     id: string;
     heading?: string;
     question?: string;
-    choices?: IQuizChoice[];
+    choices?: QuizChoice[];
     choice?: boolean;
     multiple?: boolean;
-    answer?: IQuizChoice[];
+    answer?: QuizChoice[];
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export interface IQuizAnswers<QuizResult = any> {
+export interface QuizAnswers<QuizResult = any> {
     quizType: QuizType;
-    answers: IQuizAnswer[];
+    answers: QuizAnswer[];
     result?: QuizResult;
-    user?: IUser;
+    user?: User;
 }

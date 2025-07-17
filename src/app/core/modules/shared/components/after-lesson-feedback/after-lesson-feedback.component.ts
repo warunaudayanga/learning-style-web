@@ -1,8 +1,8 @@
-import { AfterViewInit, Component, Input } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { toFirstCase, toTitleCase } from "hichchi-utils";
 import { QuizType } from "src/app/core/enums/quiz-type.eum";
-import { IQuizUserAnswers } from "../../../../interfaces/models/quiz";
-import { IQuiz, IQuizChoice } from "../../../../interfaces/quiz.interfaces";
+import { QuizUserAnswers } from "../../../../interfaces/models/quiz";
+import { Quiz, QuizChoice } from "../../../../interfaces/quiz.interfaces";
 import { Agreement } from "../../../../enums/agreement.enum";
 
 @Component({
@@ -11,7 +11,7 @@ import { Agreement } from "../../../../enums/agreement.enum";
     styleUrls: ["./after-lesson-feedback.component.scss"],
 })
 export class AfterLessonFeedbackComponent {
-    @Input() result?: IQuizUserAnswers<IQuiz<IQuizChoice>>;
+    @Input() result?: QuizUserAnswers<Quiz<QuizChoice>>;
 
     loading = false;
 

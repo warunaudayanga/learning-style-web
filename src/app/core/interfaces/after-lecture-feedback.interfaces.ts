@@ -1,6 +1,6 @@
-import { IAfterLectureFeedbackResponse } from "../types/after-lecture-feedback.types";
+import { AfterLectureFeedbackResponse } from "../types/after-lecture-feedback.types";
 
 export interface IAfterLectureFeedbackResult {
-    responses: IAfterLectureFeedbackResponse;
+    responses: AfterLectureFeedbackResponse;
     weightedAverage: number;
 }

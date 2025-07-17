@@ -1,16 +1,17 @@
-import { IBaseModel } from "./base-model";
+import { User as HcUser } from "@hichchi/nest-connector/auth";
 import { UserRole } from "../../enums/user-role.enum";
-import { IQuizUserAnswers } from "./quiz";
+import { QuizUserAnswers } from "./quiz";
 import { DoneICT } from "../../enums/done-ict.enum";
 
-export interface IUser extends IBaseModel {
+export interface User extends HcUser<UserRole> {
     name: string;
+    email: string;
     username: string;
+    password: string;
     role: UserRole;
     regNo: string;
     dob: string;
     gender: string;
-    email: string;
     cot: string;
     cotOther: string;
     olMaths: string;
@@ -30,5 +31,5 @@ export interface IUser extends IBaseModel {
     followOther: boolean;
     followedOther: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    answers?: IQuizUserAnswers<any>[];
+    answers: QuizUserAnswers<any>[];
 }

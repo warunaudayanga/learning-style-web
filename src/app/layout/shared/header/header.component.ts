@@ -5,7 +5,7 @@ import { Logout } from "../../../core/store/auth/auth.action";
 import { HeaderMenu } from "../../../core/enums/menus/header-menu.enum";
 import { AuthState } from "../../../core/store/auth/auth.state";
 import { Observable, Subscription } from "rxjs";
-import { IUser } from "../../../core/interfaces/models";
+import { User } from "../../../core/interfaces/models";
 
 @Component({
     selector: "app-header",
@@ -13,9 +13,9 @@ import { IUser } from "../../../core/interfaces/models";
     styleUrls: ["./header.component.scss"],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-    @Select(AuthState.user) user$!: Observable<IUser | undefined>;
+    @Select(AuthState.user) user$!: Observable<User | undefined>;
 
-    user?: IUser;
+    user?: User;
 
     userSub?: Subscription;
 

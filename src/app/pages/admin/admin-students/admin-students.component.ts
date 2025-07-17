@@ -1,13 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import { UserService } from "../../../core/services/http/user.service";
-import { IUser } from "../../../core/interfaces/models";
+import { User } from "../../../core/interfaces/models";
 import { AppService } from "../../../app.service";
 import { HttpError } from "../../../core/interfaces";
-import { IQuizUserAnswers } from "../../../core/interfaces/models/quiz";
-import { ISelfRatingQuiz } from "../../../core/interfaces/self-rating-quiz.interfaces";
+import { QuizUserAnswers } from "../../../core/interfaces/models/quiz";
+import { SelfRatingQuiz } from "../../../core/interfaces/self-rating-quiz.interfaces";
 import { QuizType } from "../../../core/enums/quiz-type.eum";
 import { groupBy } from "hichchi-utils";
-import { SelfRatingQuizResult } from "../../../core/utils/self-rating-quiz-result";
+import { SelfRatingQuizResultDto } from "../../../core/utils/self-rating-quiz-result.dto";
 import { StyleCategory } from "../../../core/enums/style-category.enum";
 
 @Component({
@@ -16,9 +16,9 @@ import { StyleCategory } from "../../../core/enums/style-category.enum";
     styleUrls: ["./admin-students.component.scss"],
 })
 export class AdminStudentsComponent implements OnInit {
-    students: IUser[] = [];
+    students: User[] = [];
 
-    studentGroups?: [string | undefined, IUser[]][];
+    studentGroups?: [string | undefined, User[]][];
 
     loading = false;
 
@@ -42,7 +42,7 @@ export class AdminStudentsComponent implements OnInit {
                 this.loading = false;
                 this.students = students.sort((a, b) => (a.name && b.name ? a.name.localeCompare(b.name) : 0));
                 this.studentGroups = Array.from(
-                    groupBy(students, (student: IUser) => student.regNo?.split("/")?.[1]).entries(),
+                    groupBy(students, (student: User) => student.regNo?.split("/")?.[1]).entries(),
                 ).sort((a, b) => (a[0] && b[0] ? a[0].localeCompare(b[0]) : 0));
             },
             error: (err: HttpError) => {
@@ -53,18 +53,18 @@ export class AdminStudentsComponent implements OnInit {
         });
     }
 
-    getResult(answers?: IQuizUserAnswers<ISelfRatingQuiz>[]): SelfRatingQuizResult | undefined {
-        const answer: IQuizUserAnswers<ISelfRatingQuiz> | undefined = answers?.find(
+    getResult(answers?: QuizUserAnswers<SelfRatingQuiz>[]): SelfRatingQuizResultDto | undefined {
+        const answer: QuizUserAnswers<SelfRatingQuiz> | undefined = answers?.find(
             answer => answer.quizCollection?.type === QuizType.SELF_RATING,
         );
-        return answer ? new SelfRatingQuizResult(answer.result) : undefined;
+        return answer ? new SelfRatingQuizResultDto(answer.result) : undefined;
     }
 
     refresh(): void {
         this.getStudents();
     }
 
-    filterByCategory(students: IUser[], category?: StyleCategory | "mixed"): IUser[] {
+    filterByCategory(students: User[], category?: StyleCategory | "mixed"): User[] {
         return students.filter(student => {
             const categories = this.getResult(student.answers)?.result?.final?.categories;
             if (category === "mixed") {

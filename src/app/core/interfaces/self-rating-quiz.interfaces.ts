@@ -1,4 +1,4 @@
-import { IQuiz, IQuizAnswer, IQuizAnswers, IQuizChoice } from "./quiz.interfaces";
+import { Quiz, QuizAnswer, QuizAnswers, QuizChoice } from "./quiz.interfaces";
 import { StyleCategory } from "../enums/style-category.enum";
 import { QuizType } from "../enums/quiz-type.eum";
 
@@ -6,64 +6,64 @@ export interface ISelfRatingQuizChoiceExtendData {
     category: StyleCategory;
 }
 
-export interface ISelfRatingQuizChoice extends IQuizChoice {
+export interface SelfRatingQuizChoice extends QuizChoice {
     id: string;
     value: string;
     category: StyleCategory;
 }
 
-export interface ISelfRatingQuiz extends IQuiz<IQuizChoice> {
-    choices: ISelfRatingQuizChoice[];
+export interface SelfRatingQuiz extends Quiz<QuizChoice> {
+    choices: SelfRatingQuizChoice[];
     choiceCategories: StyleCategory[];
     sequence: number;
 }
 
-export interface ISelfRatingQuizResultSingledRecord {
+export interface SelfRatingQuizResultSingledRecord {
     category?: StyleCategory;
     label?: string;
     count: number;
     percentage: number;
 }
 
-export interface ISelfRatingQuizResultPairedRecord extends ISelfRatingQuizResultSingledRecord {
+export interface SelfRatingQuizResultPairedRecord extends SelfRatingQuizResultSingledRecord {
     difference?: number;
     selectedCategory?: StyleCategory;
 }
 
-export interface ISelfRatingQuizResultFinalRecord {
+export interface SelfRatingQuizResultFinalRecord {
     categories?: StyleCategory[];
     label?: string;
     count: number;
     percentage: number;
 }
 
-export interface ISelfRatingQuizResultSingle {
-    activist: ISelfRatingQuizResultSingledRecord;
-    reflector: ISelfRatingQuizResultSingledRecord;
-    sensing: ISelfRatingQuizResultSingledRecord;
-    intuitive: ISelfRatingQuizResultSingledRecord;
-    visual: ISelfRatingQuizResultSingledRecord;
-    verbal: ISelfRatingQuizResultSingledRecord;
-    sequential: ISelfRatingQuizResultSingledRecord;
-    global: ISelfRatingQuizResultSingledRecord;
+export interface SelfRatingQuizResultSingle {
+    activist: SelfRatingQuizResultSingledRecord;
+    reflector: SelfRatingQuizResultSingledRecord;
+    sensing: SelfRatingQuizResultSingledRecord;
+    intuitive: SelfRatingQuizResultSingledRecord;
+    visual: SelfRatingQuizResultSingledRecord;
+    verbal: SelfRatingQuizResultSingledRecord;
+    sequential: SelfRatingQuizResultSingledRecord;
+    global: SelfRatingQuizResultSingledRecord;
 }
 
-export interface ISelfRatingQuizResultPaired {
-    activistReflector: ISelfRatingQuizResultPairedRecord;
-    sensingIntuitive: ISelfRatingQuizResultPairedRecord;
-    visualVerbal: ISelfRatingQuizResultPairedRecord;
-    sequentialGlobal: ISelfRatingQuizResultPairedRecord;
+export interface SelfRatingQuizResultPaired {
+    activistReflector: SelfRatingQuizResultPairedRecord;
+    sensingIntuitive: SelfRatingQuizResultPairedRecord;
+    visualVerbal: SelfRatingQuizResultPairedRecord;
+    sequentialGlobal: SelfRatingQuizResultPairedRecord;
 }
 
-export interface ISelfRatingQuizResult {
-    singled: ISelfRatingQuizResultSingle;
-    paired: ISelfRatingQuizResultPaired;
+export interface SelfRatingQuizResult {
+    singled: SelfRatingQuizResultSingle;
+    paired: SelfRatingQuizResultPaired;
     total: number;
-    final: ISelfRatingQuizResultFinalRecord;
+    final: SelfRatingQuizResultFinalRecord;
 }
 // noinspection JSUnusedGlobalSymbols
-export interface ISelfRatingQuizAnswers extends IQuizAnswers {
+export interface ISelfRatingQuizAnswers extends QuizAnswers {
     quizType: QuizType;
-    answers: IQuizAnswer[];
-    result?: ISelfRatingQuizResult;
+    answers: QuizAnswer[];
+    result?: SelfRatingQuizResult;
 }

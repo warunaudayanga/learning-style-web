@@ -19,8 +19,6 @@
         [readonly]="readonly"
         [(ngModel)]="value"
         [disabled]="disabled"
-        [max]="max"
-        [min]="min"
         (ngModelChange)="changeValue($event)"
         (focus)="onFocus.emit($event)"
     />

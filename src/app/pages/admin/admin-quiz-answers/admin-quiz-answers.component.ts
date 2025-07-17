@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { IUser } from "../../../core/interfaces/models";
+import { User } from "../../../core/interfaces/models";
 import { AppService } from "../../../app.service";
 import { ActivatedRoute } from "@angular/router";
 import { UserService } from "../../../core/services/http/user.service";
@@ -17,7 +17,7 @@ export class AdminQuizAnswersComponent implements OnInit {
 
     quizType?: QuizType;
 
-    student?: IUser;
+    student?: User;
 
     loading = false;
 

@@ -11,7 +11,7 @@ import {
     SimpleChanges,
 } from "@angular/core";
 import { QzComponent } from "../qz/qz.component";
-import { IQuiz, IQuizAnswer, IQuizChoice } from "../../../../interfaces/quiz.interfaces";
+import { Quiz, QuizAnswer, QuizChoice } from "../../../../interfaces/quiz.interfaces";
 import { DialogLevel } from "../../../dialog/enums";
 import { DialogService } from "../../../dialog";
 
@@ -23,9 +23,9 @@ import { DialogService } from "../../../dialog";
 })
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class QzListComponent implements OnInit, OnChanges, AfterContentInit {
-    @Input() items?: IQuiz<IQuizChoice>[] = [];
+    @Input() items?: Quiz<QuizChoice>[] = [];
 
-    @Input() answers: IQuizAnswer[] = [];
+    @Input() answers: QuizAnswer[] = [];
 
     @Input() submitted = false;
 
@@ -39,7 +39,7 @@ export class QzListComponent implements OnInit, OnChanges, AfterContentInit {
 
     @Input() limit?: number;
 
-    @Output() answersChange: EventEmitter<IQuizAnswer[]> = new EventEmitter<IQuizAnswer[]>();
+    @Output() answersChange: EventEmitter<QuizAnswer[]> = new EventEmitter<QuizAnswer[]>();
 
     @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
 
@@ -83,7 +83,7 @@ export class QzListComponent implements OnInit, OnChanges, AfterContentInit {
         });
     }
 
-    onAnswerChange(id: string, answer: IQuizChoice[]): void {
+    onAnswerChange(id: string, answer: QuizChoice[]): void {
         const qAns = this.answers.find(ans => ans.id === id);
         if (qAns) {
             qAns.answer = answer;
@@ -93,7 +93,7 @@ export class QzListComponent implements OnInit, OnChanges, AfterContentInit {
         this.answersChange.emit(this.answers);
     }
 
-    getAnswer(quiz: IQuiz<IQuizChoice>): IQuizChoice[] {
+    getAnswer(quiz: Quiz<QuizChoice>): QuizChoice[] {
         return this.answers?.find(ans => ans.id === quiz.id)?.answer ?? [];
     }
 

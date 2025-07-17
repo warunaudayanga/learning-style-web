@@ -10,21 +10,21 @@ import {
     ClearQuiz,
 } from "./quiz.action";
 import { deepCopy } from "hichchi-utils";
-import { IQuiz, IQuizAnswers, IQuizChoice } from "../../interfaces/quiz.interfaces";
+import { Quiz, QuizAnswers, QuizChoice } from "../../interfaces/quiz.interfaces";
 import { ClearState } from "../shared/state.actions";
 import { QuizType } from "../../enums/quiz-type.eum";
 import { QuizService } from "../../services/http/quiz.service";
 import { catchError, Observable, of, take } from "rxjs";
 import { tap } from "rxjs/operators";
 import { HttpError } from "../../interfaces";
-import { IQuizCollection } from "../../interfaces/models/quiz";
+import { QuizCollection } from "../../interfaces/models/quiz";
 import { AppService } from "../../../app.service";
 import { QuizError } from "../../enums/errors/quiz.error.enum";
 
 interface QuizStateModel {
-    quizCollectionList: IQuizCollection<IQuiz<IQuizChoice>>[];
-    quizAnswersList: IQuizAnswers[];
-    quizAnswersDraftList: IQuizAnswers[];
+    quizCollectionList: QuizCollection<Quiz<QuizChoice>>[];
+    quizAnswersList: QuizAnswers[];
+    quizAnswersDraftList: QuizAnswers[];
 }
 
 @State<QuizStateModel>({
@@ -57,22 +57,22 @@ export class QuizState implements NgxsOnInit {
     }
 
     @Selector()
-    static getQuiz(state: QuizStateModel): (quizType: QuizType) => IQuizCollection<IQuiz<IQuizChoice>> | undefined {
-        return (quizType: QuizType): IQuizCollection<IQuiz<IQuizChoice>> | undefined => {
+    static getQuiz(state: QuizStateModel): (quizType: QuizType) => QuizCollection<Quiz<QuizChoice>> | undefined {
+        return (quizType: QuizType): QuizCollection<Quiz<QuizChoice>> | undefined => {
             return deepCopy(state.quizCollectionList.find(list => list.type === quizType));
         };
     }
 
     @Selector()
-    static getQuizAnswers(state: QuizStateModel): (quizType: QuizType) => IQuizAnswers | undefined {
-        return (quizType: QuizType): IQuizAnswers | undefined => {
+    static getQuizAnswers(state: QuizStateModel): (quizType: QuizType) => QuizAnswers | undefined {
+        return (quizType: QuizType): QuizAnswers | undefined => {
             return deepCopy(state.quizAnswersList.find(list => list.quizType === quizType));
         };
     }
 
     @Selector()
-    static getQuizAnswersDraft(state: QuizStateModel): (quizType: QuizType) => IQuizAnswers | undefined {
-        return (quizType: QuizType): IQuizAnswers | undefined => {
+    static getQuizAnswersDraft(state: QuizStateModel): (quizType: QuizType) => QuizAnswers | undefined {
+        return (quizType: QuizType): QuizAnswers | undefined => {
             return deepCopy(state.quizAnswersDraftList.find(list => list.quizType === quizType));
         };
     }
@@ -81,7 +81,7 @@ export class QuizState implements NgxsOnInit {
     loadQuiz(
         _ctx: StateContext<QuizStateModel>,
         action: LoadQuiz,
-    ): Observable<IQuizCollection<IQuiz<IQuizChoice>> | null> {
+    ): Observable<QuizCollection<Quiz<QuizChoice>> | null> {
         return this.quizService.getQuizCollection(action.payload).pipe(
             take(1),
             tap(quizCollection => {

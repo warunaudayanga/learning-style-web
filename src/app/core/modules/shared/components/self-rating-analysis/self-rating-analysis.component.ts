@@ -1,12 +1,12 @@
 import { Component, Input } from "@angular/core";
-import { SelfRatingQuizResult } from "../../../../utils/self-rating-quiz-result";
+import { SelfRatingQuizResultDto } from "../../../../utils/self-rating-quiz-result.dto";
 import { ProgressbarType } from "ngx-bootstrap/progressbar";
 import { QuizType } from "../../../../enums/quiz-type.eum";
 import { StyleCategory } from "../../../../enums/style-category.enum";
 import { Store } from "@ngxs/store";
 import { AuthState } from "../../../../store/auth/auth.state";
 import { UserRole } from "../../../../enums/user-role.enum";
-import { ISelfRatingQuizResultFinalRecord } from "../../../../interfaces/self-rating-quiz.interfaces";
+import { SelfRatingQuizResultFinalRecord } from "../../../../interfaces/self-rating-quiz.interfaces";
 
 @Component({
     selector: "app-self-rating-analysis",
@@ -14,7 +14,7 @@ import { ISelfRatingQuizResultFinalRecord } from "../../../../interfaces/self-ra
     styleUrls: ["./self-rating-analysis.component.scss"],
 })
 export class SelfRatingAnalysisComponent {
-    @Input() result?: SelfRatingQuizResult;
+    @Input() result?: SelfRatingQuizResultDto;
 
     @Input() child = false;
 
@@ -28,7 +28,7 @@ export class SelfRatingAnalysisComponent {
         this.who = this.store.selectSnapshot(AuthState.role) === UserRole.STUDENT ? "You" : "This student";
     }
 
-    getDescription(final: ISelfRatingQuizResultFinalRecord): string | undefined {
+    getDescription(final: SelfRatingQuizResultFinalRecord): string | undefined {
         return final.categories
             ?.map(category => {
                 switch (category) {

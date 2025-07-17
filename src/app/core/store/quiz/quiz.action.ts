@@ -1,6 +1,6 @@
-import { IQuiz, IQuizAnswers, IQuizChoice } from "../../interfaces/quiz.interfaces";
+import { Quiz, QuizAnswers, QuizChoice } from "../../interfaces/quiz.interfaces";
 import { QuizType } from "../../enums/quiz-type.eum";
-import { IQuizCollection, IQuizUserAnswers } from "../../interfaces/models/quiz";
+import { QuizCollection, QuizUserAnswers } from "../../interfaces/models/quiz";
 
 export class LoadQuiz {
     static readonly type = "[Quiz] LoadQuizAnswers";
@@ -11,19 +11,19 @@ export class LoadQuiz {
 export class SaveQuiz {
     static readonly type = "[Quiz] SaveQuiz";
 
-    constructor(public payload: IQuizCollection<IQuiz<IQuizChoice>>) {}
+    constructor(public payload: QuizCollection<Quiz<QuizChoice>>) {}
 }
 
 export class SaveQuizAnswers {
     static readonly type = "[Quiz] SaveQuizAnswers";
 
-    constructor(public payload: { quizType: QuizType; answers: IQuizUserAnswers<IQuiz<IQuizChoice>> }) {}
+    constructor(public payload: { quizType: QuizType; answers: QuizUserAnswers<Quiz<QuizChoice>> }) {}
 }
 
 export class SaveQuizAnswersDraft {
     static readonly type = "[Quiz] SaveQuizAnswersDraft";
 
-    constructor(public payload: IQuizAnswers) {}
+    constructor(public payload: QuizAnswers) {}
 }
 
 export class ClearQuiz {

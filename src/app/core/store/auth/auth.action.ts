@@ -1,10 +1,10 @@
-import { IUser } from "../../interfaces/models";
-import { ILoginDto } from "../../dtos/auth/login-dto";
+import { User } from "../../interfaces/models";
+import { LoginDto } from "../../dtos/auth/login-dto";
 
 export class Login {
     static readonly type = "[Auth] Login";
 
-    constructor(public payload: ILoginDto) {}
+    constructor(public payload: LoginDto) {}
 }
 
 export class Logout {
@@ -14,7 +14,7 @@ export class Logout {
 export class SetLoggedUser {
     static readonly type = "[Auth] SetLoggedUser";
 
-    constructor(public payload: IUser) {}
+    constructor(public payload: User) {}
 }
 
 export class ClearLoggedUser {

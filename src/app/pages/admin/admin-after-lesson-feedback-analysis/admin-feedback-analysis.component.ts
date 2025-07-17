@@ -2,10 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { QuizService } from "../../../core/services/http/quiz.service";
 import { QuizType } from "../../../core/enums/quiz-type.eum";
 import { HttpError } from "../../../core/interfaces";
-import { IQuizCollection } from "../../../core/interfaces/models/quiz";
-import { IQuiz, IQuizChoice } from "../../../core/interfaces/quiz.interfaces";
+import { QuizCollection } from "../../../core/interfaces/models/quiz";
+import { Quiz, QuizChoice } from "../../../core/interfaces/quiz.interfaces";
 import { AppService } from "../../../app.service";
-import { IAfterLectureFeedbackResult } from "../../../core/interfaces/after-lecture-feedback.interfaces";
 import { ChartConfiguration } from "chart.js";
 
 @Component({
@@ -18,7 +17,7 @@ export class AdminFeedbackAnalysisComponent implements OnInit {
 
     error = false;
 
-    quizzes?: IQuizCollection<IQuiz<IQuizChoice>>;
+    quizzes?: QuizCollection<Quiz<QuizChoice>>;
 
     weightedAverage: number[] = [];
 

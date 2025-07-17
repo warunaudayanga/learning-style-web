@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { IQuizCollection } from "../../../core/interfaces/models/quiz";
-import { ISelfRatingQuiz, ISelfRatingQuizResult } from "../../../core/interfaces/self-rating-quiz.interfaces";
-import { IQuiz, IQuizAnswer, IQuizChoice } from "../../../core/interfaces/quiz.interfaces";
+import { Component, Input, OnInit } from "@angular/core";
+import { QuizCollection } from "../../../core/interfaces/models/quiz";
+import { SelfRatingQuiz } from "../../../core/interfaces/self-rating-quiz.interfaces";
+import { Quiz, QuizAnswer, QuizChoice } from "../../../core/interfaces/quiz.interfaces";
 import { AppService } from "../../../app.service";
 import { Store } from "@ngxs/store";
 import { QuizService } from "../../../core/services/http/quiz.service";
@@ -11,7 +11,6 @@ import { QuizType } from "../../../core/enums/quiz-type.eum";
 import { DialogLevel } from "../../../core/modules/dialog/enums";
 import { SaveQuizAnswers, SaveQuizAnswersDraft } from "../../../core/store/quiz/quiz.action";
 import { HttpError } from "../../../core/interfaces";
-import { SelfRatingQuizResult } from "../../../core/utils/self-rating-quiz-result";
 
 @Component({
     selector: "app-student-quiz",
@@ -36,15 +35,15 @@ export class StudentQuizComponent implements OnInit {
     @Input() readonly?: boolean;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    @Input() resultTransform?: (quizCollection: IQuizCollection<any>, answers: IQuizAnswer[]) => any;
+    @Input() resultTransform?: (quizCollection: QuizCollection<any>, answers: QuizAnswer[]) => any;
 
-    quizCollection?: IQuizCollection<ISelfRatingQuiz>;
+    quizCollection?: QuizCollection<SelfRatingQuiz>;
 
-    get quizzes(): IQuiz<IQuizChoice>[] {
+    get quizzes(): Quiz<QuizChoice>[] {
         return this.quizCollection?.quizzes ?? [];
     }
 
-    answers: IQuizAnswer[] = [];
+    answers: QuizAnswer[] = [];
 
     submitting = false;
 
@@ -68,7 +67,7 @@ export class StudentQuizComponent implements OnInit {
     localQuizCollection(): void {
         this.quizCollection = this.store.selectSnapshot(QuizState.getQuiz)(
             this.quizType,
-        ) as IQuizCollection<ISelfRatingQuiz>;
+        ) as QuizCollection<SelfRatingQuiz>;
         if (this.studentId || !this.quizCollection?.quizzes?.length || !this.loadAnswers(this.quizCollection)) {
             this.getQuizCollection();
         }
@@ -85,7 +84,7 @@ export class StudentQuizComponent implements OnInit {
     getQuizCollection(): void {
         this.loading = true;
         this.error = false;
-        this.quizService.getQuizCollection<ISelfRatingQuiz>(this.quizType, this.studentId).subscribe({
+        this.quizService.getQuizCollection<SelfRatingQuiz>(this.quizType, this.studentId).subscribe({
             next: qc => {
                 this.quizCollection = qc;
                 this.loading = false;
@@ -100,7 +99,7 @@ export class StudentQuizComponent implements OnInit {
         });
     }
 
-    loadAnswers(qc: IQuizCollection<IQuiz<IQuizChoice>>): boolean {
+    loadAnswers(qc: QuizCollection<Quiz<QuizChoice>>): boolean {
         if (!qc.userAnswers?.length) {
             this.answers = this.store.selectSnapshot(QuizState.getQuizAnswersDraft)(this.quizType)?.answers ?? [];
         } else {
@@ -126,7 +125,7 @@ export class StudentQuizComponent implements OnInit {
 
         this.submitting = true;
         this.quizService
-            .saveAnswers<ISelfRatingQuiz>(
+            .saveAnswers<SelfRatingQuiz>(
                 this.quizType,
                 this.answers,
                 this.resultTransform?.(this.quizCollection!, this.answers),
