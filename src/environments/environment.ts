@@ -1,4 +1,4 @@
 export const environment = {
-    production: false,
-    apiBase: "https://learning-style-zvm1.onrender.com",
+    production: true,
+    apiBase: "https://learning-style-api.vercel.app",
 };
