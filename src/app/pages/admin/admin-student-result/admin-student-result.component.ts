@@ -1,21 +1,49 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, RouterLink } from "@angular/router";
 import { UserService } from "../../../core/services/http/user.service";
-import { HttpError } from "../../../core/interfaces";
 import { AppService } from "../../../app.service";
 import { User } from "../../../core/interfaces/models";
 import { QuizUserAnswers } from "../../../core/interfaces/models/quiz";
 import { SelfRatingQuiz } from "../../../core/interfaces/self-rating-quiz.interfaces";
 import { QuizType } from "../../../core/enums/quiz-type.eum";
 import { SelfRatingQuizResultDto } from "../../../core/utils/self-rating-quiz-result.dto";
-import { toFirstCase } from "hichchi-utils";
+import { toFirstCase } from "@hichchi/utils";
 import { DoneICT } from "../../../core/enums/done-ict.enum";
 import { Quiz, QuizChoice } from "../../../core/interfaces/quiz.interfaces";
+import { NgIf, NgSwitch, NgSwitchCase } from "@angular/common";
+import { SectionComponent } from "../../../layout/shared/section/section.component";
+import { SelfRatingAnalysisComponent } from "../../../core/modules/shared/components/self-rating-analysis/self-rating-analysis.component";
+import { AfterLessonFeedbackComponent } from "../../../core/modules/shared/components/after-lesson-feedback/after-lesson-feedback.component";
+import { SectionHeadingDirective } from "../../../core/directives/section-heading.directive";
+import { HttpError } from "@hichchi/ngx-utils";
 
 @Component({
     selector: "app-admin-student-result",
     templateUrl: "./admin-student-result.component.html",
     styleUrls: ["./admin-student-result.component.scss"],
+    imports: [
+        NgSwitchCase,
+        NgSwitchCase,
+        NgSwitchCase,
+        NgIf,
+        NgIf,
+        NgIf,
+        NgIf,
+        SectionComponent,
+        SectionComponent,
+        NgIf,
+        NgIf,
+        SelfRatingAnalysisComponent,
+        AfterLessonFeedbackComponent,
+        SectionComponent,
+        SelfRatingAnalysisComponent,
+        RouterLink,
+        SectionComponent,
+        SectionComponent,
+        AfterLessonFeedbackComponent,
+        SectionHeadingDirective,
+        NgSwitch,
+    ],
 })
 export class AdminStudentResultComponent implements OnInit {
     studentId?: string;

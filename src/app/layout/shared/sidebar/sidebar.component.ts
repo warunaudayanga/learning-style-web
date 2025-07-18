@@ -1,15 +1,17 @@
 import { AfterContentInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
 import { MenuItem, MenuToggleOptions } from "../../../core/interfaces";
-import { NavigationEnd, Router } from "@angular/router";
+import { NavigationEnd, Router, RouterLink } from "@angular/router";
 import { Subscription } from "rxjs";
 import { StudentMenu } from "../../../core/enums/menus/student-menu.enum";
 import { AdinMenu } from "../../../core/enums/menus/adin-menu.enum";
 import { AppService } from "../../../app.service";
+import { NgClass, NgForOf, NgIf } from "@angular/common";
 
 @Component({
     selector: "app-sidebar",
     templateUrl: "./sidebar.component.html",
     styleUrls: ["./sidebar.component.scss"],
+    imports: [NgIf, NgForOf, RouterLink, NgClass],
 })
 export class SidebarComponent implements OnInit, AfterContentInit, OnDestroy {
     @Input() items: MenuItem[] = [];

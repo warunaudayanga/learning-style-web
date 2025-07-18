@@ -1,4 +1,4 @@
-@import '../ng-form-control';
+@use "../ng-form-control" as *;
 
 :host {
     min-width: 100px;

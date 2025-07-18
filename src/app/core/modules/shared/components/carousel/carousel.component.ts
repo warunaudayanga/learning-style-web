@@ -13,11 +13,13 @@ import {
     QueryList,
 } from "@angular/core";
 import { SlideComponent } from "./slide/slide.component";
+import { NgClass, NgForOf, NgIf } from "@angular/common";
 
 @Component({
     selector: "app-carousel",
     templateUrl: "./carousel.component.html",
     styleUrls: ["./carousel.component.scss"],
+    imports: [NgForOf, NgIf, NgClass],
 })
 export class CarouselComponent implements OnInit, AfterContentInit, AfterViewInit {
     @Input() controlSide: "left" | "center" | "right" = "left";

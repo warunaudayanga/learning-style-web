@@ -1,22 +1,29 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, inject, Input, OnInit } from "@angular/core";
 import { QuizCollection } from "../../../core/interfaces/models/quiz";
 import { SelfRatingQuiz } from "../../../core/interfaces/self-rating-quiz.interfaces";
 import { Quiz, QuizChoice, QuizChoiceExtenders } from "../../../core/interfaces/quiz.interfaces";
 import { AppService } from "../../../app.service";
-import { Store } from "@ngxs/store";
 import { QuizService } from "../../../core/services/http/quiz.service";
-import { QuizState } from "../../../core/store/quiz/quiz.state";
-import { HttpError } from "../../../core/interfaces";
 import { QuizError } from "../../../core/enums/errors/quiz.error.enum";
-import { ClearQuiz, SaveQuiz } from "../../../core/store/quiz/quiz.action";
 import { QuizType } from "../../../core/enums/quiz-type.eum";
+import { QuizState } from "../../../core/store/quiz.state";
+import { SectionComponent } from "../../../layout/shared/section/section.component";
+import { QuizListEditorComponent } from "../../../core/modules/quiz/components/quiz-list-editor/quiz-list-editor.component";
+import { NgButtonComponent } from "../../../core/modules/ng-control/components/ng-button/ng-button.component";
+import { SectionHeadingDirective } from "../../../core/directives/section-heading.directive";
+import { NgIf } from "@angular/common";
+import { HttpError } from "@hichchi/ngx-utils";
 
 @Component({
     selector: "app-admin-quiz",
     templateUrl: "./admin-quiz.component.html",
     styleUrls: ["./admin-quiz.component.scss"],
+    standalone: true,
+    imports: [SectionComponent, QuizListEditorComponent, NgButtonComponent, SectionHeadingDirective, NgIf],
 })
 export class AdminQuizComponent implements OnInit {
+    quizState = inject(QuizState);
+
     @Input() quizType!: QuizType;
 
     @Input() title!: string;
@@ -52,7 +59,6 @@ export class AdminQuizComponent implements OnInit {
 
     constructor(
         private readonly app: AppService,
-        private readonly store: Store,
         private readonly quizService: QuizService,
     ) {}
 
@@ -67,9 +73,10 @@ export class AdminQuizComponent implements OnInit {
     getQuizCollection(): void {
         this.loading = true;
         this.error = false;
-        const localCollection = this.store.selectSnapshot(QuizState.getQuiz)(
+        const localCollection: QuizCollection<SelfRatingQuiz> = this.quizState.getQuiz(
             this.quizType,
         ) as QuizCollection<SelfRatingQuiz>;
+
         this.quizService.getQuizCollection<SelfRatingQuiz>(this.quizType).subscribe({
             next: qc => {
                 this.loading = false;
@@ -81,7 +88,7 @@ export class AdminQuizComponent implements OnInit {
                     this.quizCollection = qc;
                 }
             },
-            error: (err: HttpError<QuizError>) => {
+            error: (err: HttpError) => {
                 this.loading = false;
                 if (err.error?.code !== QuizError.QUIZ_404_TYPE) {
                     this.error = true;
@@ -102,7 +109,7 @@ export class AdminQuizComponent implements OnInit {
 
     onQuizChange(): void {
         this.submitted = false;
-        this.store.dispatch(new SaveQuiz(this.quizCollection!));
+        this.quizState.saveQuiz(this.quizCollection!);
     }
 
     saveQuizzes(): void {
@@ -111,7 +118,7 @@ export class AdminQuizComponent implements OnInit {
             next: qc => {
                 this.saving = false;
                 this.quizCollection = qc;
-                this.store.dispatch(new ClearQuiz(this.quizType));
+                this.quizState.clearQuiz(this.quizType);
                 this.submitted = true;
                 this.app.success("Quiz saved successfully!");
             },

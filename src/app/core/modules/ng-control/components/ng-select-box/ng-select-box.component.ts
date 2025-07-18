@@ -12,7 +12,17 @@ import {
     SkipSelf,
 } from "@angular/core";
 import { NgFormControl } from "../../abstract-form-controll";
-import { AbstractControl, ControlContainer, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from "@angular/forms";
+import {
+    AbstractControl,
+    ControlContainer,
+    FormsModule,
+    NG_VALIDATORS,
+    NG_VALUE_ACCESSOR,
+    ValidationErrors,
+} from "@angular/forms";
+import { NgClass, NgIf } from "@angular/common";
+import { FirstCasePipe } from "../../../pipe/pipes/string.pipes";
+import { NgSelectComponent } from "@ng-select/ng-select";
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
@@ -32,6 +42,26 @@ import { AbstractControl, ControlContainer, NG_VALIDATORS, NG_VALUE_ACCESSOR, Va
             // eslint-disable-next-line no-use-before-define
             useExisting: forwardRef(() => NgSelectBoxComponent),
         },
+    ],
+    imports: [
+        NgIf,
+        NgIf,
+        NgIf,
+        NgIf,
+        NgIf,
+        NgIf,
+        FirstCasePipe,
+        NgSelectComponent,
+        FormsModule,
+        NgSelectComponent,
+        NgSelectComponent,
+        FormsModule,
+        NgSelectComponent,
+        NgClass,
+        NgSelectComponent,
+        NgSelectComponent,
+        NgSelectComponent,
+        NgSelectComponent,
     ],
 })
 export class NgSelectBoxComponent<T> extends NgFormControl<T[] | T> implements OnInit, OnChanges {

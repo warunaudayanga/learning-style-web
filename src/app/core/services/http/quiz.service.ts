@@ -5,6 +5,7 @@ import { QuizCollection, QuizUserAnswers } from "../../interfaces/models/quiz";
 import { QuizType } from "../../enums/quiz-type.eum";
 import { Quiz, QuizAnswer, QuizChoice } from "../../interfaces/quiz.interfaces";
 import { SelfRatingQuizResult } from "../../interfaces/self-rating-quiz.interfaces";
+import { skipNotifyContext } from "@hichchi/ngx-utils";
 
 export const QUIZ_URL = "quiz";
 export const QUIZ_ANSWER_URL = "quiz-answer";
@@ -16,7 +17,9 @@ export class QuizService {
     constructor(protected http: HttpClient) {}
 
     getQuizCollection<Q extends Quiz<QuizChoice>>(type: QuizType, studentId?: string): Observable<QuizCollection<Q>> {
-        return this.http.get<QuizCollection<Q>>(`${QUIZ_URL}/${type}?studentId=${studentId ?? ""}`).pipe(take(1));
+        return this.http
+            .get<QuizCollection<Q>>(`${QUIZ_URL}/${type}?studentId=${studentId ?? ""}`, skipNotifyContext(true))
+            .pipe(take(1));
     }
 
     saveQuizCollection<Q extends Quiz<QuizChoice>>(type: QuizType, quizzes: Q[]): Observable<QuizCollection<Q>> {
@@ -32,6 +35,6 @@ export class QuizService {
     }
 
     getAnswers<Q extends Quiz<QuizChoice>>(type: QuizType): Observable<QuizUserAnswers<Q>> {
-        return this.http.get<QuizUserAnswers<Q>>(`${QUIZ_ANSWER_URL}/${type}`).pipe(take(1));
+        return this.http.get<QuizUserAnswers<Q>>(`${QUIZ_ANSWER_URL}/${type}`, skipNotifyContext(true)).pipe(take(1));
     }
 }

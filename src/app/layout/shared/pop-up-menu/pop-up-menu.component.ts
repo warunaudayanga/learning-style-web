@@ -1,10 +1,13 @@
 import { Component, HostListener, Input } from "@angular/core";
 import { MenuItem } from "../../../core/interfaces";
+import { RouterLink } from "@angular/router";
+import { NgForOf, NgIf } from "@angular/common";
 
 @Component({
     selector: "app-pop-up-menu",
     templateUrl: "./pop-up-menu.component.html",
     styleUrls: ["./pop-up-menu.component.scss"],
+    imports: [RouterLink, NgIf, NgForOf, NgIf, NgIf],
 })
 export class PopUpMenuComponent {
     @Input() avatar?: string;

@@ -2,23 +2,52 @@ import { Component, OnInit } from "@angular/core";
 import { UserService } from "../../../core/services/http/user.service";
 import { User } from "../../../core/interfaces/models";
 import { AppService } from "../../../app.service";
-import { HttpError } from "../../../core/interfaces";
 import { QuizUserAnswers } from "../../../core/interfaces/models/quiz";
 import { SelfRatingQuiz } from "../../../core/interfaces/self-rating-quiz.interfaces";
 import { QuizType } from "../../../core/enums/quiz-type.eum";
-import { groupBy } from "hichchi-utils";
+import { groupBy } from "@hichchi/utils";
 import { SelfRatingQuizResultDto } from "../../../core/utils/self-rating-quiz-result.dto";
 import { StyleCategory } from "../../../core/enums/style-category.enum";
+import { StudentCardComponent } from "./student-card/student-card.component";
+import { NgForOf, NgIf } from "@angular/common";
+import { RouterLink } from "@angular/router";
+import { SectionComponent } from "../../../layout/shared/section/section.component";
+import { SectionHeadingDirective } from "../../../core/directives/section-heading.directive";
+import { HttpError } from "@hichchi/ngx-utils";
 
 @Component({
     selector: "app-admin-students",
     templateUrl: "./admin-students.component.html",
     styleUrls: ["./admin-students.component.scss"],
+    imports: [
+        StudentCardComponent,
+        StudentCardComponent,
+        NgForOf,
+        NgForOf,
+        NgForOf,
+        NgIf,
+        NgIf,
+        NgIf,
+        NgIf,
+        RouterLink,
+        SectionComponent,
+        RouterLink,
+        RouterLink,
+        SectionComponent,
+        RouterLink,
+        SectionComponent,
+        RouterLink,
+        RouterLink,
+        SectionComponent,
+        RouterLink,
+        SectionHeadingDirective,
+        RouterLink,
+    ],
 })
 export class AdminStudentsComponent implements OnInit {
     students: User[] = [];
 
-    studentGroups?: [string | undefined, User[]][];
+    studentGroups?: [string | null, User[]][];
 
     loading = false;
 

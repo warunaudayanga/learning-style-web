@@ -1,4 +1,4 @@
-@import "../ng-form-control";
+@use "../ng-form-control" as *;
 
 ng-select ::ng-deep .ng-select-container  {
     height: 100% !important;

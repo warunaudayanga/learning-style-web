@@ -2,12 +2,24 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { Quiz, QuizChoice, QuizChoiceExtenders } from "../../../../interfaces/quiz.interfaces";
 import { v4 as uuid } from "uuid";
 import { DialogService } from "../../../dialog";
+import { NgForOf, NgIf } from "@angular/common";
+import { QuizEditorComponent } from "../quiz-editor/quiz-editor.component";
+import { NgButtonComponent } from "../../../ng-control/components/ng-button/ng-button.component";
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: "quiz-list-editor",
     templateUrl: "./quiz-list-editor.component.html",
     styleUrls: ["./quiz-list-editor.component.scss"],
+    imports: [
+        NgIf,
+        QuizEditorComponent,
+        NgButtonComponent,
+        QuizEditorComponent,
+        NgForOf,
+        NgButtonComponent,
+        NgButtonComponent,
+    ],
 })
 export class QuizListEditorComponent {
     @Input() quizzes: Quiz<QuizChoice>[] = [];

@@ -1,11 +1,16 @@
 import { Component } from "@angular/core";
 import { MenuItem } from "../../core/interfaces";
 import { StudentMenu } from "../../core/enums/menus/student-menu.enum";
+import { SidebarComponent } from "../shared/sidebar/sidebar.component";
+import { HeaderComponent } from "../shared/header/header.component";
+import { ContentComponent } from "../shared/content/content.component";
+import { RouterOutlet } from "@angular/router";
 
 @Component({
     selector: "app-student-layout",
     templateUrl: "./student-layout.component.html",
     styleUrls: ["../shared/layout.scss", "./student-layout.component.scss"],
+    imports: [SidebarComponent, SidebarComponent, HeaderComponent, ContentComponent, RouterOutlet],
 })
 export class StudentLayoutComponent {
     items: MenuItem<StudentMenu>[] = [

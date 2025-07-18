@@ -1,7 +1,7 @@
 import { Directive, ElementRef, HostListener } from "@angular/core";
 import { AbstractControl, UntypedFormGroup, FormGroupDirective } from "@angular/forms";
 import { AppService } from "../../../../app.service";
-import { toFirstCase } from "hichchi-utils";
+import { toFirstCase } from "@hichchi/utils";
 
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector

@@ -1,11 +1,16 @@
 import { Component } from "@angular/core";
 import { MenuItem } from "../../core/interfaces";
 import { AdinMenu } from "../../core/enums/menus/adin-menu.enum";
+import { SidebarComponent } from "../shared/sidebar/sidebar.component";
+import { ContentComponent } from "../shared/content/content.component";
+import { HeaderComponent } from "../shared/header/header.component";
+import { RouterOutlet } from "@angular/router";
 
 @Component({
     selector: "app-admin-layout",
     templateUrl: "./admin-layout.component.html",
     styleUrls: ["../shared/layout.scss", "./admin-layout.component.scss"],
+    imports: [SidebarComponent, ContentComponent, HeaderComponent, RouterOutlet],
 })
 export class AdminLayoutComponent {
     items: MenuItem<AdinMenu>[] = [

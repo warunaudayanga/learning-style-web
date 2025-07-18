@@ -2,11 +2,13 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Renderer2 } fr
 import { Subscription } from "rxjs";
 import { AppService } from "../../../app.service";
 import { ScrollDir } from "../../../core/enums/scroll-dir.enum";
+import { FooterComponent } from "../footer/footer.component";
 
 @Component({
     selector: "app-content",
     templateUrl: "./content.component.html",
     styleUrls: ["./content.component.scss"],
+    imports: [FooterComponent],
 })
 export class ContentComponent implements OnInit, AfterViewInit, OnDestroy {
     scrollListener?: Subscription;

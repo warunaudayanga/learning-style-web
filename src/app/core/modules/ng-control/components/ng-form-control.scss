@@ -1,4 +1,6 @@
-@import "src/style/scss";
+@forward "style/scss";
+
+@use "style/scss" as *;
 
 .ng-control {
     .ng-form-control, &.btn {

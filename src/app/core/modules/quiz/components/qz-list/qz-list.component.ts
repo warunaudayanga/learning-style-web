@@ -14,12 +14,27 @@ import { QzComponent } from "../qz/qz.component";
 import { Quiz, QuizAnswer, QuizChoice } from "../../../../interfaces/quiz.interfaces";
 import { DialogLevel } from "../../../dialog/enums";
 import { DialogService } from "../../../dialog";
+import { NgForOf, NgIf } from "@angular/common";
+import { NgButtonComponent } from "../../../ng-control/components/ng-button/ng-button.component";
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: "qz-list",
     templateUrl: "./qz-list.component.html",
     styleUrls: ["./qz-list.component.scss"],
+    imports: [
+        QzComponent,
+        NgIf,
+        NgButtonComponent,
+        NgButtonComponent,
+        NgForOf,
+        NgButtonComponent,
+        NgButtonComponent,
+        NgButtonComponent,
+        NgButtonComponent,
+        NgButtonComponent,
+        NgButtonComponent,
+    ],
 })
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class QzListComponent implements OnInit, OnChanges, AfterContentInit {

@@ -1,25 +1,14 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
+
 @use '@angular/material' as mat;
-
-@import "bootstrap/scss/bootstrap";
-
-@import "bootstrap-icons";
-
-@import 'bootstrap/scss/functions';
-@import 'bootstrap/scss/variables';
-@import 'bootstrap/scss/mixins';
-
-@import "ngx-toastr/toastr";
-
-@import "@ng-select/ng-select/themes/default.theme.css";
-
-@import "ngx-bootstrap/datepicker/bs-datepicker.css";
-
-@import "./assets/fonts/proxima-nova";
-
-@import "./style/scss";
-@import "./style/scss/utils";
+@use "bootstrap-icons" as *;
+@use "ngx-toastr/toastr" as *;
+@use "@ng-select/ng-select/themes/default.theme.css" as *;
+@use "ngx-bootstrap/datepicker/bs-datepicker.css" as *;
+@use "./assets/fonts/proxima-nova" as *;
+@use "./style/scss/utils" as *;
+@use "./style/scss" as *;
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
@@ -29,15 +18,15 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$learning-style-web-primary: mat.define-palette(mat.$indigo-palette);
-$learning-style-web-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$learning-style-web-primary: mat.m2-define-palette(mat.$m2-indigo-palette);
+$learning-style-web-accent: mat.m2-define-palette(mat.$m2-pink-palette, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
-$learning-style-web-warn: mat.define-palette(mat.$red-palette);
+$learning-style-web-warn: mat.m2-define-palette(mat.$m2-red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$learning-style-web-theme: mat.define-light-theme((
+$learning-style-web-theme: mat.m2-define-light-theme((
     color: (
         primary: $learning-style-web-primary,
         accent: $learning-style-web-accent,

@@ -1,5 +1,6 @@
 import { Component, forwardRef, Input } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { NgForOf, NgIf } from "@angular/common";
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
@@ -14,6 +15,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
             multi: true,
         },
     ],
+    imports: [NgForOf, NgIf, NgIf],
 })
 export class NgTagInputComponent implements ControlValueAccessor {
     @Input() name?: string;

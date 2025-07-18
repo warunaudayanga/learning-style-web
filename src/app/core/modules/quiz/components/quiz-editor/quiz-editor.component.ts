@@ -3,12 +3,39 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { v4 as uuid } from "uuid";
 import { Quiz, QuizChoice, QuizChoiceExtender, QuizChoiceExtenders } from "../../../../interfaces/quiz.interfaces";
 import { mapChoiceId } from "../../../../utils/quiz.utils";
+import { FormsModule } from "@angular/forms";
+import { NgForOf, NgIf, NgStyle } from "@angular/common";
+import { NgInputComponent } from "../../../ng-control/components/ng-input/ng-input.component";
+import { NgButtonComponent } from "../../../ng-control/components/ng-button/ng-button.component";
+import { NgSelectBoxComponent } from "../../../ng-control/components/ng-select-box/ng-select-box.component";
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: "quiz-editor",
     templateUrl: "./quiz-editor.component.html",
     styleUrls: ["./quiz-editor.component.scss"],
+    imports: [
+        FormsModule,
+        NgForOf,
+        NgIf,
+        NgIf,
+        NgForOf,
+        NgInputComponent,
+        NgIf,
+        NgInputComponent,
+        NgButtonComponent,
+        NgInputComponent,
+        NgIf,
+        NgInputComponent,
+        NgSelectBoxComponent,
+        NgSelectBoxComponent,
+        NgInputComponent,
+        NgButtonComponent,
+        NgButtonComponent,
+        NgInputComponent,
+        NgStyle,
+        NgSelectBoxComponent,
+    ],
 })
 export class QuizEditorComponent implements OnInit {
     @Input() quiz: Quiz<QuizChoice> = {

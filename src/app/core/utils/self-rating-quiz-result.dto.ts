@@ -12,7 +12,7 @@ import {
 } from "../interfaces/self-rating-quiz.interfaces";
 import { StyleCategory } from "../enums/style-category.enum";
 import { QuizAnswer } from "../interfaces/quiz.interfaces";
-import { toFirstCase } from "hichchi-utils";
+import { toFirstCase } from "@hichchi/utils";
 
 export class SelfRatingQuizResultDto {
     public readonly collection?: QuizCollection<SelfRatingQuiz>;

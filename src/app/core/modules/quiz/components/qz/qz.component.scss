@@ -1,4 +1,4 @@
-@import "src/style/scss";
+@use "style/scss" as *;
 
 .quiz {
     margin-bottom: $spacer-4;

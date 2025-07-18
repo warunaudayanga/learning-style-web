@@ -1,10 +1,13 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
+import { NgClass, NgIf } from "@angular/common";
+import { NgSpinnerComponent } from "../ng-spinner/ng-spinner.component";
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: "ng-button",
     templateUrl: "./ng-button.component.html",
     styleUrls: ["./ng-button.component.scss"],
+    imports: [NgIf, NgSpinnerComponent, NgClass],
 })
 export class NgButtonComponent implements OnChanges {
     @Input() label = "";

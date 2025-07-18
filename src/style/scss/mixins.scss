@@ -1,7 +1,7 @@
 @mixin app-button($btn, $bg, $text) {
     .btn-app-#{$btn} {
-        background-color: $bg;
-        color: $text;
+        background-color: $bg !important;
+        color: $text !important;
         &:hover, &:active, &:focus {
             background-color: $bg !important;
             color: $text !important;;

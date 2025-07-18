@@ -1,12 +1,16 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
 import { Quiz, QuizChoice } from "../../../../interfaces/quiz.interfaces";
 import { mapChoiceId } from "../../../../utils/quiz.utils";
+import { NgInputComponent } from "../../../ng-control/components/ng-input/ng-input.component";
+import { NgForOf, NgIf } from "@angular/common";
+import { FormsModule } from "@angular/forms";
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: "qz",
     templateUrl: "./qz.component.html",
     styleUrls: ["./qz.component.scss"],
+    imports: [NgInputComponent, NgIf, NgIf, NgForOf, NgForOf, FormsModule],
 })
 export class QzComponent implements OnChanges {
     @Input() quiz!: Quiz<QuizChoice>;

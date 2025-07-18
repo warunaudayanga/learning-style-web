@@ -9,11 +9,15 @@ import {
     SimpleChanges,
 } from "@angular/core";
 import { SectionHeadingDirective } from "../../../core/directives/section-heading.directive";
+import { NgIf, NgTemplateOutlet } from "@angular/common";
+import { NgErrorComponent } from "../../../core/modules/ng-control/components/ng-error/ng-error.component";
+import { NgSpinnerComponent } from "../../../core/modules/ng-control/components/ng-spinner/ng-spinner.component";
 
 @Component({
     selector: "app-section",
     templateUrl: "./section.component.html",
     styleUrls: ["./section.component.scss"],
+    imports: [NgTemplateOutlet, NgIf, NgIf, NgIf, NgErrorComponent, NgSpinnerComponent, NgIf, NgIf, NgErrorComponent],
 })
 export class SectionComponent implements OnChanges {
     @Input() full = false;

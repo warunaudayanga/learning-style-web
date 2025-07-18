@@ -6,9 +6,18 @@
     </ng-template>
 
     <div>
-        <div *ngFor="let item of result?.quizCollection?.quizzes">
-            <div class="label">{{ item.question }}</div>
-            <div class="value">{{ getAnswer(item.id) }}</div>
-        </div>
+        @if (result()?.answers?.length) {
+            @for (item of result()?.quizCollection?.quizzes; track item) {
+                <div>
+                    <div class="label">{{ item.question }}</div>
+                    <div class="value">{{ getAnswer(item.id) }}</div>
+                </div>
+            }
+        } @else {
+            <div class="alert alert-warning">
+                <h4 class="alert-heading">No Results!</h4>
+                <p>You have not completed this questionnaire yet.</p>
+            </div>
+        }
     </div>
 </app-section>

@@ -1,22 +1,35 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import { SelfRatingQuizResultDto } from "../../../core/utils/self-rating-quiz-result.dto";
 import { ProgressbarType } from "ngx-bootstrap/progressbar";
 import { AppService } from "../../../app.service";
-import { Store } from "@ngxs/store";
 import { QuizService } from "../../../core/services/http/quiz.service";
-import { QuizState } from "../../../core/store/quiz/quiz.state";
 import { QuizType } from "../../../core/enums/quiz-type.eum";
-import { HttpError } from "../../../core/interfaces";
-import { QuizError } from "../../../core/enums/errors/quiz.error.enum";
 import { QuizUserAnswers } from "../../../core/interfaces/models/quiz";
 import { Quiz, QuizChoice } from "../../../core/interfaces/quiz.interfaces";
+import { QuizState } from "../../../core/store/quiz.state";
+import { NgIf } from "@angular/common";
+import { AfterLessonFeedbackComponent } from "../../../core/modules/shared/components/after-lesson-feedback/after-lesson-feedback.component";
+import { SelfRatingAnalysisComponent } from "../../../core/modules/shared/components/self-rating-analysis/self-rating-analysis.component";
+import { SectionComponent } from "../../../layout/shared/section/section.component";
+import { SectionHeadingDirective } from "../../../core/directives/section-heading.directive";
 
 @Component({
     selector: "app-student-result",
     templateUrl: "./student-result.component.html",
     styleUrls: ["./student-result.component.scss"],
+    standalone: true,
+    imports: [
+        NgIf,
+        AfterLessonFeedbackComponent,
+        NgIf,
+        SelfRatingAnalysisComponent,
+        SectionComponent,
+        SectionHeadingDirective,
+    ],
 })
 export class StudentResultComponent implements OnInit {
+    quizState = inject(QuizState);
+
     selfRatingQuizResult?: SelfRatingQuizResultDto;
 
     afterLectureFeedbackResult?: QuizUserAnswers<Quiz<QuizChoice>>;
@@ -29,20 +42,18 @@ export class StudentResultComponent implements OnInit {
 
     constructor(
         private readonly app: AppService,
-        private readonly store: Store,
         private readonly quizService: QuizService,
     ) {}
 
     ngOnInit(): void {
-        const selfRatingQuizResult = this.store.selectSnapshot(QuizState.getQuizAnswers)(QuizType.SELF_RATING)?.result;
+        const selfRatingQuizResult = this.quizState.getQuizAnswers(QuizType.SELF_RATING)?.result;
         if (this.selfRatingQuizResult) {
             this.selfRatingQuizResult = new SelfRatingQuizResultDto(selfRatingQuizResult);
         } else {
             this.getSelfRatingQuizCollection();
         }
 
-        const afterLectureFeedbackResult = this.store.selectSnapshot(QuizState.getQuizAnswers)(QuizType.AFTER_LECTURE)
-            ?.result;
+        const afterLectureFeedbackResult = this.quizState.getQuizAnswers(QuizType.AFTER_LECTURE)?.result;
         if (this.afterLectureFeedbackResult) {
             this.afterLectureFeedbackResult = afterLectureFeedbackResult;
         } else {
@@ -58,17 +69,9 @@ export class StudentResultComponent implements OnInit {
                 this.loading = false;
                 this.selfRatingQuizResult = new SelfRatingQuizResultDto(quizCollection.result);
             },
-            error: (err: HttpError) => {
+            error: () => {
                 this.loading = false;
                 this.error = true;
-                if (
-                    !(
-                        err.error?.code === QuizError.QUIZ_404_TYPE ||
-                        err.error?.code === QuizError.QUIZ_ANSWERS_404_CONDITION
-                    )
-                ) {
-                    this.app.error(err.error?.message || "Failed to load Questions!");
-                }
             },
         });
     }
@@ -81,17 +84,9 @@ export class StudentResultComponent implements OnInit {
                 this.loading = false;
                 this.afterLectureFeedbackResult = quizCollection;
             },
-            error: (err: HttpError) => {
+            error: () => {
                 this.loading = false;
                 this.error = true;
-                if (
-                    !(
-                        err.error?.code === QuizError.QUIZ_404_TYPE ||
-                        err.error?.code === QuizError.QUIZ_ANSWERS_404_CONDITION
-                    )
-                ) {
-                    this.app.error(err.error?.message || "Failed to load Questions!");
-                }
             },
         });
     }

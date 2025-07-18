@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols
+
 export enum QuizType {
     SELF_RATING = "self-rating",
     BEFORE_LECTURE = "pre-lecture",

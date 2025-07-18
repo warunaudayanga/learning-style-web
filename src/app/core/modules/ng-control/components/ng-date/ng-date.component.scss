@@ -1,4 +1,4 @@
-@import "../ng-form-control";
+@use "../ng-form-control" as *;
 
 .ng-control {
     position: relative;

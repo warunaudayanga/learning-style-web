@@ -1,56 +1,45 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Subscription } from "rxjs";
-import { AppService } from "../../../app.service";
-import { Store } from "@ngxs/store";
-import { AuthService } from "../../../core/services/http/auth.service";
+import { Component, inject } from "@angular/core";
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { markFormDirty } from "../../../core/modules/ng-control/utils/form-group.utils";
-import { Login } from "../../../core/store/auth/auth.action";
+import { AuthState } from "@hichchi/ngx-auth";
+import { NgInputComponent } from "../../../core/modules/ng-control/components/ng-input/ng-input.component";
+import { NgButtonComponent } from "../../../core/modules/ng-control/components/ng-button/ng-button.component";
+import { NgIf } from "@angular/common";
+import { RouterLink } from "@angular/router";
+import { UserRole } from "../../../core/enums/user-role.enum";
 
 @Component({
     selector: "app-login",
     templateUrl: "./login.component.html",
     styleUrls: ["./login.component.scss"],
+    imports: [NgInputComponent, NgButtonComponent, ReactiveFormsModule, NgIf, RouterLink],
 })
-export class LoginComponent implements OnInit, OnDestroy {
-    loginForm?: FormGroup;
+export class LoginComponent {
+    authState = inject(AuthState);
 
-    authResponseSubscription: Subscription;
+    loginForm?: FormGroup;
 
     loading = false;
 
     error = false;
 
-    constructor(
-        private readonly app: AppService,
-        private readonly store: Store,
-        private readonly fb: FormBuilder,
-        private readonly authService: AuthService,
-    ) {
-        this.authResponseSubscription = this.authService.getAuthResponseListener().subscribe(res => {
-            this.loading = false;
-            if (typeof res === "boolean") {
-                this.error = res;
-            }
-        });
-    }
-
-    ngOnInit(): void {
+    constructor(private readonly fb: FormBuilder) {
         this.loginForm = this.fb.group({
             username: ["", [Validators.required]],
             password: ["", [Validators.required]],
         });
     }
 
-    login(): void {
+    async login(): Promise<void> {
         if (markFormDirty(this.loginForm)) {
             return;
         }
         this.loading = true;
-        this.store.dispatch(new Login(this.loginForm!.value));
-    }
-
-    ngOnDestroy(): void {
-        this.authResponseSubscription.unsubscribe();
+        await this.authState.signIn(this.loginForm!.value, res =>
+            (res.user.role && typeof res.user.role === "object" ? res.user.role.name : res.user.role) === UserRole.ADMIN
+                ? "admin"
+                : "",
+        );
+        this.loading = false;
     }
 }

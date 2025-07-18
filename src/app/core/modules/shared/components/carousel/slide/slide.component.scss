@@ -1,4 +1,4 @@
-@import "src/style/scss";
+@use "style/scss" as *;
 
 $transition-time: 0.5s;
 

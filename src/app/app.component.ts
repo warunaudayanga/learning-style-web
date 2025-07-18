@@ -1,35 +1,27 @@
-import { Component } from "@angular/core";
-import { Select, Store } from "@ngxs/store";
-import { LoadQuiz } from "./core/store/quiz/quiz.action";
+import { Component, effect, inject } from "@angular/core";
 import { QuizType } from "./core/enums/quiz-type.eum";
-import { AuthState } from "./core/store/auth/auth.state";
-import { Observable, Subscription } from "rxjs";
 import { UserRole } from "./core/enums/user-role.enum";
+import { AuthState } from "@hichchi/ngx-auth";
+import { QuizState } from "./core/store/quiz.state";
+import { RouterOutlet } from "@angular/router";
 
 @Component({
     selector: "app-root",
     templateUrl: "./app.component.html",
     styleUrls: ["./app.component.scss"],
+    standalone: true,
+    imports: [RouterOutlet],
 })
 export class AppComponent {
-    @Select(AuthState.role) role$!: Observable<UserRole | undefined>;
+    authState = inject(AuthState);
 
-    userSub?: Subscription;
+    quizState = inject(QuizState);
 
-    role?: UserRole;
-
-    constructor(private readonly store: Store) {
-        this.userSub = this.role$.subscribe(role => {
-            this.role = role;
-            this.loadFromState();
+    constructor() {
+        effect(() => {
+            if (this.authState.role() === UserRole.STUDENT) {
+                this.quizState.loadQuiz(QuizType.SELF_RATING);
+            }
         });
-        this.role = this.store.selectSnapshot(AuthState.role);
-        this.loadFromState();
-    }
-
-    loadFromState(): void {
-        if (this.role === UserRole.STUDENT) {
-            this.store.dispatch(new LoadQuiz(QuizType.SELF_RATING));
-        }
     }
 }

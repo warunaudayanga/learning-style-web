@@ -1,25 +1,17 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { MenuItem } from "../../../core/interfaces";
-import { Select, Store } from "@ngxs/store";
-import { Logout } from "../../../core/store/auth/auth.action";
 import { HeaderMenu } from "../../../core/enums/menus/header-menu.enum";
-import { AuthState } from "../../../core/store/auth/auth.state";
-import { Observable, Subscription } from "rxjs";
-import { User } from "../../../core/interfaces/models";
+import { AuthState } from "@hichchi/ngx-auth";
+import { PopUpMenuComponent } from "../pop-up-menu/pop-up-menu.component";
 
 @Component({
     selector: "app-header",
     templateUrl: "./header.component.html",
     styleUrls: ["./header.component.scss"],
+    imports: [PopUpMenuComponent],
 })
-export class HeaderComponent implements OnInit, OnDestroy {
-    @Select(AuthState.user) user$!: Observable<User | undefined>;
-
-    user?: User;
-
-    userSub?: Subscription;
-
-    constructor(private readonly store: Store) {}
+export class HeaderComponent {
+    authState = inject(AuthState);
 
     menuItems: MenuItem<HeaderMenu>[] = [
         {
@@ -27,18 +19,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
             label: "Logout",
             icon: "bi bi-power",
             action: (): void => {
-                this.store.dispatch(new Logout());
+                this.authState.signOut("auth");
             },
         },
     ];
-
-    ngOnInit(): void {
-        this.userSub = this.user$.subscribe(user => {
-            this.user = user;
-        });
-    }
-
-    ngOnDestroy(): void {
-        this.userSub?.unsubscribe();
-    }
 }

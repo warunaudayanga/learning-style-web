@@ -4,11 +4,14 @@ import { SelfRatingQuizResultDto } from "../../../core/utils/self-rating-quiz-re
 import { QuizCollection } from "../../../core/interfaces/models/quiz";
 import { SelfRatingQuiz, SelfRatingQuizResult } from "../../../core/interfaces/self-rating-quiz.interfaces";
 import { QuizAnswer } from "../../../core/interfaces/quiz.interfaces";
+import { StudentQuizComponent } from "../student-quiz/student-quiz.component";
 
 @Component({
     selector: "app-student-self-rating-quiz",
     templateUrl: "./student-self-rating-quiz.component.html",
     styleUrls: ["./student-self-rating-quiz.component.scss"],
+    standalone: true,
+    imports: [StudentQuizComponent],
 })
 export class StudentSelfRatingQuizComponent {
     protected readonly QuizType = QuizType;

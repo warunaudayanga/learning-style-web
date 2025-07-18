@@ -1,3 +1,6 @@
+@use "bootstrap/scss/bootstrap" as *;
+@forward "bootstrap/scss/bootstrap";
+
 $white:    #fff !default;
 $gray-100: #f8f9fa !default;
 $gray-200: #e9ecef !default;
@@ -114,13 +117,8 @@ $font-size-9xl: 8rem;
 $font-size-10xl: 10rem;
 
 // Spacing
-//noinspection SassScssResolvedByNameOnly
 $spacer-1: $spacer * .25;
-//noinspection SassScssResolvedByNameOnly
 $spacer-2: $spacer * .5;
-//noinspection SassScssResolvedByNameOnly
 $spacer-3: $spacer;
-//noinspection SassScssResolvedByNameOnly
 $spacer-4: $spacer * 1.5;
-//noinspection SassScssResolvedByNameOnly
 $spacer-5: $spacer * 3;

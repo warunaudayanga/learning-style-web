@@ -1,4 +1,4 @@
-@import "src/style/scss";
+@use "style/scss" as *;
 
 :host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option .ng-option-label {
 

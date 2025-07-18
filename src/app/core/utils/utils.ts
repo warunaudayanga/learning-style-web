@@ -1,10 +1,11 @@
 // noinspection JSUnusedGlobalSymbols
 
-import { toTitleCase } from "hichchi-utils";
-import { CustomComponentType, HttpError, DropdownValue, EnumToDropdownFormat } from "../interfaces";
+import { toTitleCase } from "@hichchi/utils";
+import { CustomComponentType, DropdownValue, EnumToDropdownFormat } from "../interfaces";
 import { inject } from "@angular/core";
 import { Observer } from "rxjs";
 import { AppService } from "../../app.service";
+import { HttpError } from "@hichchi/ngx-utils";
 
 /**
  * Convert an enum to a dropdown list.

@@ -9,7 +9,7 @@ import {
     ValidatorFn,
 } from "@angular/forms";
 import { EventEmitter } from "@angular/core";
-import { toLowerCaseBreak } from "hichchi-utils";
+import { toLowerCaseBreak } from "@hichchi/utils";
 
 export abstract class NgFormControl<T> implements ControlValueAccessor, Validator {
     abstract formControlName: string;

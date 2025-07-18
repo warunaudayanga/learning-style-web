@@ -1,12 +1,14 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
 
 import { PaginatorInterfaces } from "../../../shared/interfaces/paginator.interfaces";
+import { NgForOf } from "@angular/common";
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: "ng-paginator",
     templateUrl: "./ng-paginator.component.html",
     styleUrls: ["./ng-paginator.component.scss"],
+    imports: [NgForOf],
 })
 export class NgPaginatorComponent implements OnInit, OnChanges {
     @Input() totalRecords = 50;

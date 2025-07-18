@@ -1,23 +1,43 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, inject, Input, OnInit } from "@angular/core";
 import { QuizCollection } from "../../../core/interfaces/models/quiz";
 import { SelfRatingQuiz } from "../../../core/interfaces/self-rating-quiz.interfaces";
 import { Quiz, QuizAnswer, QuizChoice } from "../../../core/interfaces/quiz.interfaces";
 import { AppService } from "../../../app.service";
-import { Store } from "@ngxs/store";
 import { QuizService } from "../../../core/services/http/quiz.service";
 import { DialogService } from "../../../core/modules/dialog";
-import { QuizState } from "../../../core/store/quiz/quiz.state";
 import { QuizType } from "../../../core/enums/quiz-type.eum";
 import { DialogLevel } from "../../../core/modules/dialog/enums";
-import { SaveQuizAnswers, SaveQuizAnswersDraft } from "../../../core/store/quiz/quiz.action";
-import { HttpError } from "../../../core/interfaces";
+import { QuizState } from "../../../core/store/quiz.state";
+import { NgIf } from "@angular/common";
+import { SectionComponent } from "../../../layout/shared/section/section.component";
+import { QzListComponent } from "../../../core/modules/quiz/components/qz-list/qz-list.component";
+import { SectionHeadingDirective } from "../../../core/directives/section-heading.directive";
+import { HttpError } from "@hichchi/ngx-utils";
 
 @Component({
     selector: "app-student-quiz",
     templateUrl: "./student-quiz.component.html",
     styleUrls: ["./student-quiz.component.scss"],
+    standalone: true,
+    imports: [
+        NgIf,
+        NgIf,
+        SectionComponent,
+        QzListComponent,
+        SectionComponent,
+        SectionHeadingDirective,
+        QzListComponent,
+        QzListComponent,
+        QzListComponent,
+        QzListComponent,
+        QzListComponent,
+        QzListComponent,
+        QzListComponent,
+    ],
 })
 export class StudentQuizComponent implements OnInit {
+    quizState = inject(QuizState);
+
     @Input() quizType!: QuizType;
 
     @Input() title?: string;
@@ -55,7 +75,6 @@ export class StudentQuizComponent implements OnInit {
 
     constructor(
         private readonly app: AppService,
-        public readonly store: Store,
         private readonly quizService: QuizService,
         private readonly dialogService: DialogService,
     ) {}
@@ -65,9 +84,7 @@ export class StudentQuizComponent implements OnInit {
     }
 
     localQuizCollection(): void {
-        this.quizCollection = this.store.selectSnapshot(QuizState.getQuiz)(
-            this.quizType,
-        ) as QuizCollection<SelfRatingQuiz>;
+        this.quizCollection = this.quizState.getQuiz(this.quizType) as QuizCollection<SelfRatingQuiz>;
         if (this.studentId || !this.quizCollection?.quizzes?.length || !this.loadAnswers(this.quizCollection)) {
             this.getQuizCollection();
         }
@@ -101,7 +118,7 @@ export class StudentQuizComponent implements OnInit {
 
     loadAnswers(qc: QuizCollection<Quiz<QuizChoice>>): boolean {
         if (!qc.userAnswers?.length) {
-            this.answers = this.store.selectSnapshot(QuizState.getQuizAnswersDraft)(this.quizType)?.answers ?? [];
+            this.answers = this.quizState.getQuizAnswersDraft(this.quizType)?.answers ?? [];
         } else {
             this.answers = qc.userAnswers;
             this.submitted = true;
@@ -110,7 +127,7 @@ export class StudentQuizComponent implements OnInit {
     }
 
     onAnswersChange(): void {
-        this.store.dispatch(new SaveQuizAnswersDraft({ quizType: this.quizType, answers: this.answers }));
+        this.quizState.saveQuizAnswersDraft({ quizType: this.quizType, answers: this.answers });
     }
 
     onSubmit(): void {
@@ -132,7 +149,7 @@ export class StudentQuizComponent implements OnInit {
             )
             .subscribe({
                 next: answers => {
-                    this.store.dispatch(new SaveQuizAnswers({ quizType: this.quizType, answers }));
+                    this.quizState.saveQuizAnswers({ quizType: this.quizType, answers });
                     this.submitting = false;
                     this.submitted = true;
                     this.app.scrollToTop();

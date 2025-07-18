@@ -8,7 +8,7 @@ describe("ButtonComponent", () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [NgButtonComponent],
+            imports: [NgButtonComponent],
         }).compileComponents();
 
         fixture = TestBed.createComponent(NgButtonComponent);

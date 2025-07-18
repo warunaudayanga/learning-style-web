@@ -1,19 +1,25 @@
-import { Component, Input } from "@angular/core";
+import { Component, inject, Input } from "@angular/core";
 import { SelfRatingQuizResultDto } from "../../../../utils/self-rating-quiz-result.dto";
-import { ProgressbarType } from "ngx-bootstrap/progressbar";
+import { ProgressbarComponent, ProgressbarType } from "ngx-bootstrap/progressbar";
 import { QuizType } from "../../../../enums/quiz-type.eum";
 import { StyleCategory } from "../../../../enums/style-category.enum";
-import { Store } from "@ngxs/store";
-import { AuthState } from "../../../../store/auth/auth.state";
 import { UserRole } from "../../../../enums/user-role.enum";
 import { SelfRatingQuizResultFinalRecord } from "../../../../interfaces/self-rating-quiz.interfaces";
+import { AuthState } from "@hichchi/ngx-auth";
+import { SectionComponent } from "../../../../../layout/shared/section/section.component";
+import { SectionHeadingDirective } from "../../../../directives/section-heading.directive";
+import { NgForOf, NgIf } from "@angular/common";
+import { RouterLink } from "@angular/router";
 
 @Component({
     selector: "app-self-rating-analysis",
     templateUrl: "./self-rating-analysis.component.html",
     styleUrls: ["./self-rating-analysis.component.scss"],
+    imports: [SectionComponent, SectionHeadingDirective, NgIf, RouterLink, ProgressbarComponent, NgForOf],
 })
 export class SelfRatingAnalysisComponent {
+    authState = inject(AuthState);
+
     @Input() result?: SelfRatingQuizResultDto;
 
     @Input() child = false;
@@ -24,8 +30,8 @@ export class SelfRatingAnalysisComponent {
 
     protected readonly QuizType = QuizType;
 
-    constructor(private readonly store: Store) {
-        this.who = this.store.selectSnapshot(AuthState.role) === UserRole.STUDENT ? "You" : "This student";
+    constructor() {
+        this.who = this.authState.roleName() === UserRole.STUDENT ? "You" : "This student";
     }
 
     getDescription(final: SelfRatingQuizResultFinalRecord): string | undefined {

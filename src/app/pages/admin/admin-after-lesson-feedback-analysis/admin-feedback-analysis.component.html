@@ -4,12 +4,21 @@
     </ng-template>
 
     <div>
-        <div *ngFor="let quiz of quizzes?.quizzes; let i = index" class="mb-5">
-            <div class="font-bold mb-3">{{ quiz.question }}</div>
-            <div>
-                <canvas baseChart [data]="barChartDataSet[i]" [options]="barChartOptions" [type]="'bar'"> </canvas>
+        @if (quizzes?.answers?.length) {
+            @for (quiz of quizzes?.quizzes; track quiz) {
+                <div class="mb-5">
+                    <div class="font-bold mb-3">{{ quiz.question }}</div>
+                    <div>
+                        <canvas baseChart [data]="barChartDataSet[$index]" [options]="barChartOptions" [type]="'bar'"> </canvas>
+                    </div>
+                    <div class="ps-5 ms-4">Weighted Average: {{ weightedAverage[$index] }}</div>
+                </div>
+            }
+        } @else {
+            <div class="alert alert-warning">
+                <h4 class="alert-heading">No Results!</h4>
+                <p>No one has completed this questionnaire yet.</p>
             </div>
-            <div class="ps-5 ms-4">Weighted Average: {{ weightedAverage[i] }}</div>
-        </div>
+        }
     </div>
 </app-section>

@@ -1,4 +1,4 @@
-@import "src/style/scss";
+@use "style/scss" as *;
 
 :host {
   display: block;
@@ -11,8 +11,6 @@
   background-color: $app-surface-color;
   box-shadow: $app-shadow;
 }
-
-@import "/src/style/scss";
 
 .header-content {
   height: 100%;

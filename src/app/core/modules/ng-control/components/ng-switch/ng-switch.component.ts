@@ -1,6 +1,7 @@
 import { Component, EventEmitter, forwardRef, Host, Input, OnInit, Optional, Output, SkipSelf } from "@angular/core";
 import { AbstractControl, ControlContainer, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from "@angular/forms";
 import { NgFormControl } from "../../abstract-form-controll";
+import { NgClass } from "@angular/common";
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
@@ -21,6 +22,7 @@ import { NgFormControl } from "../../abstract-form-controll";
             useExisting: forwardRef(() => NgSwitchComponent),
         },
     ],
+    imports: [NgClass],
 })
 export class NgSwitchComponent extends NgFormControl<boolean> implements OnInit {
     @Input() label?: string;

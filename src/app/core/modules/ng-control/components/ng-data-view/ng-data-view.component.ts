@@ -15,12 +15,17 @@ import {
 
 import { PaginatorInterfaces } from "../../../shared/interfaces/paginator.interfaces";
 import { DataViewRefreshEvent } from "../../../shared/interfaces/data-view.interfaces";
+import { NgForOf, NgIf, NgTemplateOutlet } from "@angular/common";
+import { NgPaginatorComponent } from "../paginator/ng-paginator.component";
+import { NgErrorComponent } from "../ng-error/ng-error.component";
+import { NgSpinnerComponent } from "../ng-spinner/ng-spinner.component";
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: "ng-data-view",
     templateUrl: "./ng-data-view.component.html",
     styleUrls: ["./ng-data-view.component.scss"],
+    imports: [NgTemplateOutlet, NgIf, NgForOf, NgPaginatorComponent, NgErrorComponent, NgSpinnerComponent],
 })
 export class NgDataViewComponent implements OnChanges, AfterViewInit {
     @Input() items!: unknown[];

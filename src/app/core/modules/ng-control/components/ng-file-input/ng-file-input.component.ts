@@ -3,6 +3,7 @@ import { AbstractControl, ControlContainer, NG_VALIDATORS, NG_VALUE_ACCESSOR, Va
 import { NgFormControl } from "../../abstract-form-controll";
 import { PreviewData } from "../../interfaces/ng-file-input.interfaces";
 import { isArray } from "ngx-bootstrap/chronos";
+import { NgClass, NgForOf, NgIf } from "@angular/common";
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
@@ -23,6 +24,7 @@ import { isArray } from "ngx-bootstrap/chronos";
             useExisting: forwardRef(() => NgFileInputComponent),
         },
     ],
+    imports: [NgIf, NgIf, NgForOf, NgIf, NgIf, NgClass],
 })
 export class NgFileInputComponent extends NgFormControl<File[] | File> implements OnInit {
     @Input() label?: string;

@@ -1,17 +1,23 @@
 import { Component, OnInit } from "@angular/core";
 import { AppService } from "../../../app.service";
-import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { AuthService } from "../../../core/services/http/auth.service";
+import { AbstractControlOptions, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { matched } from "../../../core/validators/validators";
 import { enumToDropdownList } from "../../../core/utils/utils";
 import { Gender } from "../../../core/enums/gender.enum";
 import { markFormDirty } from "../../../core/modules/ng-control/utils/form-group.utils";
-import { HttpError } from "../../../core/interfaces";
+import { NgIf } from "@angular/common";
+import { NgInputComponent } from "../../../core/modules/ng-control/components/ng-input/ng-input.component";
+import { NgButtonComponent } from "../../../core/modules/ng-control/components/ng-button/ng-button.component";
+import { NgSelectBoxComponent } from "../../../core/modules/ng-control/components/ng-select-box/ng-select-box.component";
+import { RouterLink } from "@angular/router";
+import { AuthService } from "@hichchi/ngx-auth";
+import { HttpError } from "@hichchi/ngx-utils";
 
 @Component({
     selector: "app-register",
     templateUrl: "./register.component.html",
     styleUrls: ["./register.component.scss"],
+    imports: [NgIf, NgButtonComponent, NgInputComponent, NgSelectBoxComponent, ReactiveFormsModule, RouterLink],
 })
 export class RegisterComponent implements OnInit {
     registerForm?: FormGroup;
@@ -80,7 +86,7 @@ export class RegisterComponent implements OnInit {
         }
 
         this.loading = true;
-        this.authService.register(this.registerForm!.value).subscribe({
+        this.authService.signUp(this.registerForm!.value).subscribe({
             next: (): void => {
                 this.loading = false;
                 this.app.load("/auth/login");

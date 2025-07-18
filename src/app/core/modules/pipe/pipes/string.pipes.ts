@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { toFirstCase, toTitleCase } from "hichchi-utils";
+import { toFirstCase, toTitleCase } from "@hichchi/utils";
 
 @Pipe({
     name: "toTitleCase",

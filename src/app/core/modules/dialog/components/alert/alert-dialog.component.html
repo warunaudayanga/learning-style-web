@@ -15,8 +15,8 @@
                         ? alertData.buttons?.cancel?.toUpperCase()
                         : "NO"
                     : alertData.buttons?.ok
-                    ? alertData.buttons?.ok?.toUpperCase()
-                    : "OK"
+                      ? alertData.buttons?.ok?.toUpperCase()
+                      : "OK"
             }}
         </button>
         <button *ngIf="alertData.confirm" type="button" class="btn btn-{{ style.colorClass }} text-light" (click)="confirm()" data-key="Escape">

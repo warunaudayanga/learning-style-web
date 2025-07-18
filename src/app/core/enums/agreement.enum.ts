@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols
+
 export enum Agreement {
     STRONGLY_DISAGREE = 1,
     DISAGREE = 2,

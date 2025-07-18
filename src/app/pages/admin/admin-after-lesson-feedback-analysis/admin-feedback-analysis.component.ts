@@ -1,16 +1,20 @@
 import { Component, OnInit } from "@angular/core";
 import { QuizService } from "../../../core/services/http/quiz.service";
 import { QuizType } from "../../../core/enums/quiz-type.eum";
-import { HttpError } from "../../../core/interfaces";
 import { QuizCollection } from "../../../core/interfaces/models/quiz";
 import { Quiz, QuizChoice } from "../../../core/interfaces/quiz.interfaces";
 import { AppService } from "../../../app.service";
 import { ChartConfiguration } from "chart.js";
+import { BaseChartDirective } from "ng2-charts";
+import { SectionHeadingDirective } from "../../../core/directives/section-heading.directive";
+import { SectionComponent } from "../../../layout/shared/section/section.component";
+import { HttpError } from "@hichchi/ngx-utils";
 
 @Component({
     selector: "app-admin-feedback-analysis",
     templateUrl: "./admin-feedback-analysis.component.html",
     styleUrls: ["./admin-feedback-analysis.component.scss"],
+    imports: [BaseChartDirective, SectionHeadingDirective, SectionComponent, SectionComponent],
 })
 export class AdminFeedbackAnalysisComponent implements OnInit {
     loading = false;

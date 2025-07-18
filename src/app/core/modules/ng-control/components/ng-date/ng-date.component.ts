@@ -11,9 +11,20 @@ import {
     SkipSelf,
     ViewChild,
 } from "@angular/core";
-import { AbstractControl, ControlContainer, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from "@angular/forms";
+import {
+    AbstractControl,
+    ControlContainer,
+    FormsModule,
+    NG_VALIDATORS,
+    NG_VALUE_ACCESSOR,
+    ValidationErrors,
+} from "@angular/forms";
 import { NgFormControl } from "../../abstract-form-controll";
 import moment from "moment";
+import { NgClass, NgIf } from "@angular/common";
+import { FirstCasePipe } from "../../../pipe/pipes/string.pipes";
+import { TimepickerComponent } from "ngx-bootstrap/timepicker";
+import { BsDatepickerDirective } from "ngx-bootstrap/datepicker";
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
@@ -34,6 +45,7 @@ import moment from "moment";
             useExisting: forwardRef(() => NgDateComponent),
         },
     ],
+    imports: [NgIf, FirstCasePipe, TimepickerComponent, FormsModule, NgClass, BsDatepickerDirective],
 })
 export class NgDateComponent extends NgFormControl<Date> implements OnInit {
     @Input() label?: string;
