@@ -1,6 +1,7 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 
+@use "bootstrap/scss/bootstrap" as *;
 @use '@angular/material' as mat;
 @use "bootstrap-icons" as *;
 @use "ngx-toastr/toastr" as *;
@@ -177,25 +178,25 @@ body {
 
     &.success {
         .mat-mdc-dialog-container .mat-mdc-dialog-title {
-            border-color: $success;
+            border-color: $app-success;
         }
     }
 
     &.info {
         .mat-mdc-dialog-container .mat-mdc-dialog-title {
-            border-color: $info;
+            border-color: $app-info;
         }
     }
 
     &.warning {
         .mat-mdc-dialog-container .mat-mdc-dialog-title {
-            border-color: $warning;
+            border-color: $app-warning;
         }
     }
 
     &.error {
         .mat-mdc-dialog-container .mat-mdc-dialog-title {
-            border-color: $danger;
+            border-color: $app-danger;
         }
     }
 }
@@ -260,7 +261,7 @@ body {
 .btn-app-warning {
 }
 
-@include app-button("danger", $danger, $app-text-invert-color);
+@include app-button("danger", $app-danger, $app-text-invert-color);
 .btn-app-danger {
 }
 
@@ -380,14 +381,14 @@ a {
 }
 
 .pending {
-    border: 1px solid $warning !important;
-    background-color: #{$warning}20 !important;
+    border: 1px solid $app-warning !important;
+    background-color: #{$app-warning}20 !important;
 }
 
 
 .deactivated {
-    border: 1px solid $danger !important;
-    background-color: #{$danger}20 !important;
+    border: 1px solid $app-danger !important;
+    background-color: #{$app-danger}20 !important;
 }
 
 /* Bootstrap Fixes*/

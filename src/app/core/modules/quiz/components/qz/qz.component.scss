@@ -23,7 +23,7 @@
     }
 
     .correct-marking {
-        color: $success;
+        color: $app-success;
     }
 
     &.incorrect {
@@ -32,22 +32,22 @@
         }
 
         .incorrect-marking {
-            color: $danger;
+            color: $app-danger;
             display: inline;
         }
 
         .form-check {
             .form-check-input:checked {
-                background-color: $danger;
-                border-color: $danger;
+                background-color: $app-danger;
+                border-color: $app-danger;
 
                 + .form-check-label {
-                    color: $danger;
+                    color: $app-danger;
                 }
             }
 
             &.answer .form-check-label {
-                border-bottom: 2px solid $success;
+                border-bottom: 2px solid $app-success;
             }
         }
     }
@@ -59,13 +59,13 @@
 
     .quiz-title {
         font-weight: $font-bold;
-        margin-left: $spacer;
+        margin-left: $spacer-3;
         margin-bottom: $spacer-1;
     }
 
     .quiz-body {
         position: relative;
-        margin-left: $spacer * 2;
+        margin-left: $spacer-3 * 2;
 
         .quiz-choices {
             .form-check-label, .form-check-input {
@@ -76,7 +76,7 @@
                 display: flex;
                 align-items: flex-end;
                 gap: 2rem;
-                color: $gray-700;
+                color: $app-gray-700;
 
                 .form-check {
                     display: inline-flex;

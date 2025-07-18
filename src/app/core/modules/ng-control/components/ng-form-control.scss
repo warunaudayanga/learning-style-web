@@ -66,11 +66,11 @@
 }
 
 .was-validated .ng-control .ng-form-control:invalid, .ng-control .ng-form-control.is-invalid {
-    border-color: $danger !important;
+    border-color: $app-danger !important;
 }
 
 .was-validated .ng-control .ng-form-control:invalid:focus, .ng-control .ng-form-control.is-invalid:focus {
-    @include ng-form-control-shadow($danger);
+    @include ng-form-control-shadow($app-danger);
 }
 
 .was-validated .ng-control .ng-form-control:valid, .ng-control .ng-form-control.is-valid,

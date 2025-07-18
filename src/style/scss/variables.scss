@@ -1,38 +1,35 @@
-@use "bootstrap/scss/bootstrap" as *;
-@forward "bootstrap/scss/bootstrap";
+$app-white:    #fff !default;
+$app-gray-100: #f8f9fa !default;
+$app-gray-200: #e9ecef !default;
+$app-gray-300: #dee2e6 !default;
+$app-gray-400: #ced4da !default;
+$app-gray-500: #adb5bd !default;
+$app-gray-600: #6c757d !default;
+$app-gray-700: #495057 !default;
+$app-gray-800: #343a40 !default;
+$app-gray-900: #212529 !default;
+$app-black:    #000 !default;
 
-$white:    #fff !default;
-$gray-100: #f8f9fa !default;
-$gray-200: #e9ecef !default;
-$gray-300: #dee2e6 !default;
-$gray-400: #ced4da !default;
-$gray-500: #adb5bd !default;
-$gray-600: #6c757d !default;
-$gray-700: #495057 !default;
-$gray-800: #343a40 !default;
-$gray-900: #212529 !default;
-$black:    #000 !default;
+$app-blue:    #0d6efd !default;
+$app-indigo:  #6610f2 !default;
+$app-purple:  #6f42c1 !default;
+$app-pink:    #d63384 !default;
+$app-red:     #dc3545 !default;
+$app-orange:  #fd7e14 !default;
+$app-yellow:  #ffc107 !default;
+$app-green:   #198754 !default;
+$app-teal:    #20c997 !default;
+$app-cyan:    #0dcaf0 !default;
 
-$blue:    #0d6efd !default;
-$indigo:  #6610f2 !default;
-$purple:  #6f42c1 !default;
-$pink:    #d63384 !default;
-$red:     #dc3545 !default;
-$orange:  #fd7e14 !default;
-$yellow:  #ffc107 !default;
-$green:   #198754 !default;
-$teal:    #20c997 !default;
-$cyan:    #0dcaf0 !default;
-
-$primary:       $blue !default;
-$secondary:     $gray-600 !default;
-$disabled:      #dadada40 !default;
-$success:       $green !default;
-$info:          $cyan !default;
-$warning:       $yellow !default;
-$danger:        $red !default;
-$light:         $gray-100 !default;
-$dark:          $gray-900 !default;
+$app-primary:       $app-blue !default;
+$app-secondary:     $app-gray-600 !default;
+$app-disabled:      #dadada40 !default;
+$app-success:       $app-green !default;
+$app-info:          $app-cyan !default;
+$app-warning:       $app-yellow !default;
+$app-danger:        $app-red !default;
+$app-light:         $app-gray-100 !default;
+$app-dark:          $app-gray-900 !default;
 
 $scroll-bar-size: 10px;
 
@@ -117,8 +114,11 @@ $font-size-9xl: 8rem;
 $font-size-10xl: 10rem;
 
 // Spacing
-$spacer-1: $spacer * .25;
-$spacer-2: $spacer * .5;
-$spacer-3: $spacer;
-$spacer-4: $spacer * 1.5;
-$spacer-5: $spacer * 3;
+$app-spacer: 1rem !default;
+$spacer-1: $app-spacer * .25;
+$spacer-2: $app-spacer * .5;
+$spacer-3: $app-spacer;
+$spacer-4: $app-spacer * 1.5;
+$spacer-5: $app-spacer * 3;
+
+$border-radius-lg: .5rem;
